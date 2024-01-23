@@ -22,7 +22,7 @@ $plainTextBody .= "Subject: $subject\n";
 $plainTextBody .= $message;
 
 // Recipient name. Change this name to your
-$recipientName = "Muhammad Arif";
+$recipientName = "Muhammad Arif Rajput";
 
 // Recipient email. Change this email to your
 $recipientEmail = "rajputwindsor@gmail.com";

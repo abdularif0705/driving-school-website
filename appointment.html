@@ -55,7 +55,7 @@
             <div class="col-lg-5 px-5 text-end">
                 <div class="h-100 d-inline-flex align-items-center me-4">
                     <small class="fa fa-phone-alt text-primary me-2"></small>
-                    <small href="tel:+12262462224">226 246 2224</small>
+                    <small><a href="tel:+12262462224" style="color: white;">226 246 2224</a></small>
                 </div>
                 <div class="h-100 d-inline-flex align-items-center mx-n2">
                     <a class="btn btn-square btn-link rounded-0 border-0 border-end border-secondary" href="https://www.google.com/search?q=Rajput+Driving+School+Windsor%2C+ON"><i class="fab fa-google"></i></a>
@@ -74,7 +74,7 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
-        <a href="index.html" class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5">
+        <a href="/" class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5">
             <h2 class="m-0"><i class="fa fa-car text-primary me-2"></i>Rajput Driving School</h2>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -82,7 +82,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.html" class="nav-item nav-link">Home</a>
+                <a href="/" class="nav-item nav-link">Home</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="courses.html" class="nav-item nav-link">Courses</a>
                 <div class="nav-item dropdown">
@@ -133,41 +133,36 @@
                     <h6 class="text-primary text-uppercase mb-2">Appointment</h6>
                     <h1 class="display-6 mb-4">Make An Appointment To Pass Test & Get A License On The First Try</h1>
                     <!-- Begin Contact Form -->
-                    <form id="contactForm" novalidate="novalidate">
+                    <form id="contactForm" action="https://formspree.io/f/mbjnlojk" method="POST">
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" placeholder="Your Name" required="required" data-validation-required-message="Please enter your name">
+                                    <input type="text" class="form-control" name="name" id="name" placeholder="Your Name" required>
                                     <label for="name">Your Name</label>
-                                    <p class="help-block text-danger"></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="email" class="form-control" id="email" placeholder="Your Email" required="required" data-validation-required-message="Please enter your email">
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
                                     <label for="email">Your Email</label>
-                                    <p class="help-block text-danger"></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     <input type="text" class="form-control" id="mobile" placeholder="Mobile" required="required" data-validation-required-message="Please enter your mobile number" pattern="^(?![-. ])[\d().+\- ]{6,14}\d$" data-validation-pattern-message="Not a valid mobile number">
                                     <label for="mobile">Mobile</label>
-                                    <p class="help-block text-danger"></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="subject" placeholder="Subject">
+                                    <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject">
                                     <label for="subject">Subject</label>
-                                    <p class="help-block text-danger"></p>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <textarea class="form-control" id="message" placeholder="Leave a message here" style="height: 150px"></textarea>
+                                    <textarea class="form-control" name="message" id="message" placeholder="Leave a message here" style="height: 150px" required></textarea>
                                     <label for="message">Message</label>
-                                    <p class="help-block text-danger"></p>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -191,8 +186,8 @@
                     <h4 class="text-white mb-4">Get In Touch</h4>
                     <h2 class="text-primary mb-4"><i class="fa fa-car text-white me-2"></i>Rajput Driving School</h2>
                     <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Windsor, ON</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3" href="tel:+12262462224"></i>226 246 2224</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3" href="mailto:rajputwindsor@gmail.com"></i>rajputwindsor@gmail.com</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i><a href="tel:+12262462224" style="color: white;">226 246 2224</a></p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i><a href="mailto:rajputwindsor@gmail.com" style="color: white"></a>rajputwindsor@gmail.com</a></p>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-light mb-4">Quick Links</h4>
@@ -261,9 +256,6 @@
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <!-- Contact Form JavaScript -->
-    <script src="mailer/validation.form.js"></script>
-    <script src="mailer/contact.form.js"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
