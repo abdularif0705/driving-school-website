@@ -9,7 +9,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="img/favicon.ico" rel="icon" type="image/x-icon"/>
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -113,8 +113,8 @@
                             <div class="row justify-content-center">
                                 <div class="col-lg-7">
                                     <h1 class="display-2 text-light mb-5 animated slideInDown">Learn To Drive With Confidence</h1>
-                                    <a href="" class="btn btn-primary py-sm-3 px-sm-5">Learn More</a>
-                                    <a href="" class="btn btn-light py-sm-3 px-sm-5 ms-3">Our Courses</a>
+                                    <a href="tel:+2262462224" class="btn btn-primary py-sm-3 px-sm-5">Learn More</a>
+                                    <a href="courses.html" class="btn btn-light py-sm-3 px-sm-5 ms-3">Our Courses</a>
                                 </div>
                             </div>
                         </div>
@@ -127,8 +127,8 @@
                             <div class="row justify-content-center">
                                 <div class="col-lg-7">
                                     <h1 class="display-2 text-light mb-5 animated slideInDown">Safe Driving Is Our Top Priority</h1>
-                                    <a href="" class="btn btn-primary py-sm-3 px-sm-5">Learn More</a>
-                                    <a href="" class="btn btn-light py-sm-3 px-sm-5 ms-3">Our Courses</a>
+                                    <a href="tel:+2262462224" class="btn btn-primary py-sm-3 px-sm-5">Learn More</a>
+                                    <a href="courses.html" class="btn btn-light py-sm-3 px-sm-5 ms-3">Our Courses</a>
                                 </div>
                             </div>
                         </div>
@@ -318,36 +318,41 @@
                 <div class="col-lg-8 my-6 mb-0 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="bg-primary text-center p-5">
                         <h1 class="mb-4">Make Appointment</h1>
-                        <form>
+                        <form id="contactForm" novalidate="novalidate">
                             <div class="row g-3">
                                 <div class="col-sm-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control border-0" id="gname" placeholder="Gurdian Name">
+                                        <input type="text" class="form-control border-0" id="gname" placeholder="Your Name" required="required" data-validation-required-message="Please enter your name">
                                         <label for="gname">Your Name</label>
+                                        <p class="help-block text-danger"></p>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-floating">
-                                        <input type="email" class="form-control border-0" id="gmail" placeholder="Gurdian Email">
-                                        <label for="gmail">Your Email</label>
+                                        <input type="email" class="form-control border-0" id="gmail" placeholder="Your Email" required="required" data-validation-required-message="Please enter your email">
+                                        <label for="email">Your Email</label>
+                                        <p class="help-block text-danger"></p>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control border-0" id="cname" placeholder="Child Name">
-                                        <label for="cname">Courses Type</label>
+                                        <input type="text" class="form-control border-0" id="mobile" placeholder="Mobile" required="required" data-validation-required-message="Please enter your mobile number" pattern="^(?![-. ])[\d().+\- ]{6,14}\d$" data-validation-pattern-message="Not a valid mobile number">
+                                        <label for="mobile">Mobile</label>
+                                        <p class="help-block text-danger"></p>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control border-0" id="cage" placeholder="Child Age">
-                                        <label for="cage">Car Type</label>
+                                        <input type="text" class="form-control border-0" id="subject" placeholder="Subject">
+                                        <label for="subject">Subject</label>
+                                        <p class="help-block text-danger"></p>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating">
                                         <textarea class="form-control border-0" placeholder="Leave a message here" id="message" style="height: 100px"></textarea>
                                         <label for="message">Message</label>
+                                        <p class="help-block text-danger"></p>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -355,6 +360,7 @@
                                 </div>
                             </div>
                         </form>
+                        <!-- End Contact Form -->
                     </div>
                 </div>
             </div>
@@ -704,6 +710,9 @@
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <!-- Contact Form JavaScript -->
+    <script src="mailer/validation.form.js"></script>
+    <script src="mailer/contact.form.js"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
