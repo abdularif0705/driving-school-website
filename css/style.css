@@ -349,3 +349,39 @@
 .copyright a:hover {
     color: var(--light);
 }
+
+
+/* Contact Form Error Messages */
+.help-block {
+  color: #ff0000; /* Red color for error messages */
+  margin-top: 5px;
+}
+
+/* This will style the unordered list within the help-block class used for error messages */
+.help-block ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+/* This will style each list item within the help-block class used for error messages */
+.help-block li {
+  font-size: 14px;
+}
+
+/* Styling for individual form control validation state */
+.form-control.is-invalid,
+.form-control.is-valid {
+  border-color: #ff0000;
+  /* Add other styling like box-shadow if needed */
+}
+
+/* Styling for valid input fields, optional if you want to highlight valid fields */
+.form-control.is-valid {
+  border-color: #28a745; /* Bootstrap success color */
+}
+
+/* You may also want to style the validation message for the valid state */
+.valid-feedback {
+  color: #28a745; /* Bootstrap success color */
+}
