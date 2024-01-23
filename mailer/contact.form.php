@@ -40,14 +40,14 @@ $mail = new PHPMailer(true);
 
 // Set mailer to use SMTP or PHP's mail() function
 // If you use SMTP, it will be "true". Otherwise, it will be "false"
-$useSMTP = false;
+$useSMTP = true;
 
 if ($useSMTP) {
     // Server settings for SMTP
     $mail->isSMTP();
-    $mail->Host = 'smtp.example.com';
+    $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username = 'user@example.com';
+    $mail->Username = 'rajputwindsor@gmail.com';
     $mail->Password = 'secret';
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
