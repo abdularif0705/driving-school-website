@@ -55,7 +55,7 @@
             <div class="col-lg-5 px-5 text-end">
                 <div class="h-100 d-inline-flex align-items-center me-4">
                     <small class="fa fa-phone-alt text-primary me-2"></small>
-                    <small href="tel:+2262462224">226 246 2224</small>
+                    <small href="tel:+12262462224">226 246 2224</small>
                 </div>
                 <div class="h-100 d-inline-flex align-items-center mx-n2">
                     <a class="btn btn-square btn-link rounded-0 border-0 border-end border-secondary" href="https://www.google.com/search?q=Rajput+Driving+School+Windsor%2C+ON"><i class="fab fa-google"></i></a>
@@ -132,43 +132,50 @@
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
                     <h6 class="text-primary text-uppercase mb-2">Appointment</h6>
                     <h1 class="display-6 mb-4">Make An Appointment To Pass Test & Get A License On The First Try</h1>
-                    <form>
+                    <!-- Begin Contact Form -->
+                    <form id="contactForm" novalidate="novalidate">
                         <div class="row g-3">
-                            <div class="col-sm-6">
+                            <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control border-0 bg-light" id="gname" placeholder="Gurdian Name">
-                                    <label for="gname">Your Name</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Your Name" required="required" data-validation-required-message="Please enter your name">
+                                    <label for="name">Your Name</label>
+                                    <p class="help-block text-danger"></p>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="email" class="form-control border-0 bg-light" id="gmail" placeholder="Gurdian Email">
-                                    <label for="gmail">Your Email</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Your Email" required="required" data-validation-required-message="Please enter your email">
+                                    <label for="email">Your Email</label>
+                                    <p class="help-block text-danger"></p>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control border-0 bg-light" id="cname" placeholder="Child Name">
-                                    <label for="cname">Courses Type</label>
+                                    <input type="text" class="form-control" id="mobile" placeholder="Mobile" required="required" data-validation-required-message="Please enter your mobile number" pattern="^(?![-. ])[\d().+\- ]{6,14}\d$" data-validation-pattern-message="Not a valid mobile number">
+                                    <label for="mobile">Mobile</label>
+                                    <p class="help-block text-danger"></p>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control border-0 bg-light" id="cage" placeholder="Child Age">
-                                    <label for="cage">Car Type</label>
+                                    <input type="text" class="form-control" id="subject" placeholder="Subject">
+                                    <label for="subject">Subject</label>
+                                    <p class="help-block text-danger"></p>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <textarea class="form-control border-0 bg-light" placeholder="Leave a message here" id="message" style="height: 150px"></textarea>
+                                    <textarea class="form-control" id="message" placeholder="Leave a message here" style="height: 150px"></textarea>
                                     <label for="message">Message</label>
+                                    <p class="help-block text-danger"></p>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-primary w-100 py-3" type="submit">Submit</button>
+                                <button class="btn btn-primary py-3 px-5" type="submit">Send Message</button>
                             </div>
                         </div>
                     </form>
+                    <!-- End Contact Form -->
                 </div>
             </div>
         </div>
@@ -184,7 +191,7 @@
                     <h4 class="text-white mb-4">Get In Touch</h4>
                     <h2 class="text-primary mb-4"><i class="fa fa-car text-white me-2"></i>Rajput Driving School</h2>
                     <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Windsor, ON</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3" href="tel:+2262462224"></i>226 246 2224</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3" href="tel:+12262462224"></i>226 246 2224</p>
                     <p class="mb-2"><i class="fa fa-envelope me-3" href="mailto:rajputwindsor@gmail.com"></i>rajputwindsor@gmail.com</p>
                 </div>
                 <div class="col-lg-3 col-md-6">
