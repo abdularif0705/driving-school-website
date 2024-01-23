@@ -318,6 +318,7 @@
                 <div class="col-lg-8 my-6 mb-0 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="bg-primary text-center p-5">
                         <h1 class="mb-4">Make Appointment</h1>
+                        <!-- Begin Contact Form -->
                         <form id="contactForm" action="https://formspree.io/f/mbjnlojk" method="POST" novalidate="novalidate">
                             <div class="row g-3">
                                 <div class="col-sm-6">
@@ -334,7 +335,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control border-0" id="mobile" name="mobile" placeholder="Mobile" data-validation-required-message="Please enter your mobile number" pattern="^(?![-. ])[\d().+\- ]{6,14}\d$" data-validation-pattern-message="Not a valid mobile number">
+                                        <input type="text" class="form-control border-0" id="mobile" name="mobile" placeholder="Mobile" pattern="^(?![-. ])[\d().+\- ]{6,14}\d$" required>
                                         <label for="mobile">Mobile</label>
                                     </div>
                                 </div>
