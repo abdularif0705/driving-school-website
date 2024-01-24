@@ -241,6 +241,13 @@
     padding: .75rem;
 }
 
+.team-item img {
+    height: 350px; /* Adjust the height as needed */
+    width: 100%; /* This will make the image take full width of the container */
+    object-fit: cover; /* This prevents the image from stretching */
+    object-position: center; /* This will center the image within the frame */
+}
+
 .team-item::after {
     position: absolute;
     content: "";
