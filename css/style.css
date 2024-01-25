@@ -313,8 +313,11 @@
 }
 
 .testimonial-carousel .owl-item img {
-    width: 150px;
-    height: 150px;
+    width: 150px;  /* Fixed width */
+    height: 150px; /* Fixed height */
+    object-fit: cover; /* This will prevent the image from stretching */
+    object-position: center; /* Center the image within the frame */
+    /* border-radius: 50%; To maintain the rounded circle shape */
 }
 
 
