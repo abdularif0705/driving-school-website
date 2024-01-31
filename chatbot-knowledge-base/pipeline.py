@@ -86,10 +86,10 @@ def parse_text(pdf_file: str) -> str:
     from google.cloud import documentai
     from google.api_core.client_options import ClientOptions
 
-    project_id = 'TODO'
+    project_id = 'aarif-project-412522'
     location = 'us'
     mime_type = 'application/pdf'
-    processor_id = 'TODO'
+    processor_id = 'aee6fbdcc4397457'
 
     opts = ClientOptions(api_endpoint=f"{location}-documentai.googleapis.com")
     client = documentai.DocumentProcessorServiceClient(client_options=opts)
@@ -131,8 +131,8 @@ def write_embeddings(embedding: Dict):
 
     # Connect to the Elasticsearch instance
     es = Elasticsearch(
-        hosts=["http://TODO:9200"],
-        basic_auth=("elastic", "TODO")
+        hosts=["http://34.72.66.41:9200"],
+        basic_auth=("elastic", "r22mF62rHLMq16831FwPE3bN")
     )
 
     # Name of the index
