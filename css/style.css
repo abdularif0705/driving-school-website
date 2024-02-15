@@ -169,6 +169,7 @@
     border: 10px solid var(--primary);
 }
 
+/* it is a must to have this for mobile devices, otherwise the carousel will not look nice */
 @media (max-width: 768px) {
     #header-carousel .carousel-item {
         position: relative;
@@ -184,8 +185,9 @@
 }
 
 /* Styles for larger screens */
-/* Commented this out because height is too big for laptop screens vs monitors */
-/* @media (min-width: 769px) {
+/* Adjusted this height for monitors but laptop screens won't have forced enlarged height 1070px images. Tablets or smaller laptops might have buttons going up and down though, but very very slightly. Not worth locking the height to that size for tablets for aesthetic reasons even if it deals with the button issue */
+/* Keeping it commented out because the cropped images are almost perfect anyways, so a little movement of the buttons and not being perfectly alighned is fine if it means a more pleasant and aesthetic look to the carousel on any device. */
+/* @media (min-width: 1700px) {
     #header-carousel .carousel-item {
         position: relative;
         height: 1070px;
