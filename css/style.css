@@ -184,6 +184,7 @@
 }
 
 /* Styles for larger screens */
+/* Commented this out because height is too big for laptop screens vs monitors */
 /* @media (min-width: 769px) {
     #header-carousel .carousel-item {
         position: relative;
