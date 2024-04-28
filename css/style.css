@@ -95,6 +95,8 @@
     font-weight: 500;
     text-transform: uppercase;
     outline: none;
+    display: flex;
+    flex-wrap: nowrap; /* Prevents the title and toggler from wrapping */
 }
 
 .navbar .navbar-nav .nav-link:hover,
@@ -112,9 +114,6 @@
 }
 
 @media (max-width: 991.98px) {
-    .navbar-toggler {
-        flex-wrap: nowrap;
-    }
     .navbar .navbar-nav .nav-link  {
         margin-right: 0;
         padding: 10px 0;
