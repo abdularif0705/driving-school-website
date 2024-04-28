@@ -95,10 +95,6 @@
     font-weight: 500;
     text-transform: uppercase;
     outline: none;
-    display: flex;
-    flex-wrap: nowrap; /* Prevents the brand and toggler from wrapping */
-    overflow-x: auto; /* Allows horizontal scrolling if content overflows */
-    align-items: center; /* Vertically aligns the brand and toggler */
 }
 
 .navbar .navbar-nav .nav-link:hover,
