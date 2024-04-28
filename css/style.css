@@ -112,7 +112,7 @@
 }
 
 @media (max-width: 991.98px) {
-    .navbar-nav {
+    .navbar-toggler {
         flex-wrap: nowrap;
     }
     .navbar .navbar-nav .nav-link  {
