@@ -55,6 +55,7 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <link rel="preload" as="image" href="img/DrivingSchool.jpg" imagesrcset="img/DrivingSchool.jpg 1920w, img/DrivingSchool-1366x768.jpg 1366w, img/DrivingSchool-768x1024.jpg 768w, img/DrivingSchool-375x667.jpg 375w" imagesizes="(max-width: 575px) 375px, (max-width: 767px) 768px, (max-width: 991px) 1366px, 1920px" />
 
     <!-- Schema Markup -->
     <script type="application/ld+json">
@@ -182,7 +183,7 @@
         <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="w-100" src="img/DrivingSchool.jpg" alt="Best Driving School Windsor">
+                    <img fetchpriority="high" rel="preload" class="w-100" src="img/DrivingSchool.jpg" alt="Best Driving School in Windsor">
                     <div class="carousel-caption">
                         <div class="container">
                             <div class="row justify-content-center">
