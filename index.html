@@ -2,22 +2,16 @@
 <html lang="en">
 
 <head>
+    <!-- Preload LCP Image -->
+    <link rel="preload" as="image" href="img/DrivingSchool.jpg"/>
+
     <!-- Google Tag Manager -->
     <script defer>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-KRD8TNJ8');</script>
-    <!-- JavaScript Libraries -->
-    <script defer src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script defer src="lib/wow/wow.min.js"></script>
-    <script defer src="lib/easing/easing.min.js"></script>
-    <script defer src="lib/waypoints/waypoints.min.js"></script>
-    <script defer src="lib/owlcarousel/owl.carousel.min.js"></script>
-    
-    <!-- Template Javascript -->
-    <script defer src="js/main.js"></script>
+    <!-- End Google Tag Manager -->
     <!-- JavaScript Libraries -->
     <script defer src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -55,7 +49,6 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    <link rel="preload" as="image" href="img/DrivingSchool.jpg" imagesrcset="img/DrivingSchool.jpg 1920w, img/DrivingSchool-1366x768.jpg 1366w, img/DrivingSchool-768x1024.jpg 768w, img/DrivingSchool-375x667.jpg 375w" imagesizes="(max-width: 575px) 375px, (max-width: 767px) 768px, (max-width: 991px) 1366px, 1920px" />
 
     <!-- Schema Markup -->
     <script type="application/ld+json">
@@ -183,7 +176,7 @@
         <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img fetchpriority="high" rel="preload" class="w-100" src="img/DrivingSchool.jpg" alt="Best Driving School in Windsor">
+                    <img class="w-100" src="img/DrivingSchool.jpg" alt="Best Driving School Windsor">
                     <div class="carousel-caption">
                         <div class="container">
                             <div class="row justify-content-center">
@@ -197,7 +190,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="w-100" src="img/DrivingSchoolWindsor.jpg" alt="Driving School Windsor">
+                    <img class="w-100" src="img/DrivingSchoolWindsor.jpg" alt="Driving School Windsor" loading="lazy">
                     <div class="carousel-caption">
                         <div class="container">
                             <div class="row justify-content-center">
@@ -281,8 +274,8 @@
             <div class="row g-5">
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="position-relative overflow-hidden ps-5 pt-5 h-100" style="min-height: 400px;">
-                        <img class="position-absolute w-100 h-100" src="img/about-1.jpg" alt="Top Windsor Driving School" style="object-fit: cover;">
-                        <img class="position-absolute top-0 start-0 bg-white pe-3 pb-3" src="img/about-2.jpg" alt="Student training session" style="width: 200px; height: 200px;">
+                        <img class="position-absolute w-100 h-100" src="img/about-1.jpg" alt="Top Windsor Driving School" style="object-fit: cover;" loading="lazy">
+                        <img class="position-absolute top-0 start-0 bg-white pe-3 pb-3" src="img/about-2.jpg" alt="Student training session" style="width: 200px; height: 200px;" loading="lazy">
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
@@ -346,7 +339,7 @@
                             </ol>
                         </div>
                         <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="img/driving-courses-1.jpg" alt="Girl driving our driving school car for test">
+                            <img class="img-fluid" src="img/driving-courses-1.jpg" alt="Girl driving our driving school car for test" loading="lazy">
                             <div class="driving-courses-overlay">
                                 <a class="btn btn-outline-primary border-2" href="tel:+12262462224">Learn More</a>
                             </div>
@@ -365,7 +358,7 @@
                             </ol>
                         </div>
                         <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="img/driving-courses-2.jpg" alt="Man driving our driving school windsor car for test">
+                            <img class="img-fluid" src="img/driving-courses-2.jpg" alt="Man driving our driving school windsor car for test" loading="lazy">
                             <div class="driving-courses-overlay">
                                 <a class="btn btn-outline-primary border-2" href="tel:+12262462224">Learn More</a>
                             </div>
@@ -384,7 +377,7 @@
                             </ol>
                         </div>
                         <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="img/driving-courses-3.jpg" alt="Preparation for driving test">
+                            <img class="img-fluid" src="img/driving-courses-3.jpg" alt="Preparation for driving test" loading="lazy">
                             <div class="driving-courses-overlay">
                                 <a class="btn btn-outline-primary border-2" href="tel:+12262462224">Learn More</a>
                             </div>
@@ -490,8 +483,8 @@
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="position-relative overflow-hidden pe-5 pt-5 h-100" style="min-height: 400px;">
-                        <img class="position-absolute w-100 h-100" src="img/about-1.jpg" alt="Teen girl driving car for G2 driving test in Windsor" style="object-fit: cover;">
-                        <img class="position-absolute top-0 end-0 bg-white ps-3 pb-3" src="img/about-2.jpg" alt="" style="width: 200px; height: 200px">
+                        <img class="position-absolute w-100 h-100" src="img/about-1.jpg" alt="Teen girl driving car for G2 driving test in Windsor" style="object-fit: cover;" loading="lazy">
+                        <img class="position-absolute top-0 end-0 bg-white ps-3 pb-3" src="img/about-2.jpg" alt="" style="width: 200px; height: 200px" loading="lazy">
                     </div>
                 </div>
             </div>
@@ -511,7 +504,7 @@
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="team-item position-relative">
                         <div class="position-relative">
-                            <img class="img-fluid" src="img/BossManArifPortrait.JPG" alt="Portrait of Muhammad Arif Rajput MTO certified best driving instructor and Owner of Rajput Driving School Windsor">
+                            <img class="img-fluid" src="img/BossManArifPortrait.JPG" alt="Portrait of Muhammad Arif Rajput MTO certified best driving instructor and Owner of Rajput Driving School Windsor" loading="lazy">
                             <div class="team-social text-center">
                                 <a class="btn btn-square btn-outline-primary border-2 m-1" href="https://www.facebook.com/rajputdrivingschoolwindsor"><i class="fab fa-facebook-f"></i></a>
                                 <!-- <a class="btn btn-square btn-outline-primary border-2 m-1" href=""><i class="fab fa-twitter"></i></a> -->
@@ -528,7 +521,7 @@
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="team-item position-relative">
                         <div class="position-relative">
-                            <img class="img-fluid" src="img/AbdulGrad.png" alt="Portrait of Abdul Rehman Arif, MTO certified top driving instructor">
+                            <img class="img-fluid" src="img/AbdulGrad.png" alt="Portrait of Abdul Rehman Arif, MTO certified top driving instructor" loading="lazy">
                             <div class="team-social text-center">
                                 <a class="btn btn-square btn-outline-primary border-2 m-1" href="https://www.facebook.com/abdulrehman.arif.7967"><i class="fab fa-facebook-f"></i></a>
                                 <a class="btn btn-square btn-outline-primary border-2 m-1" href="https://www.linkedin.com/in/abdularif0705/"><i class="fab fa-linkedin-in"></i></a>
@@ -544,7 +537,7 @@
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="team-item position-relative">
                         <div class="position-relative">
-                            <img class="img-fluid" src="img/profile-picture-whit-blue-tie-unknown-person.jpg" alt="Portrait of Abdul Waheed, MTO certified top driving instructor">
+                            <img class="img-fluid" src="img/profile-picture-whit-blue-tie-unknown-person.jpg" alt="Portrait of Abdul Waheed, MTO certified top driving instructor" loading="lazy">
                             <div class="team-social text-center">
                                 <!-- <a class="btn btn-square btn-outline-primary border-2 m-1" href=""><i class="fa fa-phone-alt"></i></a> -->
                                 <!-- <a class="btn btn-square btn-outline-primary border-2 m-1" href=""><i class="fab fa-twitter"></i></a>
@@ -560,7 +553,7 @@
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
                     <div class="team-item position-relative">
                         <div class="position-relative">
-                            <img class="img-fluid" src="img/profile-picture-whit-blue-tie-unknown-person.jpg" alt="Portrait of Ali Jawad, MTO certified top driving instructor">
+                            <img class="img-fluid" src="img/profile-picture-whit-blue-tie-unknown-person.jpg" alt="Portrait of Ali Jawad, MTO certified top driving instructor" loading="lazy">
                             <div class="team-social text-center">
                                 <!-- <a class="btn btn-square btn-outline-primary border-2 m-1" href=""><i class="fab fa-facebook-f"></i></a>
                                 <a class="btn btn-square btn-outline-primary border-2 m-1" href=""><i class="fab fa-twitter"></i></a> -->
@@ -591,7 +584,7 @@
                     <div class="owl-carousel testimonial-carousel">
                         <div class="testimonial-item text-center">
                             <div class="position-relative mb-5">
-                                <img class="img-fluid rounded-circle mx-auto" src="img/meera.jpg" alt="Picture of Meera Al-Batayneh, English Teacher, happy student of Rajput Driving School Windsor">
+                                <img class="img-fluid rounded-circle mx-auto" src="img/meera.jpg" alt="Picture of Meera Al-Batayneh, English Teacher, happy student of Rajput Driving School Windsor" loading="lazy">
                                 <div class="position-absolute top-100 start-50 translate-middle d-flex align-items-center justify-content-center bg-white rounded-circle" style="width: 60px; height: 60px;">
                                     <i class="fa fa-quote-left fa-2x text-primary"></i>
                                 </div>
@@ -603,7 +596,7 @@
                         </div>
                         <div class="testimonial-item text-center">
                             <div class="position-relative mb-5">
-                                <img class="img-fluid rounded-circle mx-auto" src="img/umer.JPG" alt="Picture of Umer Shahzad, Civil Engineer, passed G2 and G test with Rajput Driving School Windsor">
+                                <img class="img-fluid rounded-circle mx-auto" src="img/umer.JPG" alt="Picture of Umer Shahzad, Civil Engineer, passed G2 and G test with Rajput Driving School Windsor" loading="lazy">
                                 <div class="position-absolute top-100 start-50 translate-middle d-flex align-items-center justify-content-center bg-white rounded-circle" style="width: 60px; height: 60px;">
                                     <i class="fa fa-quote-left fa-2x text-primary"></i>
                                 </div>
@@ -615,7 +608,7 @@
                         </div>
                         <div class="testimonial-item text-center">
                             <div class="position-relative mb-5">
-                                <img class="img-fluid rounded-circle mx-auto" src="img/patt-b.jpg" alt="Picture of Patterson, Engineer, passed G test with Rajput Driving School Windsor">
+                                <img class="img-fluid rounded-circle mx-auto" src="img/patt-b.jpg" alt="Picture of Patterson, Engineer, passed G test with Rajput Driving School Windsor" loading="lazy">
                                 <div class="position-absolute top-100 start-50 translate-middle d-flex align-items-center justify-content-center bg-white rounded-circle" style="width: 60px; height: 60px;">
                                     <i class="fa fa-quote-left fa-2x text-primary"></i>
                                 </div>
@@ -628,7 +621,7 @@
                         </div>
                         <div class="testimonial-item text-center">
                             <div class="position-relative mb-5">
-                                <img class="img-fluid rounded-circle mx-auto" src="img/1.jpg" alt="">
+                                <img class="img-fluid rounded-circle mx-auto" src="img/1.jpg" alt="" loading="lazy">
                                 <div class="position-absolute top-100 start-50 translate-middle d-flex align-items-center justify-content-center bg-white rounded-circle" style="width: 60px; height: 60px;">
                                     <i class="fa fa-quote-left fa-2x text-primary"></i>
                                 </div>
@@ -640,7 +633,7 @@
                         </div>
                         <!-- <div class="testimonial-item text-center">
                             <div class="position-relative mb-5">
-                                <img class="img-fluid rounded-circle mx-auto" src="img/2.jpg" alt="">
+                                <img class="img-fluid rounded-circle mx-auto" src="img/2.jpg" alt="" loading="lazy">
                                 <div class="position-absolute top-100 start-50 translate-middle d-flex align-items-center justify-content-center bg-white rounded-circle" style="width: 60px; height: 60px;">
                                     <i class="fa fa-quote-left fa-2x text-primary"></i>
                                 </div>
@@ -652,7 +645,7 @@
                         </div> -->
                         <div class="testimonial-item text-center">
                             <div class="position-relative mb-5">
-                                <img class="img-fluid rounded-circle mx-auto" src="img/3(1).jpg" alt="">
+                                <img class="img-fluid rounded-circle mx-auto" src="img/3(1).jpg" alt="" loading="lazy">
                                 <div class="position-absolute top-100 start-50 translate-middle d-flex align-items-center justify-content-center bg-white rounded-circle" style="width: 60px; height: 60px;">
                                     <i class="fa fa-quote-left fa-2x text-primary"></i>
                                 </div>
@@ -664,7 +657,7 @@
                         </div>
                         <div class="testimonial-item text-center">
                             <div class="position-relative mb-5">
-                                <img class="img-fluid rounded-circle mx-auto" src="img/4.jpg" alt="">
+                                <img class="img-fluid rounded-circle mx-auto" src="img/4.jpg" alt="" loading="lazy">
                                 <div class="position-absolute top-100 start-50 translate-middle d-flex align-items-center justify-content-center bg-white rounded-circle" style="width: 60px; height: 60px;">
                                     <i class="fa fa-quote-left fa-2x text-primary"></i>
                                 </div>
@@ -676,7 +669,7 @@
                         </div>
                         <div class="testimonial-item text-center">
                             <div class="position-relative mb-5">
-                                <img class="img-fluid rounded-circle mx-auto" src="img/5(1).jpg" alt="">
+                                <img class="img-fluid rounded-circle mx-auto" src="img/5(1).jpg" alt="" loading="lazy">
                                 <div class="position-absolute top-100 start-50 translate-middle d-flex align-items-center justify-content-center bg-white rounded-circle" style="width: 60px; height: 60px;">
                                     <i class="fa fa-quote-left fa-2x text-primary"></i>
                                 </div>
@@ -688,7 +681,7 @@
                         </div>
                         <!-- <div class="testimonial-item text-center">
                             <div class="position-relative mb-5">
-                                <img class="img-fluid rounded-circle mx-auto" src="img/6.jpg" alt="">
+                                <img class="img-fluid rounded-circle mx-auto" src="img/6.jpg" alt="" loading="lazy">
                                 <div class="position-absolute top-100 start-50 translate-middle d-flex align-items-center justify-content-center bg-white rounded-circle" style="width: 60px; height: 60px;">
                                     <i class="fa fa-quote-left fa-2x text-primary"></i>
                                 </div>
@@ -700,7 +693,7 @@
                         </div> -->
                         <!-- <div class="testimonial-item text-center">
                             <div class="position-relative mb-5">
-                                <img class="img-fluid rounded-circle mx-auto" src="img/7.jpg" alt="">
+                                <img class="img-fluid rounded-circle mx-auto" src="img/7.jpg" alt="" loading="lazy">
                                 <div class="position-absolute top-100 start-50 translate-middle d-flex align-items-center justify-content-center bg-white rounded-circle" style="width: 60px; height: 60px;">
                                     <i class="fa fa-quote-left fa-2x text-primary"></i>
                                 </div>
@@ -712,7 +705,7 @@
                         </div> -->
                         <div class="testimonial-item text-center">
                             <div class="position-relative mb-5">
-                                <img class="img-fluid rounded-circle mx-auto" src="img/8(1).jpg" alt="">
+                                <img class="img-fluid rounded-circle mx-auto" src="img/8(1).jpg" alt="" loading="lazy">
                                 <div class="position-absolute top-100 start-50 translate-middle d-flex align-items-center justify-content-center bg-white rounded-circle" style="width: 60px; height: 60px;">
                                     <i class="fa fa-quote-left fa-2x text-primary"></i>
                                 </div>
@@ -724,7 +717,7 @@
                         </div>
                         <!-- <div class="testimonial-item text-center">
                             <div class="position-relative mb-5">
-                                <img class="img-fluid rounded-circle mx-auto" src="img/9.png" alt="">
+                                <img class="img-fluid rounded-circle mx-auto" src="img/9.png" alt="" loading="lazy">
                                 <div class="position-absolute top-100 start-50 translate-middle d-flex align-items-center justify-content-center bg-white rounded-circle" style="width: 60px; height: 60px;">
                                     <i class="fa fa-quote-left fa-2x text-primary"></i>
                                 </div>
@@ -736,7 +729,7 @@
                         </div> -->
                         <!-- <div class="testimonial-item text-center">
                             <div class="position-relative mb-5">
-                                <img class="img-fluid rounded-circle mx-auto" src="img/10.jpg" alt="">
+                                <img class="img-fluid rounded-circle mx-auto" src="img/10.jpg" alt="" loading="lazy">
                                 <div class="position-absolute top-100 start-50 translate-middle d-flex align-items-center justify-content-center bg-white rounded-circle" style="width: 60px; height: 60px;">
                                     <i class="fa fa-quote-left fa-2x text-primary"></i>
                                 </div>
@@ -748,7 +741,7 @@
                         </div> -->
                         <!-- <div class="testimonial-item text-center">
                             <div class="position-relative mb-5">
-                                <img class="img-fluid rounded-circle mx-auto" src="img/11.jpg" alt="">
+                                <img class="img-fluid rounded-circle mx-auto" src="img/11.jpg" alt="" loading="lazy">
                                 <div class="position-absolute top-100 start-50 translate-middle d-flex align-items-center justify-content-center bg-white rounded-circle" style="width: 60px; height: 60px;">
                                     <i class="fa fa-quote-left fa-2x text-primary"></i>
                                 </div>
@@ -760,7 +753,7 @@
                         </div> -->
                         <div class="testimonial-item text-center">
                             <div class="position-relative mb-5">
-                                <img class="img-fluid rounded-circle mx-auto" src="img/daniyal.JPG" alt="">
+                                <img class="img-fluid rounded-circle mx-auto" src="img/daniyal.JPG" alt="" loading="lazy">
                                 <div class="position-absolute top-100 start-50 translate-middle d-flex align-items-center justify-content-center bg-white rounded-circle" style="width: 60px; height: 60px;">
                                     <i class="fa fa-quote-left fa-2x text-primary"></i>
                                 </div>
