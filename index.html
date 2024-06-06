@@ -6,7 +6,7 @@
     <link rel="preload" as="image" href="img/DrivingSchool.jpg"/>
 
     <!-- Google Tag Manager -->
-    <script defer src="https://www.googletagmanager.com/gtm.js?id=GTM-KRD8TNJ8"></script>
+    <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-KRD8TNJ8"></script>
     <!-- End Google Tag Manager -->
     <!-- JavaScript Libraries -->
     <script defer src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -43,7 +43,7 @@
     
         /* Add more critical CSS as needed */
     </style>
-    
+
     <!-- 
     Preloading CSS: The rel="preload" attribute tells the browser to fetch the CSS files as soon as possible without blocking the rendering of the page. This ensures that the CSS files are available when needed.
 
@@ -61,6 +61,8 @@
         onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- Removing the <noscript> tag will not necessarily make your page faster. The <noscript> tag is used to provide fallback content for users who have disabled JavaScript or are using a browser that does not support JavaScript. 
+    Performance Impact: The <noscript> tag itself does not significantly impact the performance of your page. It is a lightweight HTML element that only gets processed if JavaScript is disabled. Removing it will not provide a noticeable performance boost. -->
     <noscript>
         <!-- Icon Font Stylesheet -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
