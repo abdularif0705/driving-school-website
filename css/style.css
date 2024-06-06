@@ -111,7 +111,30 @@
     margin-left: 8px;
 }
 
+/* Added this so it'll be h2 on larger screens and h5 on smaller screens for our navbar brand */
+/* Default styles for h2 and h5 */
+.navbar-brand h2,
+.navbar-brand h5 {
+    display: none;
+}
+
+/* Display h2 on larger screens */
+@media (min-width: 991.99px) {
+    .navbar-brand h2 {
+        display: block;
+    }
+}
+
+/* Display h5 on smaller screens */
 @media (max-width: 991.98px) {
+    .navbar-brand h5 {
+        display: block;
+    }
+}
+
+@media (max-width: 991.98px) { /* this means the navbar will be collapsed for screens smaller than 992px */
+    .navbar-toggler{padding:.1rem .3rem;font-size:1;} /* Adjust the padding and font size of the navbar-toggler icon */
+    .px-4{padding-right:.25rem !important;padding-left:0.5rem !important} /* Adjust the padding of the navbar-toggler button TODO: Not working for some reason so I had to manually override in the actual bootstrap.min.css file which is not ideal */
     .navbar .navbar-nav .nav-link  {
         margin-right: 0;
         padding: 10px 0;
