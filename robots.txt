@@ -1,0 +1,9 @@
+# robots.txt
+User-agent: *
+Disallow: /admin/
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /private/
+Allow: /
+
+Sitemap: https://rajputdrivingschool.com/sitemap.xml
