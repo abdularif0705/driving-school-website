@@ -272,6 +272,10 @@
     opacity: 1;
 }
 
+.driving-courses-item .bg-primary del {
+    font-size: 0.8em;
+    opacity: 0.7;
+}
 
 /*** Team ***/
 .team-items {
