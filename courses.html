@@ -206,9 +206,12 @@
                             </ol>
                         </div>
                         <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="img/driving-courses-2.jpg" alt="Man driving our car during his car instruction lesson for drive test windsor" loading="lazy">
+                            <img class="img-fluid" src="img/driving-courses-2.jpg"
+                                alt="Man driving our car during his car instruction lesson for drive test windsor"
+                                loading="lazy">
                             <div class="driving-courses-overlay">
-                                <a class="btn btn-outline-primary border-2" href="tel:+12262462224">Learn More</a>
+                                <a href="#" onclick="scrollToAppointment(event)"
+                                    class="btn btn-outline-primary border-2">Book Now</a>
                             </div>
                         </div>
                     </div>
@@ -227,14 +230,16 @@
                             </ol>
                         </div>
                         <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="img/driving-courses-1.jpg" alt="Girl driving our driving school car for test" loading="lazy">
+                            <img class="img-fluid" src="img/driving-courses-1.jpg"
+                                alt="Girl driving our driving school car for test" loading="lazy">
                             <div class="driving-courses-overlay">
-                                <a class="btn btn-outline-primary border-2" href="tel:+12262462224">Learn More</a>
+                                <a href="#" onclick="scrollToAppointment(event)"
+                                    class="btn btn-outline-primary border-2">Book Now</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+    
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="driving-courses-item d-flex flex-column bg-white overflow-hidden h-100">
                         <div class="text-center p-4 pt-0">
@@ -249,9 +254,11 @@
                             </ol>
                         </div>
                         <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="img/driving-courses-3.jpg" alt="Preparation for driving test" loading="lazy">
+                            <img class="img-fluid" src="img/driving-courses-3.jpg" alt="Preparation for driving test"
+                                loading="lazy">
                             <div class="driving-courses-overlay">
-                                <a class="btn btn-outline-primary border-2" href="tel:+12262462224">Learn More</a>
+                                <a href="#" onclick="scrollToAppointment(event)"
+                                    class="btn btn-outline-primary border-2">Book Now</a>
                             </div>
                         </div>
                     </div>
@@ -264,41 +271,44 @@
                             <div class="row g-3">
                                 <div class="col-sm-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control border-0" id="name" name="name" placeholder="Your Name" required="required">
+                                        <input type="text" class="form-control border-0" id="name" name="name"
+                                            placeholder="Your Name" required="required">
                                         <label for="name">Your Name</label>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-floating">
-                                        <input type="email" class="form-control border-0" id="email" name="email" placeholder="Your Email" required="required">
+                                        <input type="email" class="form-control border-0" id="email" name="email"
+                                            placeholder="Your Email" required="required">
                                         <label for="email">Your Email</label>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control border-0" id="mobile" name="mobile" placeholder="Mobile" pattern="^(?![-. ])[\d().+\- ]{6,14}\d$" required>
+                                        <input type="text" class="form-control border-0" id="mobile" name="mobile"
+                                            placeholder="Mobile" pattern="^(?![-. ])[\d().+\- ]{6,14}\d$" required>
                                         <label for="mobile">Mobile</label>
                                     </div>
                                 </div>
                                 <!-- <div class="col-sm-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control border-0" id="subject" name="subject" placeholder="Subject">
-                                        <label for="subject">Subject</label>
-                                    </div>
-                                </div> -->
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control border-0" id="subject" name="subject" placeholder="Subject">
+                                            <label for="subject">Subject</label>
+                                        </div>
+                                    </div> -->
                                 <div class="col-sm-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control border-0" id="license" name="license" 
-                                            placeholder="Driver's License Number" 
-                                            pattern="^[A-Za-z]\d{4}-\d{5}-\d{5}$" 
-                                            title="Enter a valid Ontario driver's license number (e.g., A1234-12345-12345)" 
+                                        <input type="text" class="form-control border-0" id="license" name="license"
+                                            placeholder="Driver's License Number" pattern="^[A-Za-z]\d{4}-\d{5}-\d{5}$"
+                                            title="Enter a valid Ontario driver's license number (e.g., A1234-12345-12345)"
                                             required>
                                         <label for="license">Driver's License Number</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <textarea class="form-control border-0" id="message" name="message" placeholder="Leave a message here" style="height: 100px" required></textarea>
+                                        <textarea class="form-control border-0" id="message" name="message"
+                                            placeholder="Leave a message here" style="height: 100px" required></textarea>
                                         <label for="message">Message</label>
                                     </div>
                                 </div>
@@ -386,6 +396,13 @@
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <script>
+        function scrollToAppointment(event) {
+            event.preventDefault();
+            const appointmentSection = document.getElementById('appointmentSection');
+            appointmentSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
 </body>
 
 </html>
