@@ -255,8 +255,15 @@
 @media (min-width: 991.98px) {
     .facts {
         position: relative;
-        margin-top: -75px;
+        /* margin-top: -75px; */ /* Adjust the margin-top as needed to show the award before the change was because the gap was too big so if I remove award then TODO: uncomment section if i remove award*/
         z-index: 1;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .facts {
+        margin-top: -100px; /* Adjust this value as needed */
+        padding-top: 20px; /* Adjust this value as needed */
     }
 }
 
