@@ -233,6 +233,23 @@
     color: #999999;
 }
 
+/*** Awards ***/
+.award-link {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.award-link:hover {
+    transform: scale(1.1);
+}
+
+.award-image {
+    max-width: 150px;
+    height: auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
 
 /*** Facts ***/
 @media (min-width: 991.98px) {
