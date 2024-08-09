@@ -151,6 +151,11 @@
     background: #724ae8;
 }
 
+.chatbox .chat p.error {
+    color: #721c24;
+    background: #f8d7da;
+}
+
 .chatbox .incoming p {
     color: #000;
     background: #f2f2f2;
@@ -173,6 +178,7 @@
     width: 100%;
     border: none;
     outline: none;
+    max-height: 180px;
     font-size: 0.95rem;
     resize: none;
     padding: 16px 15px 16px 0;
