@@ -81,9 +81,12 @@
     overflow: hidden;
     background: #fff;
     border-radius: 15px;
+    transform-origin: bottom right;
     box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.1),
                 0 32px 64px -48px rgba(0, 0, 0, 0.5);
+    transition: all 0.1s ease;
 }
+
 .show-chatbot .chatbot {
     transform: scale(1);
     opacity: 1;
@@ -116,7 +119,7 @@
 .chatbot .chatbox {
     height: 510px;
     overflow-y: auto;
-    padding: 15px 20px 100px;
+    padding: 30px 20px 100px;
 }
 
 .chatbox .chat {
@@ -140,10 +143,10 @@
     justify-content: flex-end;
 }
 
-
 .chatbox .chat p {
     color: #fff;
     max-width: 75%;
+    white-space: pre-wrap;
     font-size: 0.95rem;
     padding: 12px 16px;
     border-radius: 10px 10px 0 10px;
