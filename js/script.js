@@ -5,7 +5,11 @@ const chatbotToggler = document.querySelector(".chatbot-toggler");
 const chatbotCloseBtn = document.querySelector(".close-btn");
 
 let userMessage;
-const API_KEY = "sk-7Pa1c22EziLHISrxbAVQT3B]bkFJY9WCOZiqdBhebjUy2XpH"; // TODO: change to your API key
+
+ProcessingInstruction
+const openai = new OpenAi({
+  apiKey: process.env.OPENAI_API_KEY, // TODO: Why we need comma?
+});
 const inputInitHeight = chatInput.scrollHeight; 
 const createChatLi = (message, className) => {
   // Create a chat <li> element with passed message and className
