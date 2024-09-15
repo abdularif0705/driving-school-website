@@ -924,35 +924,36 @@ The 85% value for the vertical position moves the image slightly down from the c
     <!-- Chatbot Script -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            
             const iframe = document.createElement("iframe");
-
+            
             const iframeStyles = (styleString) => {
                 const style = document.createElement('style');
                 style.textContent = styleString;
                 document.head.append(style);
             }
-
+            
             iframeStyles(`
-                    .chat-frame {
-                        position: fixed;
-                        bottom: 50px;
-                        right: 50px;
-                        border: none;
-                        z-index: 9999;
-                    }
-                `);
-
-            iframe.src = "https://amplifire-ai.vercel.app/chatbot"
-            iframe.classList.add('chat-frame')
-            document.body.appendChild(iframe)
-
+                .chat-frame {
+                    position: fixed;
+                    bottom: 50px;
+                    right: 50px;
+                    border: none;
+                    z-index: 9999;
+                }
+            `);
+            
+            iframe.src = "https://amplifire-ai.vercel.app/chatbot";
+            iframe.classList.add('chat-frame');
+            document.body.appendChild(iframe);
+            
             window.addEventListener("message", (e) => {
-                if (e.origin !== "https://amplifire-ai.vercel.app") return null
-                let dimensions = JSON.parse(e.data)
-                iframe.width = dimensions.width
-                iframe.height = dimensions.height
-                iframe.contentWindow.postMessage("6a070c13-072f-48ca-833d-e82d8306844e", "https://amplifire-ai.vercel.app/")
-            })
+                if(e.origin !== "https://amplifire-ai.vercel.app") return;
+                let dimensions = JSON.parse(e.data);
+                iframe.width = dimensions.width;
+                iframe.height = dimensions.height;
+                iframe.contentWindow.postMessage("e4e5da12-1469-4357-a3cf-37eef734162a", "https://amplifire-ai.vercel.app/");
+            });
         });
     </script>
 
