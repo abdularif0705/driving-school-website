@@ -8,7 +8,7 @@ let userMessage;
 
 ProcessingInstruction
 const openai = new OpenAi({
-  apiKey: process.env.OPENAI_API_KEY, // TODO: Why we need comma?
+  apiKey: process.env.OPENAI_API_KEY, // TODO: This isn't properly working this is vanilla JS we need to deploy using express.js
 });
 const inputInitHeight = chatInput.scrollHeight; 
 const createChatLi = (message, className) => {
@@ -32,7 +32,7 @@ const generateResponse = (incomingChatLi) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${API_KEY}`,
+      Authorization: `Bearer ${OPENAI_API_KEY}`,
     },
     body: JSON.stringify({
       model: "gpt-3.5-turbo",
