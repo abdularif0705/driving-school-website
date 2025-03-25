@@ -98,7 +98,7 @@ dataset = {
       "responses": [
         "We offer driving lessons for students of all levels, from beginners to experienced drivers.",
         "To enroll in driving lessons, you can call us at 226-246-2224.",
-        "The cost of driving lessons varies depending on the package you choose. The cost of a single driving class is $40/hour. However, our most popular package is 10 lessons for $440, and you get the BDE certificate for free with the package, whereas the usual price for the BDE is $250."
+        "The cost of driving lessons varies depending on the package you choose. The cost of a single driving class is $40/hour. However, our most popular package is 10 lessons for $450, and you get the BDE certificate for free with the package, whereas the usual price for the BDE is $250."
       ]
     },
     {
