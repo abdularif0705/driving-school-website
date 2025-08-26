@@ -552,18 +552,34 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 9999;
+            backdrop-filter: blur(5px);
         }
 
         .loading-content {
             background: white;
-            padding: 2rem;
-            border-radius: 15px;
+            padding: 3rem 2rem;
+            border-radius: 20px;
             text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            animation: fadeInScale 0.3s ease-out;
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .spinner {
@@ -903,6 +919,11 @@
             <div class="text-center mb-4">
                 <h1 class="display-4 text-dark mb-3">Course Registration</h1>
                 <p class="lead text-muted">Join Windsor's best driving school and start your journey to safe driving</p>
+                <div class="d-flex justify-content-center align-items-center mt-3">
+                    <span class="badge bg-success me-2"><i class="fas fa-shield-alt me-1"></i>SSL Secured</span>
+                    <span class="badge bg-primary me-2"><i class="fas fa-credit-card me-1"></i>Instant Payment</span>
+                    <span class="badge bg-info"><i class="fas fa-certificate me-1"></i>MTO Approved</span>
+                </div>
             </div>
 
             <div class="registration-card">
@@ -1202,8 +1223,9 @@
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-content">
             <div class="spinner"></div>
-            <h4>Processing your payment...</h4>
-            <p>Please do not close this window</p>
+            <h4 style="color: var(--primary); margin-bottom: 1rem;">Securing Your Registration...</h4>
+            <p style="margin-bottom: 0.5rem;">🔒 Processing payment securely</p>
+            <p style="margin-bottom: 0; font-size: 0.9rem; color: #666;">Please do not close or refresh this page</p>
         </div>
     </div>
 
@@ -1500,54 +1522,81 @@
         }
 
         async function handlePayment() {
+            const submitButton = document.getElementById('submitPayment');
+            const originalText = submitButton.innerHTML;
+
+            // Update button to show processing state
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
+            submitButton.disabled = true;
+
             document.getElementById('loadingOverlay').style.display = 'flex';
 
-            const form = document.getElementById('registrationForm');
-            const formData = new FormData(form);
+            try {
+                const form = document.getElementById('registrationForm');
+                const formData = new FormData(form);
 
-            // Create payment intent on your server
-            const response = await fetch('payment-handler.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    course: selectedCourse,
-                    price: selectedCourse === 'individual' ? selectedPrice * numberOfLessons : selectedPrice,
-                    lessons: numberOfLessons,
-                    studentInfo: Object.fromEntries(formData)
-                })
-            });
+                // Create payment intent on your server
+                const response = await fetch('payment-handler.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        course: selectedCourse,
+                        price: selectedCourse === 'individual' ? selectedPrice * numberOfLessons : selectedPrice,
+                        lessons: numberOfLessons,
+                        studentInfo: Object.fromEntries(formData)
+                    })
+                });
 
-            const { client_secret } = await response.json();
+                if (!response.ok) {
+                    throw new Error('Payment setup failed. Please try again.');
+                }
 
-            // Confirm payment with Stripe
-            const result = await stripe.confirmCardPayment(client_secret, {
-                payment_method: {
-                    card: cardElement,
-                    billing_details: {
-                        name: `${formData.get('firstName')} ${formData.get('lastName')}`,
-                        email: formData.get('email'),
-                        phone: formData.get('phone'),
-                        address: {
-                            line1: formData.get('address'),
-                            city: formData.get('city'),
-                            state: formData.get('province'),
-                            postal_code: formData.get('postalCode'),
-                            country: 'CA'
+                const paymentData = await response.json();
+
+                if (paymentData.error) {
+                    throw new Error(paymentData.error);
+                }
+
+                // Confirm payment with Stripe
+                const result = await stripe.confirmCardPayment(paymentData.client_secret, {
+                    payment_method: {
+                        card: cardElement,
+                        billing_details: {
+                            name: `${formData.get('firstName')} ${formData.get('lastName')}`,
+                            email: formData.get('email'),
+                            phone: formData.get('phone'),
+                            address: {
+                                line1: formData.get('address'),
+                                city: formData.get('city'),
+                                state: formData.get('province'),
+                                postal_code: formData.get('postalCode'),
+                                country: 'CA'
+                            }
                         }
                     }
+                });
+
+                document.getElementById('loadingOverlay').style.display = 'none';
+
+                if (result.error) {
+                    // Show error to customer
+                    document.getElementById('card-errors').textContent = result.error.message;
+                    submitButton.innerHTML = originalText;
+                    submitButton.disabled = false;
+                } else {
+                    // Payment succeeded - show success immediately
+                    submitButton.innerHTML = '<i class="fas fa-check me-2"></i>Success!';
+                    setTimeout(() => {
+                        showSuccessMessage();
+                    }, 500);
                 }
-            });
-
-            document.getElementById('loadingOverlay').style.display = 'none';
-
-            if (result.error) {
-                // Show error to customer
-                document.getElementById('card-errors').textContent = result.error.message;
-            } else {
-                // Payment succeeded
-                showSuccessMessage();
+            } catch (error) {
+                document.getElementById('loadingOverlay').style.display = 'none';
+                document.getElementById('card-errors').textContent = error.message || 'An unexpected error occurred. Please try again.';
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
             }
         }
 

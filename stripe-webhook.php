@@ -105,7 +105,12 @@ function sendConfirmationEmail($paymentIntent) {
 function getEmailTemplate($paymentIntent, $courseName, $amount) {
     $studentName = $paymentIntent->metadata->student_name;
     $paymentDate = date('F j, Y \a\t g:i A', $paymentIntent->created);
-    $paymentId = $paymentIntent->id;
+    $paymentId = substr($paymentIntent->id, -8); // Show last 8 characters for security
+    $lessonsText = '';
+    
+    if ($paymentIntent->metadata->course === 'individual' && $paymentIntent->metadata->lessons > 1) {
+        $lessonsText = "<tr><th>Lessons:</th><td>{$paymentIntent->metadata->lessons} hours</td></tr>";
+    }
     
     return "
     <!DOCTYPE html>
@@ -113,65 +118,75 @@ function getEmailTemplate($paymentIntent, $courseName, $amount) {
     <head>
         <meta charset='utf-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-        <title>Registration Confirmation</title>
+        <title>Registration Confirmation - Rajput Driving School</title>
         <style>
-            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: linear-gradient(135deg, #CE252A 0%, #a01e22 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
-            .content { background: white; padding: 30px; border: 1px solid #ddd; }
-            .footer { background: #f8f9fa; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; font-size: 14px; color: #666; }
-            .highlight { background: #f8f9fa; padding: 15px; border-left: 4px solid #CE252A; margin: 20px 0; }
-            .button { display: inline-block; background: #CE252A; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; margin: 10px 0; }
-            .details { background: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0; }
-            .details th, .details td { padding: 8px 12px; text-align: left; }
-            .logo { font-size: 24px; font-weight: bold; }
+            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; background: #f8f9fa; }
+            .email-container { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+            .header { background: linear-gradient(135deg, #CE252A 0%, #a01e22 100%); color: white; padding: 40px 30px; text-align: center; }
+            .content { padding: 40px 30px; }
+            .footer { background: #f8f9fa; padding: 25px; text-align: center; font-size: 14px; color: #666; border-top: 1px solid #eee; }
+            .highlight { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 25px; border-radius: 10px; border-left: 4px solid #CE252A; margin: 25px 0; }
+            .success-badge { background: #28a745; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: 600; display: inline-block; margin-bottom: 20px; }
+            .details-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+            .details-table th { text-align: left; padding: 12px 0; color: #495057; font-weight: 600; border-bottom: 1px solid #dee2e6; }
+            .details-table td { padding: 12px 0; border-bottom: 1px solid #dee2e6; font-weight: 500; }
+            .next-steps { background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 20px; margin: 20px 0; }
+            .contact-info { background: #d1ecf1; border: 1px solid #bee5eb; border-radius: 8px; padding: 20px; margin: 20px 0; }
+            .logo { font-size: 28px; font-weight: bold; margin-bottom: 10px; }
+            .quick-contact { background: #e7f3ff; padding: 15px; border-radius: 8px; margin: 15px 0; text-align: center; }
+            h2 { color: #CE252A; margin-bottom: 20px; }
+            h3 { color: #495057; margin-bottom: 15px; }
+            .footer-badge { display: inline-block; background: #6c757d; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; margin: 5px; }
         </style>
     </head>
     <body>
-        <div class='header'>
-            <div class='logo'>🚗 Rajput Driving School Windsor</div>
+        <div class='email-container'>
+            <div class='header'>
+                <div class='logo'>🚗 Rajput Driving School Windsor</div>
             <h1>Registration Confirmed!</h1>
-        </div>
-        
-        <div class='content'>
-            <h2>Dear {$studentName},</h2>
+            </div>
             
+            <div class='content'>
+                <h2>Dear {$studentName},</h2>
+                
             <p>Thank you for registering with <strong>Rajput Driving School Windsor</strong>! We're excited to help you on your journey to becoming a safe and confident driver.</p>
-            
-            <div class='highlight'>
+                
+                <div class='highlight'>
                 <h3>📋 Registration Details</h3>
                 <table class='details' width='100%'>
                     <tr><th>Course:</th><td>{$courseName}</td></tr>
                     <tr><th>Amount Paid:</th><td>CAD \${$amount}</td></tr>
                     <tr><th>Payment Date:</th><td>{$paymentDate}</td></tr>
                     <tr><th>Payment ID:</th><td>{$paymentId}</td></tr>
-                </table>
-            </div>
-            
+                    </table>
+                </div>
+                
             <h3>🎯 What's Next?</h3>
             <ul>
                 <li><strong>Confirmation Call:</strong> Our team will contact you within 24-48 hours to schedule your lessons</li>
                 <li><strong>Course Materials:</strong> You'll receive access to online materials and resources</li>
                 <li><strong>Scheduling:</strong> We'll work with you to create a flexible schedule that fits your needs</li>
                 <li><strong>Preparation:</strong> Make sure to have your G1 license ready for in-car lessons</li>
-            </ul>
-            
+                    </ul>
+                </div>
+                
             <div class='highlight'>
                 <h3>📞 Contact Information</h3>
                 <p><strong>Phone:</strong> (226) 246-2224<br>
                 <strong>Email:</strong> rajputwindsor@gmail.com<br>
                 <strong>Address:</strong> Windsor, ON</p>
+                </div>
+                
+            <p>If you have any questions or need to make changes to your registration, please don't hesitate to contact us.</p>
+                
+            <p>Welcome to the Rajput Driving School family!</p>
+                
+            <p>Best regards,<br>
+                <strong>The Rajput Driving School Team</strong><br>
+            <em>Windsor's Award-Winning Driving School</em></p>
             </div>
             
-            <p>If you have any questions or need to make changes to your registration, please don't hesitate to contact us.</p>
-            
-            <p>Welcome to the Rajput Driving School family!</p>
-            
-            <p>Best regards,<br>
-            <strong>The Rajput Driving School Team</strong><br>
-            <em>Windsor's Award-Winning Driving School</em></p>
-        </div>
-        
-        <div class='footer'>
+            <div class='footer'>
             <p>Rajput Driving School Windsor | Windsor, ON | (226) 246-2224</p>
             <p>Award of Excellence - Distinguished Teaching Driving Schools</p>
             <p>This is an automated confirmation email. Please do not reply to this email.</p>

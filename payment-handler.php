@@ -32,20 +32,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $description .= " ({$input['lessons']} lessons)";
         }
         
-        // Create a PaymentIntent
+        // Create a PaymentIntent with optimized settings for lower fees
         $paymentIntent = \Stripe\PaymentIntent::create([
             'amount' => $amountInCents,
             'currency' => 'cad',
             'description' => $description,
+            'payment_method_types' => ['card'],
+            'capture_method' => 'automatic', // Immediate capture for lower fees
+            'confirmation_method' => 'automatic',
             'metadata' => [
                 'course' => $input['course'],
                 'student_name' => $input['studentInfo']['firstName'] . ' ' . $input['studentInfo']['lastName'],
                 'student_email' => $input['studentInfo']['email'],
                 'student_phone' => $input['studentInfo']['phone'],
                 'lessons' => $input['lessons'] ?? 1,
-                'driving_school' => 'Rajput Driving School Windsor'
+                'driving_school' => 'Rajput Driving School Windsor',
+                'registration_source' => 'website_direct'
             ],
             'receipt_email' => $input['studentInfo']['email'],
+            'statement_descriptor' => 'RAJPUT DRIVING', // Clear descriptor on customer's statement
         ]);
         
         // Log the registration attempt
