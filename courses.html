@@ -176,7 +176,7 @@
                 </div>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>
             </div>
-            <a href="appointment.html" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Get Started<i
+            <a href="registration.html" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Register Now<i
                     class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
@@ -248,8 +248,7 @@
                                 alt="Man driving our car during his car instruction lesson for drive test Windsor"
                                 loading="lazy">
                             <div class="driving-courses-overlay">
-                                <a href="#" onclick="scrollToAppointment(event)"
-                                    class="btn btn-outline-primary border-2">Book Now</a>
+                                <a href="registration.html" class="btn btn-outline-primary border-2">Register Now</a>
                             </div>
                         </div>
                     </div>
@@ -274,8 +273,7 @@
                             <img class="img-fluid" src="img/driving-lessons-windsor-1.jpg"
                                 alt="Girl driving our car for her G2 road test" loading="lazy">
                             <div class="driving-courses-overlay">
-                                <a href="#" onclick="scrollToAppointment(event)"
-                                    class="btn btn-outline-primary border-2">Book Now</a>
+                                <a href="registration.html" class="btn btn-outline-primary border-2">Register Now</a>
                             </div>
                         </div>
                     </div>
@@ -301,62 +299,19 @@
                             <img class="img-fluid" src="img/driving-lessons-windsor-3.jpg"
                                 alt="Preparation for driving test" loading="lazy">
                             <div class="driving-courses-overlay">
-                                <a href="#" onclick="scrollToAppointment(event)"
-                                    class="btn btn-outline-primary border-2">Book Now</a>
+                                <a href="registration.html" class="btn btn-outline-primary border-2">Register Now</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div id="appointmentSection" class="col-lg-8 my-6 mb-0 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="bg-primary text-center p-5">
-                        <h1 class="mb-4">Book An Appointment</h1>
-                        <!-- Begin Contact Form -->
-                        <form id="contactForm" action="https://formspree.io/f/mbjnlojk" method="POST">
-                            <div class="row g-3">
-                                <div class="col-sm-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control border-0" id="name" name="name"
-                                            placeholder="Your Name" required="required">
-                                        <label for="name">Your Name</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-floating">
-                                        <input type="email" class="form-control border-0" id="email" name="email"
-                                            placeholder="Your Email" required="required">
-                                        <label for="email">Your Email</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control border-0" id="mobile" name="mobile"
-                                            placeholder="Mobile" pattern="^(?![-. ])[\d().+\- ]{6,14}\d$" required>
-                                        <label for="mobile">Mobile</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control border-0" id="license" name="license"
-                                            placeholder="Driver's License Number" pattern="^[A-Za-z]\d{4}-\d{5}-\d{5}$"
-                                            title="Enter a valid Ontario driver's license number (e.g, A1234-12345-12345)"
-                                            required>
-                                        <label for="license">Driver's License Number</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <textarea class="form-control border-0" id="message" name="message"
-                                            placeholder="Leave a message here" style="height: 100px"
-                                            required></textarea>
-                                        <label for="message">Message</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-dark w-100 py-3" type="submit">Submit</button>
-                                </div>
-                            </div>
-                        </form>
-                        <!-- End Contact Form -->
+                <div class="col-lg-8 my-6 mb-0 wow fadeInUp text-center" data-wow-delay="0.1s">
+                    <div class="bg-primary text-center p-5 rounded">
+                        <h1 class="mb-4 text-white">Ready to Start Your Driving Journey?</h1>
+                        <p class="text-white mb-4">Register for our courses with secure online payment and get started
+                            today!</p>
+                        <a href="registration.html" class="btn btn-dark btn-lg px-5 py-3">
+                            <i class="fa fa-credit-card me-2"></i>Register & Pay Online
+                        </a>
                     </div>
                 </div>
             </div>
@@ -469,13 +424,7 @@
     <script>
         (function () { if (!window.chatbase || window.chatbase("getState") !== "initialized") { window.chatbase = (...arguments) => { if (!window.chatbase.q) { window.chatbase.q = [] } window.chatbase.q.push(arguments) }; window.chatbase = new Proxy(window.chatbase, { get(target, prop) { if (prop === "q") { return target.q } return (...args) => target(prop, ...args) } }) } const onLoad = function () { const script = document.createElement("script"); script.src = "https://www.chatbase.co/embed.min.js"; script.id = "DleEiu3_Y0lZhuSMBuO7f"; script.domain = "www.chatbase.co"; document.body.appendChild(script) }; if (document.readyState === "complete") { onLoad() } else { window.addEventListener("load", onLoad) } })();
     </script>
-    <script>
-        function scrollToAppointment(event) {
-            event.preventDefault();
-            const appointmentSection = document.getElementById('appointmentSection');
-            appointmentSection.scrollIntoView({ behavior: 'smooth' });
-        }
-    </script>
+
 </body>
 
 </html>
