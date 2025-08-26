@@ -81,16 +81,16 @@
 
         .course-card {
             background: rgba(255, 255, 255, 0.08);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 18px;
             padding: 2rem;
             margin-bottom: 1rem;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
             backdrop-filter: blur(20px);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
         }
 
         .course-card::before {
@@ -109,17 +109,17 @@
         }
 
         .course-card:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+            border-color: rgba(255, 255, 255, 0.25);
         }
 
         .course-card.selected {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.18);
             border-color: #fff;
-            transform: translateY(-5px) scale(1.03);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2), 0 0 30px rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15), 0 0 20px rgba(255, 255, 255, 0.2);
         }
 
         .course-card.selected::after {
@@ -151,11 +151,11 @@
         }
 
         .course-price {
-            font-size: 2.5rem;
-            font-weight: 800;
+            font-size: 2.2rem;
+            font-weight: 700;
             color: #fff;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            margin: 1rem 0;
+            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+            margin: 0.8rem 0;
             position: relative;
             display: inline-block;
         }
@@ -259,12 +259,18 @@
             margin-bottom: 1.5rem;
         }
 
+        #lessonQuantity .form-floating-custom {
+            margin-bottom: 1rem;
+        }
+
         .form-floating-custom .form-control {
             height: 58px;
             border: 2px solid #e9ecef;
             border-radius: 10px;
             font-size: 16px;
             transition: all 0.3s ease;
+            background: white;
+            color: #495057;
         }
 
         .form-floating-custom .form-control:focus {
@@ -389,11 +395,18 @@
             opacity: 0.5;
             transform: none !important;
             cursor: not-allowed;
+            background: rgba(255, 255, 255, 0.3) !important;
+            color: rgba(255, 255, 255, 0.5) !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+            box-shadow: none !important;
         }
 
         .modern-btn:disabled:hover {
             transform: none !important;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+            box-shadow: none !important;
+            background: rgba(255, 255, 255, 0.3) !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+            color: rgba(255, 255, 255, 0.5) !important;
         }
 
         .modern-btn-primary {
@@ -733,7 +746,7 @@
                 <!-- Step 1: Course Selection -->
                 <div id="courseSelection" class="step-content">
                     <div class="course-selection">
-                        <h2 class="text-center mb-4">Choose Your Course</h2>
+                        <h2 class="text-center mb-4 text-white">Choose Your Course</h2>
                         <div class="row">
                             <div class="col-md-4 mb-3">
                                 <div class="course-card" data-course="bde" data-price="450" data-original="799">
@@ -789,20 +802,21 @@
                         </div>
 
                         <!-- Additional Options for Individual Lessons -->
-                        <div id="lessonQuantity" style="display: none;" class="mt-4">
+                        <div id="lessonQuantity" style="display: none;" class="mt-3">
                             <div class="row justify-content-center">
                                 <div class="col-md-6">
                                     <div class="form-floating-custom">
-                                        <input type="number" class="form-control" id="numberOfLessons" min="1" max="20"
-                                            value="1">
-                                        <label for="numberOfLessons">Number of Lessons</label>
+                                        <input type="number" class="form-control bg-white text-dark"
+                                            id="numberOfLessons" min="1" max="20" value="1"
+                                            style="background: white !important; color: #495057 !important;">
+                                        <label for="numberOfLessons" class="text-white">Number of Lessons</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="text-center mt-4">
-                            <button class="btn btn-light btn-lg px-5 modern-btn" id="nextToDetails" disabled>
+                        <div class="text-center mt-5">
+                            <button class="btn btn-light btn-lg px-5 py-3 modern-btn" id="nextToDetails" disabled>
                                 Continue to Details <i class="fas fa-arrow-right ms-2"></i>
                             </button>
                         </div>
