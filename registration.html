@@ -58,18 +58,51 @@
     <!-- Custom Registration Styles -->
     <style>
         .registration-container {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
             min-height: 100vh;
             padding: 2rem 0;
+            position: relative;
+        }
+
+        .registration-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(206, 37, 42, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         .registration-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.1);
             overflow: hidden;
             max-width: 1000px;
             margin: 0 auto;
+            position: relative;
         }
 
         .course-selection {
@@ -79,39 +112,123 @@
         }
 
         .course-card {
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid transparent;
-            border-radius: 15px;
-            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
             margin-bottom: 1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .course-card:hover::before {
+            left: 100%;
         }
 
         .course-card:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .course-card.selected {
+            background: rgba(255, 255, 255, 0.2);
             border-color: #fff;
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2), 0 0 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .course-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            background: #fff;
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            animation: checkmark 0.3s ease-in-out;
+        }
+
+        @keyframes checkmark {
+            0% {
+                transform: scale(0) rotate(180deg);
+            }
+
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
         }
 
         .course-price {
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 2.5rem;
+            font-weight: 800;
             color: #fff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            margin: 1rem 0;
+            position: relative;
+            display: inline-block;
         }
 
         .original-price {
             text-decoration: line-through;
-            opacity: 0.7;
-            font-size: 1.2rem;
+            opacity: 0.6;
+            font-size: 1.1rem;
             margin-right: 0.5rem;
+            position: relative;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .course-card h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .course-card p {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .course-card ul li {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .course-card ul li i {
+            color: #fff;
+            margin-right: 0.75rem;
+            width: 16px;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
         }
 
         .form-section {
@@ -121,45 +238,79 @@
         .step-indicator {
             display: flex;
             justify-content: center;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 2;
         }
 
         .step {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            background: #e9ecef;
+            background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 0.5rem;
-            font-weight: 600;
+            margin: 0 1rem;
+            font-weight: 700;
             position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 3px solid transparent;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            color: #6c757d;
         }
 
         .step.active {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, #a01e22 100%);
             color: white;
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(206, 37, 42, 0.4);
+            border-color: rgba(255, 255, 255, 0.3);
+            animation: pulse 2s infinite;
         }
 
         .step.completed {
-            background: #28a745;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
             color: white;
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
+        }
+
+        .step.completed::before {
+            content: '✓';
+            position: absolute;
+            font-size: 16px;
+            font-weight: bold;
         }
 
         .step:not(:last-child)::after {
             content: '';
             position: absolute;
-            right: -20px;
+            right: -35px;
             top: 50%;
             transform: translateY(-50%);
-            width: 20px;
-            height: 2px;
-            background: #e9ecef;
+            width: 30px;
+            height: 3px;
+            background: linear-gradient(90deg, #e9ecef 0%, #f8f9fa 100%);
+            border-radius: 3px;
+            transition: all 0.4s ease;
         }
 
         .step.completed:not(:last-child)::after {
-            background: #28a745;
+            background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
+            box-shadow: 0 2px 10px rgba(40, 167, 69, 0.3);
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 8px 25px rgba(206, 37, 42, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 8px 25px rgba(206, 37, 42, 0.6), 0 0 0 10px rgba(206, 37, 42, 0.1);
+            }
         }
 
         .form-floating-custom {
@@ -215,17 +366,179 @@
         .btn-register {
             background: linear-gradient(135deg, var(--primary) 0%, #a01e22 100%);
             border: none;
-            padding: 1rem 2rem;
+            padding: 1.2rem 2.5rem;
             font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: 700;
             border-radius: 50px;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(206, 37, 42, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(206, 37, 42, 0.3);
+            position: relative;
+            overflow: hidden;
+            color: white;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .btn-register::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-register:hover::before {
+            left: 100%;
         }
 
         .btn-register:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(206, 37, 42, 0.4);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(206, 37, 42, 0.4);
+            background: linear-gradient(135deg, #d63031 0%, #c0392b 100%);
+        }
+
+        .btn-register:active {
+            transform: translateY(-1px) scale(0.98);
+            box-shadow: 0 5px 15px rgba(206, 37, 42, 0.3);
+        }
+
+        .modern-btn {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border: 2px solid rgba(255, 255, 255, 0.3) !important;
+            backdrop-filter: blur(10px);
+            border-radius: 50px !important;
+            padding: 1rem 2rem !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.3px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            position: relative;
+            overflow: hidden;
+            color: var(--primary) !important;
+            text-shadow: none;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .modern-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(206, 37, 42, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .modern-btn:hover::before {
+            left: 100%;
+        }
+
+        .modern-btn:hover {
+            transform: translateY(-3px) scale(1.02) !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15) !important;
+            border-color: rgba(255, 255, 255, 0.5) !important;
+            background: rgba(255, 255, 255, 1) !important;
+        }
+
+        .modern-btn:disabled {
+            opacity: 0.5;
+            transform: none !important;
+            cursor: not-allowed;
+        }
+
+        .modern-btn:disabled:hover {
+            transform: none !important;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .modern-btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, #a01e22 100%) !important;
+            border: none !important;
+            border-radius: 50px !important;
+            padding: 1rem 2rem !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.3px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            position: relative;
+            overflow: hidden;
+            color: white !important;
+            box-shadow: 0 8px 25px rgba(206, 37, 42, 0.3) !important;
+        }
+
+        .modern-btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .modern-btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .modern-btn-primary:hover {
+            transform: translateY(-3px) scale(1.02) !important;
+            box-shadow: 0 15px 35px rgba(206, 37, 42, 0.4) !important;
+            background: linear-gradient(135deg, #d63031 0%, #c0392b 100%) !important;
+        }
+
+        .modern-btn-secondary {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border: 2px solid rgba(255, 255, 255, 0.3) !important;
+            backdrop-filter: blur(10px);
+            border-radius: 50px !important;
+            padding: 0.8rem 1.5rem !important;
+            font-weight: 500 !important;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            color: rgba(108, 117, 125, 0.8) !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+        }
+
+        .modern-btn-secondary:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
+            border-color: rgba(255, 255, 255, 0.5) !important;
+            background: rgba(255, 255, 255, 0.2) !important;
+            color: #6c757d !important;
+        }
+
+        .modern-btn-link {
+            color: #6c757d !important;
+            text-decoration: none !important;
+            font-weight: 500 !important;
+            transition: all 0.3s ease !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 25px !important;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modern-btn-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(108, 117, 125, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .modern-btn-link:hover::before {
+            left: 100%;
+        }
+
+        .modern-btn-link:hover {
+            color: var(--primary) !important;
+            transform: translateY(-1px) !important;
+            text-decoration: none !important;
         }
 
         .security-badge {
@@ -305,13 +618,64 @@
             }
 
             .step-indicator {
-                margin-bottom: 1rem;
+                margin-bottom: 2rem;
             }
 
             .step {
-                width: 35px;
-                height: 35px;
+                width: 45px;
+                height: 45px;
                 font-size: 0.9rem;
+                margin: 0 0.5rem;
+            }
+
+            .step:not(:last-child)::after {
+                right: -25px;
+                width: 20px;
+            }
+
+            .course-card {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .course-price {
+                font-size: 2rem;
+            }
+
+            .course-card h4 {
+                font-size: 1.2rem;
+            }
+
+            .modern-btn,
+            .btn-register {
+                padding: 1rem 1.5rem !important;
+                font-size: 1rem !important;
+            }
+
+            .registration-card {
+                margin: 1rem;
+                border-radius: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .course-card {
+                padding: 1.2rem;
+            }
+
+            .course-price {
+                font-size: 1.8rem;
+            }
+
+            .step {
+                width: 40px;
+                height: 40px;
+                margin: 0 0.3rem;
+            }
+
+            .step:not(:last-child)::after {
+                right: -20px;
+                width: 15px;
             }
         }
     </style>
@@ -435,12 +799,11 @@
                                         <div class="course-price">
                                             <span class="original-price">$799</span>$450
                                         </div>
-                                        <p class="mt-3">Complete Beginner Driver Education with 10 in-car lessons and 30
-                                            hours of classes</p>
+                                        <p class="mt-3">Complete Beginner Driver Education</p>
                                         <ul class="list-unstyled mt-3">
                                             <li><i class="fas fa-check me-2"></i>10 In-car lessons</li>
                                             <li><i class="fas fa-check me-2"></i>30 hours online/classroom</li>
-                                            <li><i class="fas fa-check me-2"></i>Insurance discount up to $1000</li>
+                                            <li><i class="fas fa-check me-2"></i>Insurance discount by $1000</li>
                                             <li><i class="fas fa-check me-2"></i>MTO Certificate</li>
                                         </ul>
                                     </div>
@@ -496,7 +859,7 @@
                         </div>
 
                         <div class="text-center mt-4">
-                            <button class="btn btn-light btn-lg px-5" id="nextToDetails" disabled>
+                            <button class="btn btn-light btn-lg px-5 modern-btn" id="nextToDetails" disabled>
                                 Continue to Details <i class="fas fa-arrow-right ms-2"></i>
                             </button>
                         </div>
@@ -618,10 +981,12 @@
                             </div>
 
                             <div class="text-center mt-4">
-                                <button type="button" class="btn btn-secondary me-3" id="backToCourses">
+                                <button type="button" class="btn btn-outline-secondary me-3 modern-btn-secondary"
+                                    id="backToCourses">
                                     <i class="fas fa-arrow-left me-2"></i>Back
                                 </button>
-                                <button type="button" class="btn btn-primary btn-lg px-5" id="nextToPayment">
+                                <button type="button" class="btn btn-primary btn-lg px-5 modern-btn-primary"
+                                    id="nextToPayment">
                                     Continue to Payment <i class="fas fa-arrow-right ms-2"></i>
                                 </button>
                             </div>
@@ -675,7 +1040,7 @@
                                     </button>
 
                                     <div class="text-center mt-3">
-                                        <button type="button" class="btn btn-link" id="backToInfo">
+                                        <button type="button" class="btn btn-link modern-btn-link" id="backToInfo">
                                             <i class="fas fa-arrow-left me-2"></i>Back to Information
                                         </button>
                                     </div>
