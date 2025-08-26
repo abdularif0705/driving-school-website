@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="canonical" href="https://rajputdrivingschool.com/registration" />
+    <script async>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-KRD8TNJ8');</script>
+
+    <!-- Stripe.js -->
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <!-- JavaScript Libraries -->
+    <script defer src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer src="lib/wow/wow.min.js"></script>
+    <script defer src="lib/easing/easing.min.js"></script>
+    <script defer src="lib/waypoints/waypoints.min.js"></script>
+    <script defer src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script defer src="js/main.js"></script>
+
+    <meta charset="utf-8">
+    <title>Course Registration | Rajput Driving School Windsor</title>
+    <meta
+        content="Register for driving courses with Windsor's best driving school. Secure online payment and instant confirmation."
+        name="description">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Custom Registration Styles -->
+    <style>
+        .registration-container {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        .registration-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .course-selection {
+            background: linear-gradient(135deg, var(--primary) 0%, #a01e22 100%);
+            color: white;
+            padding: 2rem;
+        }
+
+        .course-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .course-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .course-card.selected {
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .course-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            opacity: 0.7;
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+
+        .form-section {
+            padding: 2rem;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 0.5rem;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .step.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .step.completed {
+            background: #28a745;
+            color: white;
+        }
+
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 2px;
+            background: #e9ecef;
+        }
+
+        .step.completed:not(:last-child)::after {
+            background: #28a745;
+        }
+
+        .form-floating-custom {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-floating-custom .form-control {
+            height: 58px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-floating-custom .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(206, 37, 42, 0.25);
+        }
+
+        .form-floating-custom label {
+            padding: 1rem 0.75rem;
+            color: #6c757d;
+        }
+
+        .payment-section {
+            background: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .payment-summary {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .btn-register {
+            background: linear-gradient(135deg, var(--primary) 0%, #a01e22 100%);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(206, 37, 42, 0.3);
+        }
+
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(206, 37, 42, 0.4);
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .security-badge i {
+            margin-right: 0.5rem;
+            color: #28a745;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            color: #28a745;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .registration-container {
+                padding: 1rem;
+            }
+
+            .course-selection,
+            .form-section {
+                padding: 1.5rem;
+            }
+
+            .step-indicator {
+                margin-bottom: 1rem;
+            }
+
+            .step {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KRD8TNJ8" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Spinner Start -->
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" role="status"></div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-dark text-light p-0">
+        <div class="row gx-0 d-none d-lg-flex">
+            <div class="col-lg-7 px-5 text-start">
+                <div class="h-100 d-inline-flex align-items-center me-4">
+                    <small class="fa fa-map-marker-alt text-primary me-2"></small>
+                    <small>Windsor, ON</small>
+                </div>
+                <div class="h-100 d-inline-flex align-items-center">
+                    <small class="far fa-clock text-primary me-2"></small>
+                    <small>Mon - Fri : 07.00 AM - 07.00 PM</small>
+                </div>
+            </div>
+            <div class="col-lg-5 px-5 text-end">
+                <div class="h-100 d-inline-flex align-items-center me-4">
+                    <small class="fa fa-envelope text-primary me-2"></small>
+                    <small><a href="mailto:rajputwindsor@gmail.com"
+                            style="color: white">rajputwindsor@gmail.com</a></small>
+                </div>
+                <div class="h-100 d-inline-flex align-items-center me-4">
+                    <small class="fa fa-phone-alt text-primary me-2"></small>
+                    <small><a href="tel:+12262462224" style="color: white;">(226) 246-2224</a></small>
+                </div>
+                <div class="h-100 d-inline-flex align-items-center mx-n2">
+                    <a class="btn btn-square btn-link rounded-0 border-0 border-end border-secondary"
+                        href="https://www.google.com/search?q=Rajput+Driving+School+Windsor"><i
+                            class="fab fa-google"></i></a>
+                    <a class="btn btn-square btn-link rounded-0 border-0 border-end border-secondary"
+                        href="https://www.facebook.com/rajputdrivingschoolwindsor"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-square btn-link rounded-0 border-0 border-end border-secondary"
+                        href="https://www.linkedin.com/company/102760425"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-square btn-link rounded-0"
+                        href="https://www.instagram.com/rajputdrivingschoolwindsor/"><i
+                            class="fab fa-instagram"></i></a>
+                    <a class="btn btn-square btn-link rounded-0"
+                        href="https://www.youtube.com/channel/UCbSylhVsjCDpxiqAL2CILsQ"><i
+                            class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
+        <a href="/" class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5">
+            <h2 class="m-0 d-none d-lg-block"><i class="fa fa-car text-primary me-2"></i>Rajput Driving School Windsor
+            </h2>
+            <h5 class="m-0 d-lg-none"><i class="fa fa-car text-primary me-2"></i>Rajput Driving School Windsor</h5>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="index.html" class="nav-item nav-link">Home</a>
+                <a href="about.html" class="nav-item nav-link">About</a>
+                <a href="courses.html" class="nav-item nav-link">Courses</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <div class="dropdown-menu bg-light m-0">
+                        <a href="driving-test-routes-windsor.html" class="dropdown-item">Driving Test Routes</a>
+                        <a href="appointment.html" class="dropdown-item">Appointment</a>
+                        <a href="team.html" class="dropdown-item">Our Team</a>
+                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                        <a href="faq.html" class="dropdown-item">FAQ</a>
+                        <a href="blog.html" class="dropdown-item">Blog</a>
+                    </div>
+                </div>
+                <a href="contact.html" class="nav-item nav-link">Contact</a>
+            </div>
+            <a href="registration.html" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block active">Register Now<i
+                    class="fa fa-arrow-right ms-3"></i></a>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Registration Container Start -->
+    <div class="registration-container">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h1 class="display-4 text-dark mb-3">Course Registration</h1>
+                <p class="lead text-muted">Join Windsor's best driving school and start your journey to safe driving</p>
+            </div>
+
+            <div class="registration-card">
+                <!-- Step Indicator -->
+                <div class="step-indicator mt-4">
+                    <div class="step active" id="step1">1</div>
+                    <div class="step" id="step2">2</div>
+                    <div class="step" id="step3">3</div>
+                </div>
+
+                <!-- Step 1: Course Selection -->
+                <div id="courseSelection" class="step-content">
+                    <div class="course-selection">
+                        <h2 class="text-center mb-4">Choose Your Course</h2>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="course-card" data-course="bde" data-price="450" data-original="799">
+                                    <div class="text-center">
+                                        <h4>MTO Approved BDE Course</h4>
+                                        <div class="course-price">
+                                            <span class="original-price">$799</span>$450
+                                        </div>
+                                        <p class="mt-3">Complete Beginner Driver Education with 10 in-car lessons and 30
+                                            hours of classes</p>
+                                        <ul class="list-unstyled mt-3">
+                                            <li><i class="fas fa-check me-2"></i>10 In-car lessons</li>
+                                            <li><i class="fas fa-check me-2"></i>30 hours online/classroom</li>
+                                            <li><i class="fas fa-check me-2"></i>Insurance discount up to $1000</li>
+                                            <li><i class="fas fa-check me-2"></i>MTO Certificate</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="course-card" data-course="individual" data-price="40" data-original="60">
+                                    <div class="text-center">
+                                        <h4>Individual Driving Lesson</h4>
+                                        <div class="course-price">
+                                            <span class="original-price">$60</span>$40<small>/hr</small>
+                                        </div>
+                                        <p class="mt-3">One-on-one driving lessons with test route practice</p>
+                                        <ul class="list-unstyled mt-3">
+                                            <li><i class="fas fa-check me-2"></i>G2 & G test preparation</li>
+                                            <li><i class="fas fa-check me-2"></i>Defensive driving techniques</li>
+                                            <li><i class="fas fa-check me-2"></i>Flexible scheduling</li>
+                                            <li><i class="fas fa-check me-2"></i>Dual-brake car</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="course-card" data-course="carRental" data-price="80" data-original="120">
+                                    <div class="text-center">
+                                        <h4>Rent Car for Road Test</h4>
+                                        <div class="course-price">
+                                            <span class="original-price">$120</span>$80
+                                        </div>
+                                        <p class="mt-3">Use our dual-brake car for your road test</p>
+                                        <ul class="list-unstyled mt-3">
+                                            <li><i class="fas fa-check me-2"></i>Dual-brake safety system</li>
+                                            <li><i class="fas fa-check me-2"></i>Examiner confidence</li>
+                                            <li><i class="fas fa-check me-2"></i>Pre-test inspection</li>
+                                            <li><i class="fas fa-check me-2"></i>Pick up & drop off</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Options for Individual Lessons -->
+                        <div id="lessonQuantity" style="display: none;" class="mt-4">
+                            <div class="row justify-content-center">
+                                <div class="col-md-6">
+                                    <div class="form-floating-custom">
+                                        <input type="number" class="form-control" id="numberOfLessons" min="1" max="20"
+                                            value="1">
+                                        <label for="numberOfLessons">Number of Lessons</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button class="btn btn-light btn-lg px-5" id="nextToDetails" disabled>
+                                Continue to Details <i class="fas fa-arrow-right ms-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Student Information -->
+                <div id="studentInfo" class="step-content" style="display: none;">
+                    <div class="form-section">
+                        <h2 class="text-center mb-4">Student Information</h2>
+                        <form id="registrationForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating-custom">
+                                        <input type="text" class="form-control" id="firstName" name="firstName"
+                                            required>
+                                        <label for="firstName">First Name *</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating-custom">
+                                        <input type="text" class="form-control" id="lastName" name="lastName" required>
+                                        <label for="lastName">Last Name *</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating-custom">
+                                        <input type="email" class="form-control" id="email" name="email" required>
+                                        <label for="email">Email Address *</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating-custom">
+                                        <input type="tel" class="form-control" id="phone" name="phone" required
+                                            pattern="^(?![-. ])[\d().+\- ]{6,14}\d$">
+                                        <label for="phone">Phone Number *</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating-custom">
+                                        <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth"
+                                            required>
+                                        <label for="dateOfBirth">Date of Birth *</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating-custom">
+                                        <input type="text" class="form-control" id="licenseNumber" name="licenseNumber"
+                                            pattern="^[A-Za-z]\d{4}-\d{5}-\d{5}$" placeholder="A1234-12345-12345">
+                                        <label for="licenseNumber">Driver's License Number (if applicable)</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-floating-custom">
+                                <input type="text" class="form-control" id="address" name="address" required>
+                                <label for="address">Street Address *</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-floating-custom">
+                                        <input type="text" class="form-control" id="city" name="city" required
+                                            value="Windsor">
+                                        <label for="city">City *</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating-custom">
+                                        <select class="form-control" id="province" name="province" required>
+                                            <option value="">Select Province</option>
+                                            <option value="ON" selected>Ontario</option>
+                                            <option value="AB">Alberta</option>
+                                            <option value="BC">British Columbia</option>
+                                            <option value="MB">Manitoba</option>
+                                            <option value="NB">New Brunswick</option>
+                                            <option value="NL">Newfoundland and Labrador</option>
+                                            <option value="NS">Nova Scotia</option>
+                                            <option value="PE">Prince Edward Island</option>
+                                            <option value="QC">Quebec</option>
+                                            <option value="SK">Saskatchewan</option>
+                                        </select>
+                                        <label for="province">Province *</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating-custom">
+                                        <input type="text" class="form-control" id="postalCode" name="postalCode"
+                                            required pattern="^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$" placeholder="N9B 3X3">
+                                        <label for="postalCode">Postal Code *</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-floating-custom">
+                                <textarea class="form-control" id="notes" name="notes"
+                                    style="height: 100px;"></textarea>
+                                <label for="notes">Additional Notes or Special Requests</label>
+                            </div>
+
+                            <!-- Emergency Contact -->
+                            <h4 class="mt-4 mb-3">Emergency Contact</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating-custom">
+                                        <input type="text" class="form-control" id="emergencyName" name="emergencyName"
+                                            required>
+                                        <label for="emergencyName">Emergency Contact Name *</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating-custom">
+                                        <input type="tel" class="form-control" id="emergencyPhone" name="emergencyPhone"
+                                            required>
+                                        <label for="emergencyPhone">Emergency Contact Phone *</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="button" class="btn btn-secondary me-3" id="backToCourses">
+                                    <i class="fas fa-arrow-left me-2"></i>Back
+                                </button>
+                                <button type="button" class="btn btn-primary btn-lg px-5" id="nextToPayment">
+                                    Continue to Payment <i class="fas fa-arrow-right ms-2"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Step 3: Payment -->
+                <div id="paymentSection" class="step-content" style="display: none;">
+                    <div class="payment-section">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <div class="form-section">
+                                    <h2 class="mb-4">Payment Information</h2>
+
+                                    <!-- Stripe Elements will be inserted here -->
+                                    <div id="card-element" class="form-control"
+                                        style="height: 58px; padding: 20px; border: 2px solid #e9ecef; border-radius: 10px;">
+                                        <!-- A Stripe Element will be inserted here. -->
+                                    </div>
+
+                                    <!-- Used to display form errors. -->
+                                    <div id="card-errors" role="alert" class="text-danger mt-2"></div>
+
+                                    <div class="security-badge">
+                                        <i class="fas fa-lock"></i>
+                                        Your payment information is secure and encrypted
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="form-section">
+                                    <h3 class="mb-4">Order Summary</h3>
+                                    <div class="payment-summary">
+                                        <div id="orderSummary">
+                                            <!-- Order details will be populated here -->
+                                        </div>
+                                    </div>
+
+                                    <div class="form-check mt-3">
+                                        <input class="form-check-input" type="checkbox" id="termsAccepted" required>
+                                        <label class="form-check-label" for="termsAccepted">
+                                            I agree to the <a href="terms-and-conditions.html" target="_blank">Terms and
+                                                Conditions</a>
+                                        </label>
+                                    </div>
+
+                                    <button class="btn btn-register w-100 mt-4" id="submitPayment" disabled>
+                                        <i class="fas fa-credit-card me-2"></i>
+                                        Complete Registration
+                                    </button>
+
+                                    <div class="text-center mt-3">
+                                        <button type="button" class="btn btn-link" id="backToInfo">
+                                            <i class="fas fa-arrow-left me-2"></i>Back to Information
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Success Message -->
+                <div id="successMessage" class="success-message">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h2 class="text-success mb-3">Registration Successful!</h2>
+                    <p class="lead">Thank you for registering with Rajput Driving School Windsor!</p>
+                    <p>You will receive a confirmation email shortly with your course details and next steps.</p>
+                    <div class="mt-4">
+                        <a href="index.html" class="btn btn-primary me-3">Return to Home</a>
+                        <a href="contact.html" class="btn btn-outline-primary">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Registration Container End -->
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <h4>Processing your payment...</h4>
+            <p>Please do not close this window</p>
+        </div>
+    </div>
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light footer py-6 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h2 class="text-white mb-4">Get in Touch</h2>
+                    <h5 class="text-primary mb-4"><i class="fa fa-car text-white me-2"></i>Rajput Driving School Windsor
+                    </h5>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Windsor, ON</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i><a href="tel:+12262462224"
+                            style="color: white;">(226) 246-2224</a></p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i><a href="mailto:rajputwindsor@gmail.com"
+                            style="color: white">rajputwindsor@gmail.com</a></p>
+
+                    <div class="mt-4">
+                        <a href="https://distinguishedteaching.ca/company/rajput-driving-school-windsor-2262462224-windsor/"
+                            style="display:inline-block; border:0;">
+                            <img src="img/Distinguished Teaching Driving Schools in Windsor Award/Award for Top Drivers Education Provider in Windsor Inverse White.png"
+                                style="width:150px; display:block;" width="150" height="150"
+                                alt="Driver Education Companies" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-light mb-4">Quick Links</h4>
+                    <a class="btn btn-link" href="about.html">About Us</a>
+                    <a class="btn btn-link" href="appointment.html">Book Now</a>
+                    <a class="btn btn-link" href="contact.html">Contact Us</a>
+                    <a class="btn btn-link" href="courses.html">Our Services</a>
+                    <a class="btn btn-link" href="terms-and-conditions.html">Terms & Conditions</a>
+                    <a class="btn btn-link" href="contact.html">Support</a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-light mb-4">Helpful Links</h4>
+                    <a class="btn btn-link" href="https://drivetest.ca/" target="_blank">Book your Road Test</a>
+                    <a class="btn btn-link" href="blog.html" target="_blank">Blog</a>
+                    <a class="btn btn-link" href="https://www.ontario.ca/document/official-mto-drivers-handbook"
+                        target="_blank">Driver's Handbook</a>
+                    <a class="btn btn-link" href="https://www.ontario.ca/page/ministry-transportation"
+                        target="_blank">Ministry of Transportation (MTO)</a>
+                    <a class="btn btn-link" href="https://www.ontario.ca/page/get-g-drivers-licence-new-drivers">Getting
+                        your license</a>
+                    <a class="btn btn-link" href="https://www.ontario.ca/page/understanding-demerit-points">Demerit
+                        Points System</a>
+                    <a class="btn btn-link" href="https://www.g1.ca/g1-diagnostic-test/">G1 Knowledge Test Practice
+                        Questions</a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-light mb-4">Newsletter</h4>
+                    <form action="">
+                        <div class="input-group">
+                            <input type="text" class="form-control p-3 border-0" placeholder="Your Email Address">
+                            <button class="btn btn-primary">Sign Up</button>
+                        </div>
+                    </form>
+                    <h6 class="text-white mt-4 mb-3">Follow Us</h6>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-square btn-outline-light me-1"
+                            href="https://www.google.com/search?q=Rajput+Driving+School+Windsor"><i
+                                class="fab fa-google"></i></a>
+                        <a class="btn btn-square btn-outline-light me-1"
+                            href="https://www.facebook.com/rajputdrivingschoolwindsor"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square btn-outline-light me-1"
+                            href="https://www.instagram.com/rajputdrivingschoolwindsor/"><i
+                                class="fab fa-instagram"></i></a>
+                        <a class="btn btn-square btn-outline-light me-1"
+                            href="https://www.youtube.com/channel/UCbSylhVsjCDpxiqAL2CILsQ"><i
+                                class="fab fa-youtube"></i></a>
+                        <a class="btn btn-square btn-outline-light me-0"
+                            href="https://www.linkedin.com/company/102760425"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Copyright Start -->
+    <div class="container-fluid copyright text-light py-4 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    Copyright &copy; <a href="#">Rajput Driving School Windsor</a> 2024, All Right Reserved.
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    Created By <a href="https://github.com/abdularif0705">Abdul Rehman Arif</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Copyright End -->
+
+    <!-- Registration JavaScript -->
+    <script>
+        // Registration form state
+        let selectedCourse = null;
+        let selectedPrice = 0;
+        let numberOfLessons = 1;
+        let stripe = Stripe('pk_test_51234567890abcdef'); // Replace with your Stripe publishable key
+        let elements = stripe.elements();
+        let cardElement;
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            initializeStripe();
+            bindEventListeners();
+        });
+
+        function initializeStripe() {
+            // Create card element
+            cardElement = elements.create('card', {
+                style: {
+                    base: {
+                        fontSize: '16px',
+                        color: '#424770',
+                        '::placeholder': {
+                            color: '#aab7c4',
+                        },
+                        fontFamily: 'Work Sans, sans-serif',
+                    },
+                    invalid: {
+                        color: '#9e2146',
+                    },
+                },
+            });
+
+            cardElement.mount('#card-element');
+
+            // Handle real-time validation errors from the card Element
+            cardElement.on('change', function (event) {
+                const displayError = document.getElementById('card-errors');
+                if (event.error) {
+                    displayError.textContent = event.error.message;
+                } else {
+                    displayError.textContent = '';
+                }
+            });
+        }
+
+        function bindEventListeners() {
+            // Course selection
+            document.querySelectorAll('.course-card').forEach(card => {
+                card.addEventListener('click', function () {
+                    // Remove previous selection
+                    document.querySelectorAll('.course-card').forEach(c => c.classList.remove('selected'));
+
+                    // Add selection to clicked card
+                    this.classList.add('selected');
+
+                    selectedCourse = this.dataset.course;
+                    selectedPrice = parseInt(this.dataset.price);
+
+                    // Show lesson quantity for individual lessons
+                    const lessonQuantity = document.getElementById('lessonQuantity');
+                    if (selectedCourse === 'individual') {
+                        lessonQuantity.style.display = 'block';
+                        updatePrice();
+                    } else {
+                        lessonQuantity.style.display = 'none';
+                    }
+
+                    document.getElementById('nextToDetails').disabled = false;
+                });
+            });
+
+            // Number of lessons change
+            document.getElementById('numberOfLessons').addEventListener('input', updatePrice);
+
+            // Navigation buttons
+            document.getElementById('nextToDetails').addEventListener('click', () => showStep(2));
+            document.getElementById('backToCourses').addEventListener('click', () => showStep(1));
+            document.getElementById('nextToPayment').addEventListener('click', () => {
+                if (validateStudentInfo()) {
+                    updateOrderSummary();
+                    showStep(3);
+                }
+            });
+            document.getElementById('backToInfo').addEventListener('click', () => showStep(2));
+
+            // Terms checkbox
+            document.getElementById('termsAccepted').addEventListener('change', function () {
+                document.getElementById('submitPayment').disabled = !this.checked;
+            });
+
+            // Payment submission
+            document.getElementById('submitPayment').addEventListener('click', handlePayment);
+        }
+
+        function updatePrice() {
+            if (selectedCourse === 'individual') {
+                numberOfLessons = parseInt(document.getElementById('numberOfLessons').value) || 1;
+            }
+        }
+
+        function showStep(stepNumber) {
+            // Hide all steps
+            document.querySelectorAll('.step-content').forEach(step => step.style.display = 'none');
+
+            // Show selected step
+            const stepElements = {
+                1: 'courseSelection',
+                2: 'studentInfo',
+                3: 'paymentSection'
+            };
+
+            document.getElementById(stepElements[stepNumber]).style.display = 'block';
+
+            // Update step indicators
+            document.querySelectorAll('.step').forEach((step, index) => {
+                step.classList.remove('active', 'completed');
+                if (index + 1 < stepNumber) {
+                    step.classList.add('completed');
+                } else if (index + 1 === stepNumber) {
+                    step.classList.add('active');
+                }
+            });
+        }
+
+        function validateStudentInfo() {
+            const form = document.getElementById('registrationForm');
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    field.classList.remove('is-invalid');
+                    field.classList.add('is-valid');
+                }
+            });
+
+            if (!isValid) {
+                alert('Please fill in all required fields');
+            }
+
+            return isValid;
+        }
+
+        function updateOrderSummary() {
+            const courseNames = {
+                'bde': 'MTO Approved BDE Course',
+                'individual': 'Individual Driving Lesson',
+                'carRental': 'Rent Car for Road Test'
+            };
+
+            const courseName = courseNames[selectedCourse];
+            let totalPrice = selectedPrice;
+
+            if (selectedCourse === 'individual') {
+                totalPrice = selectedPrice * numberOfLessons;
+            }
+
+            const taxes = Math.round(totalPrice * 0.13); // 13% HST
+            const finalTotal = totalPrice + taxes;
+
+            let summaryHTML = `
+                <div class="summary-item">
+                    <span>${courseName}</span>
+                    <span>$${selectedPrice}${selectedCourse === 'individual' ? '/hr' : ''}</span>
+                </div>
+            `;
+
+            if (selectedCourse === 'individual') {
+                summaryHTML += `
+                    <div class="summary-item">
+                        <span>Quantity</span>
+                        <span>${numberOfLessons} lesson${numberOfLessons > 1 ? 's' : ''}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Subtotal</span>
+                        <span>$${totalPrice}</span>
+                    </div>
+                `;
+            }
+
+            summaryHTML += `
+                <div class="summary-item">
+                    <span>HST (13%)</span>
+                    <span>$${taxes}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Total</span>
+                    <span>$${finalTotal}</span>
+                </div>
+            `;
+
+            document.getElementById('orderSummary').innerHTML = summaryHTML;
+        }
+
+        async function handlePayment() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+
+            const form = document.getElementById('registrationForm');
+            const formData = new FormData(form);
+
+            // Create payment intent on your server
+            const response = await fetch('payment-handler.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    course: selectedCourse,
+                    price: selectedCourse === 'individual' ? selectedPrice * numberOfLessons : selectedPrice,
+                    lessons: numberOfLessons,
+                    studentInfo: Object.fromEntries(formData)
+                })
+            });
+
+            const { client_secret } = await response.json();
+
+            // Confirm payment with Stripe
+            const result = await stripe.confirmCardPayment(client_secret, {
+                payment_method: {
+                    card: cardElement,
+                    billing_details: {
+                        name: `${formData.get('firstName')} ${formData.get('lastName')}`,
+                        email: formData.get('email'),
+                        phone: formData.get('phone'),
+                        address: {
+                            line1: formData.get('address'),
+                            city: formData.get('city'),
+                            state: formData.get('province'),
+                            postal_code: formData.get('postalCode'),
+                            country: 'CA'
+                        }
+                    }
+                }
+            });
+
+            document.getElementById('loadingOverlay').style.display = 'none';
+
+            if (result.error) {
+                // Show error to customer
+                document.getElementById('card-errors').textContent = result.error.message;
+            } else {
+                // Payment succeeded
+                showSuccessMessage();
+            }
+        }
+
+        function showSuccessMessage() {
+            document.querySelectorAll('.step-content').forEach(step => step.style.display = 'none');
+            document.querySelector('.step-indicator').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+        }
+
+        // Form validation helpers
+        document.getElementById('postalCode').addEventListener('input', function (e) {
+            let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+            if (value.length > 3) {
+                value = value.slice(0, 3) + ' ' + value.slice(3, 6);
+            }
+            e.target.value = value;
+        });
+
+        document.getElementById('phone').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 6) {
+                value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+            }
+            e.target.value = value;
+        });
+    </script>
+
+    <!-- Chatbase Script -->
+    <script>
+        (function () { if (!window.chatbase || window.chatbase("getState") !== "initialized") { window.chatbase = (...arguments) => { if (!window.chatbase.q) { window.chatbase.q = [] } window.chatbase.q.push(arguments) }; window.chatbase = new Proxy(window.chatbase, { get(target, prop) { if (prop === "q") { return target.q } return (...args) => target(prop, ...args) } }) } const onLoad = function () { const script = document.createElement("script"); script.src = "https://www.chatbase.co/embed.min.js"; script.id = "DleEiu3_Y0lZhuSMBuO7f"; script.domain = "www.chatbase.co"; document.body.appendChild(script) }; if (document.readyState === "complete") { onLoad() } else { window.addEventListener("load", onLoad) } })();
+    </script>
+</body>
+
+</html>
