@@ -564,74 +564,208 @@
 
         @media (max-width: 768px) {
             .registration-container {
-                padding: 1rem;
-            }
-
-            .course-selection,
-            .form-section {
-                padding: 1.5rem;
-            }
-
-            .step-indicator {
-                margin-bottom: 2rem;
-            }
-
-            .step {
-                width: 40px;
-                height: 40px;
-                font-size: 0.9rem;
-                margin: 0 0.4rem;
-            }
-
-            .step:not(:last-child)::after {
-                right: -21px;
-                width: 19px;
-            }
-
-            .course-card {
-                padding: 1.5rem;
-                margin-bottom: 1.5rem;
-            }
-
-            .course-price {
-                font-size: 2rem;
-            }
-
-            .course-card h4 {
-                font-size: 1.2rem;
-            }
-
-            .modern-btn,
-            .btn-register {
-                padding: 1rem 1.5rem !important;
-                font-size: 1rem !important;
+                padding: 0.5rem;
+                background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             }
 
             .registration-card {
-                margin: 1rem;
-                border-radius: 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .course-card {
-                padding: 1.2rem;
+                margin: 0.5rem;
+                border-radius: 15px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             }
 
-            .course-price {
-                font-size: 1.8rem;
+            .course-selection {
+                padding: 1.5rem 1rem;
+            }
+
+            .form-section {
+                padding: 1.5rem 1rem;
+            }
+
+            .step-indicator {
+                margin-bottom: 1.5rem;
             }
 
             .step {
                 width: 35px;
                 height: 35px;
+                font-size: 0.85rem;
                 margin: 0 0.3rem;
-                font-size: 0.8rem;
+                border: 2px solid #e9ecef;
             }
 
             .step:not(:last-child)::after {
-                right: -18px;
-                width: 15px;
+                right: -19px;
+                width: 16px;
+            }
+
+            .course-card {
+                padding: 1.2rem;
+                margin-bottom: 1rem;
+                border-radius: 15px;
+            }
+
+            .course-price {
+                font-size: 1.8rem;
+                margin: 0.5rem 0;
+            }
+
+            .course-card h4 {
+                font-size: 1.1rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .course-card p {
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+
+            .course-card ul li {
+                font-size: 0.85rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .modern-btn,
+            .btn-register {
+                padding: 0.8rem 1.2rem !important;
+                font-size: 0.9rem !important;
+                border-radius: 25px !important;
+            }
+
+            .modern-btn-secondary {
+                padding: 0.7rem 1rem !important;
+                font-size: 0.85rem !important;
+            }
+
+            .modern-btn-primary {
+                padding: 0.8rem 1.2rem !important;
+                font-size: 0.9rem !important;
+            }
+
+            .d-flex.gap-3 {
+                gap: 1rem !important;
+            }
+
+            .form-floating-custom .form-control {
+                height: 50px;
+                font-size: 14px;
+            }
+
+            .form-floating-custom label {
+                padding: 0.8rem 0.75rem;
+                font-size: 14px;
+            }
+
+            .payment-summary {
+                padding: 1rem;
+                margin-top: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .registration-container {
+                padding: 0.25rem;
+            }
+
+            .registration-card {
+                margin: 0.25rem;
+                border-radius: 12px;
+            }
+
+            .course-selection {
+                padding: 1rem 0.8rem;
+            }
+
+            .form-section {
+                padding: 1rem 0.8rem;
+            }
+
+            .course-card {
+                padding: 1rem;
+                margin-bottom: 0.8rem;
+                border-radius: 12px;
+            }
+
+            .course-price {
+                font-size: 1.6rem;
+                margin: 0.4rem 0;
+            }
+
+            .course-card h4 {
+                font-size: 1rem;
+                margin-bottom: 0.6rem;
+            }
+
+            .course-card p {
+                font-size: 0.85rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .course-card ul li {
+                font-size: 0.8rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .step {
+                width: 30px;
+                height: 30px;
+                margin: 0 0.25rem;
+                font-size: 0.75rem;
+            }
+
+            .step:not(:last-child)::after {
+                right: -17px;
+                width: 14px;
+            }
+
+            .modern-btn,
+            .btn-register {
+                padding: 0.7rem 1rem !important;
+                font-size: 0.85rem !important;
+            }
+
+            .modern-btn-secondary {
+                padding: 0.6rem 0.8rem !important;
+                font-size: 0.8rem !important;
+                min-width: 80px;
+            }
+
+            .modern-btn-primary {
+                padding: 0.7rem 1rem !important;
+                font-size: 0.85rem !important;
+                min-width: 140px;
+            }
+
+            .d-flex.gap-3 {
+                gap: 0.8rem !important;
+            }
+
+            .d-flex.flex-column.flex-sm-row {
+                flex-direction: column !important;
+                width: 100%;
+            }
+
+            .d-flex.flex-column.flex-sm-row button {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .form-floating-custom .form-control {
+                height: 45px;
+                font-size: 13px;
+            }
+
+            .form-floating-custom label {
+                padding: 0.7rem 0.6rem;
+                font-size: 13px;
+            }
+
+            h1.display-4 {
+                font-size: 2rem !important;
+            }
+
+            h2 {
+                font-size: 1.5rem !important;
             }
         }
     </style>
@@ -938,14 +1072,17 @@
                             </div>
 
                             <div class="text-center mt-4">
-                                <button type="button" class="btn btn-outline-secondary me-3 modern-btn-secondary"
-                                    id="backToCourses">
-                                    <i class="fas fa-arrow-left me-2"></i>Back
-                                </button>
-                                <button type="button" class="btn btn-primary btn-lg px-5 modern-btn-primary"
-                                    id="nextToPayment">
-                                    Continue to Payment <i class="fas fa-arrow-right ms-2"></i>
-                                </button>
+                                <div
+                                    class="d-flex flex-column flex-sm-row justify-content-center align-items-center gap-3">
+                                    <button type="button" class="btn btn-outline-secondary modern-btn-secondary"
+                                        id="backToCourses">
+                                        <i class="fas fa-arrow-left me-2"></i>Back
+                                    </button>
+                                    <button type="button" class="btn btn-primary px-4 modern-btn-primary"
+                                        id="nextToPayment">
+                                        Continue to Payment <i class="fas fa-arrow-right ms-2"></i>
+                                    </button>
+                                </div>
                             </div>
                         </form>
                     </div>
