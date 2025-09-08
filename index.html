@@ -1205,13 +1205,13 @@ The 85% value for the vertical position moves the image slightly down from the c
         });
     </script> -->
 
-    <!-- <script>
+    <script>
         function scrollToAppointment(event) {
             event.preventDefault();
             const appointmentSection = document.getElementById('appointmentSection');
             appointmentSection.scrollIntoView({ behavior: 'smooth' });
         }
-    </script> -->
+    </script>
     <!-- Chatbase Script -->
     <script>
         (function () { if (!window.chatbase || window.chatbase("getState") !== "initialized") { window.chatbase = (...arguments) => { if (!window.chatbase.q) { window.chatbase.q = [] } window.chatbase.q.push(arguments) }; window.chatbase = new Proxy(window.chatbase, { get(target, prop) { if (prop === "q") { return target.q } return (...args) => target(prop, ...args) } }) } const onLoad = function () { const script = document.createElement("script"); script.src = "https://www.chatbase.co/embed.min.js"; script.id = "DleEiu3_Y0lZhuSMBuO7f"; script.domain = "www.chatbase.co"; document.body.appendChild(script) }; if (document.readyState === "complete") { onLoad() } else { window.addEventListener("load", onLoad) } })();
