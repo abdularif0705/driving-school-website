@@ -51,7 +51,7 @@
     <link href="css/style.css" rel="stylesheet">
 
     <!-- Schema Markup -->
-    <script type="application/ld+json">
+    <!-- <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "Article",
@@ -71,7 +71,77 @@
         },
         "image": "https://www.rajputdrivingschool.com/img/The Best Driving School in Windsor.jpg"
     }
+    </script> -->
+
+    <!-- Article / BlogPosting schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Step-by-Step Guide to Getting Your G1, G2, and G Driver's Licence",
+      "description": "A complete guide to Ontario's Graduated Licensing System (G1, G2, G): rules, costs, booking, what to bring, and tips to pass each test.",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://rajputdrivingschool.com/blog-14-step-by-step-g1-g2-and-g-guide.html"
+      },
+      "image": "https://rajputdrivingschool.com/img/Ontario-Driver's-License.webp",
+      "author": {
+        "@type": "Organization",
+        "name": "Rajput Driving School"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Rajput Driving School Windsor",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.rajputdrivingschool.com/img/favicon.png"
+        }
+      },
+      "datePublished": "2024-07-23",
+      "dateModified": "2024-07-23",
+      "articleSection": "Driving Tips",
+      "keywords": [
+        "Ontario G1",
+        "Ontario G2",
+        "Ontario G test",
+        "DriveTest",
+        "Beginner Driver Education",
+        "BDE Windsor",
+        "How to book DriveTest",
+        "G1 practice"
+      ]
+    }
     </script>
+
+    <!-- BreadcrumbList schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://rajputdrivingschool.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://rajputdrivingschool.com/blog.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Step-by-Step Guide to Getting Your G1, G2, and G Driver's Licence",
+          "item": "https://rajputdrivingschool.com/blog-14-step-by-step-g1-g2-and-g-guide.html"
+        }
+      ]
+    }
+    </script>
+
+
 </head>
 
 <body>
@@ -216,6 +286,43 @@
                     </li>
                 </ul>
                 <p>Each stage comes with specific rules, costs, and requirements, which we’ll explain below.</p>
+    
+                <!-- NEW: Fees at a glance -->
+                <h3 class="mt-4">Fees at a Glance (before tax)</h3>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">Service</th>
+                                <th scope="col">Fee</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>G1 knowledge test (first-time package total)</td>
+                                <td>$159.75</td>
+                            </tr>
+                            <tr>
+                                <td>G1 knowledge test (rewrite)</td>
+                                <td>$16.00</td>
+                            </tr>
+                            <tr>
+                                <td>G2 road test (standalone)</td>
+                                <td>$53.75</td>
+                            </tr>
+                            <tr>
+                                <td>G road test</td>
+                                <td>$91.25</td>
+                            </tr>
+                            <tr>
+                                <td>Five-year licence card</td>
+                                <td>$90.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="small text-muted">Fees are published by DriveTest and may change. Always verify current amounts on
+                    the <a href="https://drivetest.ca/tests/fees/" class="text-primary">official fees page</a>.</p>
     
                 <hr class="my-4">
     
@@ -410,6 +517,52 @@
         </div>
     </div>
     <!-- Blog Post End -->
+    
+    <!-- FAQ Schema (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"FAQPage",
+      "mainEntity":[
+        {
+          "@type":"Question",
+          "name":"How much does the Ontario G1 cost?",
+          "acceptedAnswer":{"@type":"Answer","text":"$159.75 for the initial package (G1 knowledge test, first G2 attempt, and 5-year licence). G1 rewrites are $16.00."}
+        },
+        {
+          "@type":"Question",
+          "name":"Can I rewrite the G1 on the same day if I fail?",
+          "acceptedAnswer":{"@type":"Answer","text":"In many centres you can, depending on capacity. You must pay the $16 rewrite fee."}
+        },
+        {
+          "@type":"Question",
+          "name":"How long do I have to wait between G1 and G2?",
+          "acceptedAnswer":{"@type":"Answer","text":"12 months normally, or 8 months if you complete an MTO-approved BDE course."}
+        },
+        {
+          "@type":"Question",
+          "name":"What are the G2 and G retest fees?",
+          "acceptedAnswer":{"@type":"Answer","text":"G2 retest is $53.75. G retest is $91.25."}
+        },
+        {
+          "@type":"Question",
+          "name":"How do I book a driving test in Ontario?",
+          "acceptedAnswer":{"@type":"Answer","text":"Book online at drivetest.ca, by phone at 1-888-570-6110, or in person at any DriveTest Centre."}
+        },
+        {
+          "@type":"Question",
+          "name":"What should I bring on test day?",
+          "acceptedAnswer":{"@type":"Answer","text":"Your licence (G1/G2), valid insurance and registration, a roadworthy vehicle, and glasses/contacts if required."}
+        },
+        {
+          "@type":"Question",
+          "name":"Is highway driving required for the G test?",
+          "acceptedAnswer":{"@type":"Answer","text":"Yes. You should have recent highway experience (≥80 km/h), and you’ll drive on a highway during the G test."}
+        }
+      ]
+    }
+    </script>
+
 
     <!-- Blog Post Start -->
     <!-- <div class="container py-5">
