@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagination with Search - Interactive Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .search-section {
+            padding: 30px 40px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            font-size: 16px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-btn, .clear-btn {
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .search-btn {
+            background: #667eea;
+            color: white;
+        }
+
+        .search-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .clear-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        .clear-btn:hover {
+            background: #5a6268;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .stats-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stats-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .stats-text {
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .stats-number {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .content-section {
+            padding: 40px;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .blog-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+
+        .blog-card.highlight {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .blog-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .blog-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .blog-description {
+            color: #6c757d;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .blog-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .blog-tag {
+            background: #e9ecef;
+            color: #495057;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .blog-tag.match {
+            background: #667eea;
+            color: white;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+
+        .no-results-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .no-results h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .pagination-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 0;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .pagination-info {
+            background: #f8f9fa;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .pagination {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .page-btn {
+            min-width: 45px;
+            height: 45px;
+            border: 2px solid #e9ecef;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            color: #495057;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            border-color: #667eea;
+            color: #667eea;
+            transform: scale(1.1);
+        }
+
+        .page-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .page-btn.arrow {
+            font-size: 18px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .highlight-text {
+            background: yellow;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Pagination + Search Demo</h1>
+            <p>Interactive example showing how search and pagination work together</p>
+        </div>
+
+        <div class="search-section">
+            <div class="search-container">
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    id="searchInput" 
+                    placeholder="Search blog posts... (try 'test', 'tips', 'guide')"
+                    autocomplete="off"
+                >
+                <button class="search-btn" id="searchBtn">🔍 Search</button>
+                <button class="clear-btn" id="clearBtn">✕ Clear</button>
+            </div>
+
+            <div class="stats">
+                <div class="stats-item">
+                    <div class="stats-icon">📝</div>
+                    <div>
+                        <div class="stats-text">Total Posts</div>
+                        <div class="stats-number" id="totalPosts">50</div>
+                    </div>
+                </div>
+                <div class="stats-item">
+                    <div class="stats-icon">✓</div>
+                    <div>
+                        <div class="stats-text">Showing</div>
+                        <div class="stats-number" id="showingPosts">8</div>
+                    </div>
+                </div>
+                <div class="stats-item">
+                    <div class="stats-icon">📄</div>
+                    <div>
+                        <div class="stats-text">Pages</div>
+                        <div class="stats-number" id="totalPages">7</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <div class="blog-grid" id="blogGrid">
+                <!-- Blog posts will be inserted here -->
+            </div>
+
+            <div class="pagination-section">
+                <div class="pagination-info" id="paginationInfo">
+                    Page 1 of 7
+                </div>
+                <div class="pagination" id="pagination">
+                    <!-- Pagination buttons will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // DATA GENERATION
+        // ============================================
+        
+        const categories = ['Tips', 'Guide', 'Tutorial', 'Review', 'News'];
+        const topics = ['Driving Test', 'Safety', 'License', 'Insurance', 'Maintenance', 
+                       'Winter Driving', 'Highway', 'Parking', 'Road Rules', 'Practice'];
+        
+        // Generate 50 sample blog posts
+        const allBlogPosts = Array.from({ length: 50 }, (_, i) => ({
+            id: i + 1,
+            title: `${topics[i % topics.length]} ${categories[i % categories.length]} #${i + 1}`,
+            description: `Learn everything about ${topics[i % topics.length].toLowerCase()} with this comprehensive ${categories[i % categories.length].toLowerCase()}. Essential information for new drivers in Ontario.`,
+            tags: [
+                categories[i % categories.length],
+                topics[i % topics.length],
+                i % 2 === 0 ? 'Beginner' : 'Advanced'
+            ]
+        }));
+
+        // ============================================
+        // PAGINATION STATE
+        // ============================================
+        
+        const state = {
+            allPosts: allBlogPosts,
+            filteredPosts: [...allBlogPosts],
+            currentPage: 1,
+            postsPerPage: 8,
+            searchQuery: '',
+            
+            get totalPages() {
+                return Math.ceil(this.filteredPosts.length / this.postsPerPage);
+            },
+            
+            get startIndex() {
+                return (this.currentPage - 1) * this.postsPerPage;
+            },
+            
+            get endIndex() {
+                return Math.min(this.startIndex + this.postsPerPage, this.filteredPosts.length);
+            },
+            
+            get currentPosts() {
+                return this.filteredPosts.slice(this.startIndex, this.endIndex);
+            }
+        };
+
+        // ============================================
+        // SEARCH FUNCTIONALITY
+        // ============================================
+        
+        function performSearch(query) {
+            const searchTerm = query.toLowerCase().trim();
+            state.searchQuery = searchTerm;
+            
+            if (!searchTerm) {
+                // No search - show all posts
+                state.filteredPosts = [...state.allPosts];
+            } else {
+                // Filter posts based on search
+                state.filteredPosts = state.allPosts.filter(post => {
+                    const titleMatch = post.title.toLowerCase().includes(searchTerm);
+                    const descMatch = post.description.toLowerCase().includes(searchTerm);
+                    const tagMatch = post.tags.some(tag => 
+                        tag.toLowerCase().includes(searchTerm)
+                    );
+                    
+                    return titleMatch || descMatch || tagMatch;
+                });
+            }
+            
+            // Important: Reset to page 1 after search
+            state.currentPage = 1;
+            
+            // Update display
+            updateDisplay();
+        }
+
+        // Debounce function for real-time search
+        function debounce(func, delay) {
+            let timeoutId;
+            return function(...args) {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => func.apply(this, args), delay);
+            };
+        }
+
+        const debouncedSearch = debounce((query) => {
+            performSearch(query);
+        }, 300);
+
+        // ============================================
+        // DISPLAY FUNCTIONS
+        // ============================================
+        
+        function highlightText(text, query) {
+            if (!query) return text;
+            
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<span class="highlight-text">$1</span>');
+        }
+
+        function renderPosts() {
+            const grid = document.getElementById('blogGrid');
+            const posts = state.currentPosts;
+            
+            if (posts.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-results" style="grid-column: 1/-1;">
+                        <div class="no-results-icon">🔍</div>
+                        <h3>No posts found</h3>
+                        <p>Try a different search term or clear your search</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = posts.map((post, index) => {
+                const hasMatch = state.searchQuery && (
+                    post.title.toLowerCase().includes(state.searchQuery) ||
+                    post.description.toLowerCase().includes(state.searchQuery)
+                );
+                
+                return `
+                    <div class="blog-card ${hasMatch ? 'highlight' : ''}" style="animation-delay: ${index * 0.1}s">
+                        <div class="blog-number">${post.id}</div>
+                        <div class="blog-title">${highlightText(post.title, state.searchQuery)}</div>
+                        <div class="blog-description">${highlightText(post.description, state.searchQuery)}</div>
+                        <div class="blog-tags">
+                            ${post.tags.map(tag => {
+                                const matches = state.searchQuery && 
+                                    tag.toLowerCase().includes(state.searchQuery);
+                                return `<span class="blog-tag ${matches ? 'match' : ''}">${tag}</span>`;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderPagination() {
+            const pagination = document.getElementById('pagination');
+            const { currentPage, totalPages } = state;
+            
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+            
+            let buttons = [];
+            
+            // Previous button
+            buttons.push(`
+                <button class="page-btn arrow" 
+                        onclick="goToPage(${currentPage - 1})"
+                        ${currentPage === 1 ? 'disabled' : ''}>
+                    ‹
+                </button>
+            `);
+            
+            // Page numbers with smart ellipsis
+            const maxVisible = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+            
+            if (endPage - startPage + 1 < maxVisible) {
+                startPage = Math.max(1, endPage - maxVisible + 1);
+            }
+            
+            // First page
+            if (startPage > 1) {
+                buttons.push(`
+                    <button class="page-btn" onclick="goToPage(1)">1</button>
+                `);
+                if (startPage > 2) {
+                    buttons.push(`<span style="padding: 0 5px;">...</span>`);
+                }
+            }
+            
+            // Page numbers
+            for (let i = startPage; i <= endPage; i++) {
+                buttons.push(`
+                    <button class="page-btn ${i === currentPage ? 'active' : ''}" 
+                            onclick="goToPage(${i})"
+                            ${i === currentPage ? 'disabled' : ''}>
+                        ${i}
+                    </button>
+                `);
+            }
+            
+            // Last page
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    buttons.push(`<span style="padding: 0 5px;">...</span>`);
+                }
+                buttons.push(`
+                    <button class="page-btn" onclick="goToPage(${totalPages})">${totalPages}</button>
+                `);
+            }
+            
+            // Next button
+            buttons.push(`
+                <button class="page-btn arrow" 
+                        onclick="goToPage(${currentPage + 1})"
+                        ${currentPage === totalPages ? 'disabled' : ''}>
+                    ›
+                </button>
+            `);
+            
+            pagination.innerHTML = buttons.join('');
+        }
+
+        function updateStats() {
+            document.getElementById('totalPosts').textContent = state.filteredPosts.length;
+            document.getElementById('showingPosts').textContent = 
+                `${Math.min(state.startIndex + 1, state.filteredPosts.length)}-${state.endIndex}`;
+            document.getElementById('totalPages').textContent = state.totalPages || 0;
+            
+            const info = document.getElementById('paginationInfo');
+            if (state.totalPages === 0) {
+                info.textContent = 'No results';
+            } else {
+                info.textContent = `Page ${state.currentPage} of ${state.totalPages}`;
+            }
+        }
+
+        function updateDisplay() {
+            renderPosts();
+            renderPagination();
+            updateStats();
+            
+            // Scroll to top of content
+            document.querySelector('.content-section').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
+
+        // ============================================
+        // NAVIGATION
+        // ============================================
+        
+        function goToPage(pageNum) {
+            if (pageNum < 1 || pageNum > state.totalPages) return;
+            state.currentPage = pageNum;
+            updateDisplay();
+        }
+
+        // ============================================
+        // EVENT LISTENERS
+        // ============================================
+        
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            debouncedSearch(e.target.value);
+        });
+
+        document.getElementById('searchBtn').addEventListener('click', () => {
+            const query = document.getElementById('searchInput').value;
+            performSearch(query);
+        });
+
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            document.getElementById('searchInput').value = '';
+            performSearch('');
+        });
+
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                performSearch(e.target.value);
+            }
+        });
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 Pagination + Search Demo loaded!');
+            console.log(`📝 Total posts: ${state.allPosts.length}`);
+            console.log(`📄 Posts per page: ${state.postsPerPage}`);
+            console.log(`📊 Total pages: ${state.totalPages}`);
+            
+            updateDisplay();
+            
+            // Show helpful console commands
+            console.log('\n🎮 Try these commands:');
+            console.log('  goToPage(3)           - Go to page 3');
+            console.log('  performSearch("test") - Search for "test"');
+            console.log('  state.filteredPosts   - See filtered posts');
+        });
+    </script>
+</body>
+</html>
+
