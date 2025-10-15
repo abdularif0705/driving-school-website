@@ -68,16 +68,10 @@ class BlogPagination {
       `Found ${this.totalItems} blog posts, ${this.totalPages} pages needed`
     );
 
-    // Hide pagination if only one page is needed
-    const paginationContainer = document.querySelector(".blog-pagination");
-    if (paginationContainer) {
-      if (this.totalPages <= 1) {
-        paginationContainer.style.display = "none";
-        console.log("Hiding pagination - only one page needed");
-      } else {
-        paginationContainer.style.display = "block";
-        console.log("Showing pagination - multiple pages needed");
-      }
+    // Always show pagination section, even if only one page
+    const paginationSection = document.querySelector(".blog-pagination-section");
+    if (paginationSection) {
+      paginationSection.style.display = "block";
     }
   }
 
@@ -113,15 +107,27 @@ class BlogPagination {
     const paginationContainer = document.querySelector(".blog-pagination");
     const paginationInfo = document.querySelector(".pagination-info");
 
-    if (!paginationContainer || this.totalPages <= 1) return;
+    if (!paginationContainer) return;
 
     // Update pagination info
     if (paginationInfo) {
-      paginationInfo.textContent = `Page ${this.currentPage} of ${this.totalPages}`;
+      if (this.totalPages > 0) {
+        paginationInfo.textContent = `Page ${this.currentPage} of ${this.totalPages} (${this.totalItems} posts)`;
+      } else {
+        paginationInfo.textContent = `No posts found`;
+      }
     }
 
     // Clear existing pagination
     paginationContainer.innerHTML = "";
+
+    // Don't show pagination controls if only one page or no pages
+    if (this.totalPages <= 1) {
+      paginationContainer.style.display = "none";
+      return;
+    } else {
+      paginationContainer.style.display = "flex";
+    }
 
     // Calculate which pages to show
     const maxVisiblePages = 5;

@@ -121,17 +121,56 @@ class BlogSearch {
   matchesCategory(postText, category) {
     if (category === "all") return true;
 
-    const categoryKeywords = {
-      "driving-tips": ["driving tips", "road test", "g2", "g test", "parallel park", "defensive driving", "tips for passing"],
-      "test-preparation": ["g1", "g2", "g test", "road test", "driving test", "exam", "examiner", "test preparation", "pass"],
-      "licensing": ["license", "licensing", "g1", "g2", "graduated", "mto", "ontario"],
-      "safety": ["safety", "emergency", "winter driving", "night driving", "defensive", "dangerous"],
-      "insurance": ["insurance", "premium", "coverage", "policy", "save money"],
-      "maintenance": ["maintenance", "vehicle", "car care", "oil change", "tire", "repair"]
+    // Convert to lowercase for case-insensitive matching
+    const lowerPostText = postText.toLowerCase();
+
+    // Define specific blog post patterns for accurate categorization
+    const categoryMatchers = {
+      "driving-tips": () => {
+        return (
+          lowerPostText.includes("parallel park") ||
+          lowerPostText.includes("defensive driving") ||
+          lowerPostText.includes("roundabout") ||
+          lowerPostText.includes("highway merging") ||
+          lowerPostText.includes("top 5 tips")
+        );
+      },
+      "test-preparation": () => {
+        return (
+          (lowerPostText.includes("g2") && (lowerPostText.includes("pass") || lowerPostText.includes("test") || lowerPostText.includes("exam"))) ||
+          (lowerPostText.includes("g test") && lowerPostText.includes("fail")) ||
+          lowerPostText.includes("examination sheet") ||
+          lowerPostText.includes("test routes") ||
+          (lowerPostText.includes("g1") && lowerPostText.includes("fail"))
+        ) && !lowerPostText.includes("teen driver");
+      },
+      "licensing": () => {
+        return (
+          lowerPostText.includes("licensing roadmap") ||
+          lowerPostText.includes("graduated licensing") ||
+          (lowerPostText.includes("g1") && lowerPostText.includes("g2") && lowerPostText.includes("complete"))
+        ) && !lowerPostText.includes("teen driver");
+      },
+      "safety": () => {
+        return (
+          lowerPostText.includes("teen driver safety") ||
+          lowerPostText.includes("emergency driving") ||
+          lowerPostText.includes("winter driving safety") ||
+          lowerPostText.includes("night driving safety")
+        );
+      },
+      "insurance": () => {
+        return lowerPostText.includes("insurance") && 
+               (lowerPostText.includes("save money") || lowerPostText.includes("new driver insurance"));
+      },
+      "maintenance": () => {
+        return lowerPostText.includes("vehicle maintenance") || 
+               lowerPostText.includes("car care");
+      }
     };
 
-    const keywords = categoryKeywords[category] || [];
-    return keywords.some(keyword => postText.includes(keyword));
+    const matcher = categoryMatchers[category];
+    return matcher ? matcher() : false;
   }
 
   showNoResults() {
