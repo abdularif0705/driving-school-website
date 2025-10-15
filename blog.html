@@ -20,6 +20,10 @@
 
     <!-- Template Javascript -->
     <script defer src="js/main.js"></script>
+    
+    <!-- Blog Search and Pagination Javascript -->
+    <script defer src="js/blog-search.js"></script>
+    <script defer src="js/blog-pagination.js"></script>
 
     <meta charset="utf-8">
     <title>Rajput Driving School Windsor | Blog</title>
@@ -27,6 +31,33 @@
     <meta name="description"
         content="Discover the best tips and strategies to pass your driving test in Windsor with Rajput Driving School. Learn from MTO certified instructors and get your license on the first try.">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://rajputdrivingschool.com/blog.html" />
+
+    <!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://rajputdrivingschool.com/blog.html" />
+    <meta property="og:title" content="Driving Tips & Guides | Rajput Driving School Windsor Blog" />
+    <meta property="og:description" content="Expert driving tips, G2/G test preparation guides, Ontario licensing info, defensive driving techniques, and more from MTO certified instructors in Windsor." />
+    <meta property="og:image" content="https://rajputdrivingschool.com/img/teen-drivers-ed-windsor-ontario.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_CA" />
+    <meta property="og:site_name" content="Rajput Driving School Windsor" />
+
+    <!-- Additional Preconnects for Performance -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preconnect" href="https://code.jquery.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://www.chatbase.co" crossorigin>
+    <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+
+    <!-- Mobile Optimization -->
+    <meta name="theme-color" content="#06A3DA" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon" />
@@ -50,44 +81,232 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 
-    <!-- Schema Markup -->
+    <!-- Blog Search and Pagination Styles -->
+    <style>
+        /* Blog Search Section Styles */
+        .blog-search-section {
+            border: 1px solid #e9ecef;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .blog-search-section .input-group-text {
+            background-color: #f8f9fa;
+            border-color: #ced4da;
+        }
+        
+        .blog-search-section .form-control:focus {
+            border-color: #06A3DA;
+            box-shadow: 0 0 0 0.2rem rgba(6, 163, 218, 0.25);
+        }
+        
+        /* Category Filter Buttons */
+        .category-filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .category-filter-btn {
+            border-radius: 0;
+            border: 1px solid #dee2e6;
+            background-color: white;
+            color: #212529;
+            padding: 8px 16px;
+            font-weight: 500;
+        }
+        
+        .category-filter-btn.active {
+            background-color: #CE252A;
+            border-color: #CE252A;
+            color: white;
+        }
+        
+        /* Pagination Styles - Simple & Mobile Friendly */
+        .blog-pagination-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+        }
+        
+        .blog-pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-wrap: wrap;
+        }
+        
+        .blog-pagination .page-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            height: 40px;
+            text-align: center;
+            text-decoration: none;
+            color: #212529;
+            font-size: 16px;
+            background-color: transparent;
+            cursor: pointer;
+            line-height: 1;
+        }
+        
+        .blog-pagination .page-link.active {
+            color: #CE252A;
+            font-weight: bold;
+            cursor: default;
+        }
+        
+        .pagination-info {
+            font-size: 14px;
+            color: #6c757d;
+        }
+        
+        /* Search Suggestions */
+        .search-suggestions {
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .suggestion-item:hover {
+            background-color: #f8f9fa !important;
+        }
+        
+        /* Blog Post Filtering Animation */
+        .blog-post {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        .blog-post.filtering {
+            opacity: 0.6;
+            transform: translateY(10px);
+        }
+        
+        /* Blog Post Styles - Compact */
+        .blog-post h2 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+        
+        .blog-post p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+        }
+        
+        .blog-post img {
+            max-height: 250px;
+            object-fit: cover;
+            margin-bottom: 0.75rem;
+        }
+        
+        .blog-post.mb-5 {
+            margin-bottom: 2rem !important;
+        }
+        
+        /* No Results Message */
+        .no-results-message {
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .category-filter-buttons {
+                justify-content: center;
+            }
+            
+            .blog-search-form {
+                flex-direction: column;
+            }
+            
+            .blog-search-form .btn {
+                margin-top: 10px;
+                margin-left: 0 !important;
+                width: 100%;
+            }
+            
+            .blog-pagination {
+                justify-content: center;
+                gap: 3px;
+            }
+            
+            .blog-pagination .page-link {
+                min-width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+            
+            .pagination-info {
+                text-align: center;
+                margin-bottom: 1rem;
+                font-size: 13px;
+            }
+            
+            .blog-pagination-section {
+                margin-top: 2rem;
+                padding-top: 1.5rem;
+            }
+            
+            .blog-pagination-section .row {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            .blog-post h2 {
+                font-size: 1.2rem;
+            }
+            
+            .blog-post p {
+                font-size: 0.85rem;
+            }
+            
+            .blog-post img {
+                max-height: 200px;
+            }
+        }
+    </style>
+
+    <!-- Enhanced Schema Markup -->
     <script type="application/ld+json">
     {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Rajput Driving School Windsor",
-    "image": "https://www.rajputdrivingschool.com/img/favicon.png",
-    "telephone": "(226) 246-2224",
-    "priceRange": "$$",
-    "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "2235 Everts Ave",
-        "addressLocality": "Windsor",
-        "addressRegion": "ON",
-        "postalCode": "N9B 3X3",
-        "addressCountry": "CA"
-    },
-    "openingHoursSpecification": [
-        {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-            "Saturday",
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Sunday"
-        ],
-        "opens": "07:00",
-        "closes": "21:00"
+    "@type": "Blog",
+    "name": "Rajput Driving School Windsor Blog",
+    "description": "Expert driving tips, test preparation guides, and road safety articles from MTO certified instructors",
+    "url": "https://rajputdrivingschool.com/blog.html",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Rajput Driving School Windsor",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://rajputdrivingschool.com/img/favicon.png"
         }
-    ],
-    "sameAs": [
-        "https://www.facebook.com/rajputdrivingschoolwindsor",
-        "https://www.instagram.com/rajputdrivingschoolwindsor/",
-        "https://www.youtube.com/channel/UCbSylhVsjCDpxiqAL2CILsQ"
-    ]
+    }
+    }
+    </script>
+
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://rajputdrivingschool.com/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Blog",
+                "item": "https://rajputdrivingschool.com/blog.html"
+            }
+        ]
     }
     </script>
 </head>
@@ -267,8 +486,96 @@
     <!-- Blog Start -->
     <div class="container-xxl py-4">
         <div class="container">
+            <!-- Blog Search and Filter Section -->
+            <div class="row mb-5">
+                <div class="col-12">
+                    <div class="blog-search-section bg-light p-4 rounded">
+                        <div class="row align-items-center">
+                            <div class="col-lg-8">
+                                <form class="blog-search-form d-flex">
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa fa-search"></i></span>
+                                        <input type="text" class="form-control blog-search-input" 
+                                               placeholder="Search blog posts..." 
+                                               value="">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary ms-2 blog-search-button">Search</button>
+                                </form>
+                            </div>
+                            <div class="col-lg-4 mt-3 mt-lg-0">
+                                <select class="form-select blog-category-filter">
+                                    <option value="all">All Categories</option>
+                                    <option value="driving-tips">Driving Tips</option>
+                                    <option value="test-preparation">Test Preparation</option>
+                                    <option value="licensing">Licensing</option>
+                                    <option value="safety">Safety</option>
+                                    <option value="insurance">Insurance</option>
+                                    <option value="maintenance">Maintenance</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Category Filter Buttons -->
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="category-filter-buttons">
+                                    <button class="btn btn-outline-primary btn-sm category-filter-btn active" data-category="all">All</button>
+                                    <button class="btn btn-outline-primary btn-sm category-filter-btn" data-category="driving-tips">Driving Tips</button>
+                                    <button class="btn btn-outline-primary btn-sm category-filter-btn" data-category="test-preparation">Test Prep</button>
+                                    <button class="btn btn-outline-primary btn-sm category-filter-btn" data-category="safety">Safety</button>
+                                    <button class="btn btn-outline-primary btn-sm category-filter-btn" data-category="insurance">Insurance</button>
+                                    <button class="btn btn-outline-primary btn-sm category-filter-btn" data-category="maintenance">Maintenance</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="row g-5">
-                <div class="col-lg-8">
+                <div class="col-lg-8 blog-content">
+                    <div class="blog-post mb-5">
+                        <h2 class="mb-3">Teen Driver Safety in Windsor 2025: Parent's Complete Guide</h2>
+                        <p>Essential 2025 guide for Windsor parents with teen drivers. Learn modern strategies for preventing distracted driving with technology, Ontario GDL rules, winter driving in Windsor, creating safety contracts, supervised practice schedules, choosing safe vehicles, insurance discounts, and partnering with your teen for safe driving. Includes Windsor-specific routes, local resources, and proven methods that reduce crash risk...</p>
+                        <img src="img/teen-drivers-ed-windsor-ontario.jpg" alt="Teen Driver Safety in Windsor 2025" class="img-fluid w-100 mb-4">
+                        <a href="blog-22-teen-driver-safety-windsor-2025.html" class="btn btn-primary">Read More</a>
+                    </div>
+                    <div class="blog-post mb-5">
+                        <h2 class="mb-3">Vehicle Maintenance Guide for New Drivers: Keep Your Car Safe</h2>
+                        <p>As a new driver, understanding basic vehicle maintenance is crucial for safety, reliability, and passing your road tests. A well-maintained vehicle not only keeps you safe on the road but also demonstrates responsibility to examiners during your G2 and G tests...</p>
+                        <img src="img/car-maintenance-guide.jpg" alt="Vehicle Maintenance Guide for New Drivers" class="img-fluid w-100 mb-4">
+                        <a href="blog-21-vehicle-maintenance-new-drivers-guide.html" class="btn btn-primary">Read More</a>
+                    </div>
+                    <div class="blog-post mb-5">
+                        <h2 class="mb-3">Highway Merging Techniques: Master the G Test Highway Portion</h2>
+                        <p>Highway merging is one of the most challenging aspects of the G road test and a critical skill for safe driving in Ontario. Many drivers fail their G test specifically due to poor highway merging techniques, making this skill essential to master...</p>
+                        <img src="img/highway-merging-techniques.jpeg" alt="Highway Merging Techniques Guide" class="img-fluid w-100 mb-4">
+                        <a href="blog-20-highway-merging-techniques-g-test.html" class="btn btn-primary">Read More</a>
+                    </div>
+                    <div class="blog-post mb-5">
+                        <h2 class="mb-3">Night Driving Safety: Complete Guide for New Drivers</h2>
+                        <p>Night driving presents unique challenges that can be intimidating for new drivers. With reduced visibility, increased fatigue, and different traffic patterns, driving at night requires special skills and awareness. At Rajput Driving School, we recognize that mastering night driving is essential for both safety and passing your G2 and G road tests...</p>
+                        <img src="img/night-driving-safety-guide.webp" alt="Night Driving Safety Guide" class="img-fluid w-100 mb-4">
+                        <a href="blog-19-night-driving-safety-complete-guide.html" class="btn btn-primary">Read More</a>
+                    </div>
+                    <div class="blog-post mb-5">
+                        <h2 class="mb-3">New Driver Insurance Guide: Save Money on Car Insurance in Ontario</h2>
+                        <p>Getting your driver's license is an exciting milestone, but for many new drivers in Ontario, the reality of car insurance costs can be overwhelming. As a new driver, you'll likely face higher insurance premiums due to your lack of driving experience. However, with the right knowledge and strategies, you can significantly reduce your insurance costs while maintaining adequate coverage...</p>
+                        <img src="img/new-driver-insurance-guide.webp" alt="New Driver Insurance Guide" class="img-fluid w-100 mb-4">
+                        <a href="blog-18-new-driver-insurance-guide-ontario.html" class="btn btn-primary">Read More</a>
+                    </div>
+                    <div class="blog-post mb-5">
+                        <h2 class="mb-3">Complete Roundabout Navigation Guide: Master Traffic Circles Safely</h2>
+                        <p>Roundabouts are becoming increasingly common throughout Ontario, including Windsor, and they can be intimidating for new drivers. However, with proper understanding and practice, navigating roundabouts becomes second nature. At Rajput Driving School, we've helped hundreds of students master roundabout navigation...</p>
+                        <img src="img/roundabout-navigation-guide.webp" alt="Roundabout Navigation Guide" class="img-fluid w-100 mb-4">
+                        <a href="blog-17-complete-roundabout-navigation-guide.html" class="btn btn-primary">Read More</a>
+                    </div>
+                    <div class="blog-post mb-5">
+                        <h2 class="mb-3">Emergency Driving Situations: What to Do When Things Go Wrong</h2>
+                        <p>Every driver will eventually face an emergency situation on the road. Whether it's a brake failure, tire blowout, or unexpected accident, knowing how to respond quickly and calmly can mean the difference between a minor incident and a serious tragedy. At Rajput Driving School in Windsor, we believe that emergency preparedness is as crucial as learning basic driving skills...</p>
+                        <img src="img/emergency-driving-situations.webp" alt="Emergency Driving Situations Guide" class="img-fluid w-100 mb-4">
+                        <a href="blog-16-emergency-driving-situations-what-to-do.html" class="btn btn-primary">Read More</a>
+                    </div>
                     <div class="blog-post mb-5">
                         <h2 class="mb-3">Failed Your G1 Test? What's Next</h2>
                         <p>The G1 knowledge test is a crucial step in obtaining your driver's license in Ontario, but
@@ -419,7 +726,23 @@
                             alt="Happy Teen Passed at G1, G2, and G in Windsor Drive Test" class="img-fluid w-100 mb-4">
                         <a href="blog-4-ontario-graduated-licensing.html" class="btn btn-primary">Read More</a>
                     </div>
-                    <!-- Add more blog posts as needed -->
+                    <!-- Blog Pagination -->
+                    <div class="row mt-5">
+                        <div class="col-12">
+                            <div class="blog-pagination-section">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-6">
+                                        <div class="pagination-info text-muted"></div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <nav aria-label="Blog pagination" class="d-flex justify-content-lg-end">
+                                            <div class="blog-pagination"></div>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="mb-5">
@@ -433,6 +756,12 @@
                     <div class="mb-5">
                         <h4 class="text-primary mb-4">Recent Posts</h4>
                         <ul class="list-unstyled">
+                            <li><a href="blog-21-vehicle-maintenance-new-drivers-guide.html" class="text-dark">Vehicle Maintenance Guide for New Drivers: Keep Your Car Safe</a></li>
+                            <li><a href="blog-20-highway-merging-techniques-g-test.html" class="text-dark">Highway Merging Techniques: Master the G Test Highway Portion</a></li>
+                            <li><a href="blog-19-night-driving-safety-complete-guide.html" class="text-dark">Night Driving Safety: Complete Guide for New Drivers</a></li>
+                            <li><a href="blog-18-new-driver-insurance-guide-ontario.html" class="text-dark">New Driver Insurance Guide: Save Money on Car Insurance in Ontario</a></li>
+                            <li><a href="blog-17-complete-roundabout-navigation-guide.html" class="text-dark">Complete Roundabout Navigation Guide: Master Traffic Circles Safely</a></li>
+                            <li><a href="blog-16-emergency-driving-situations-what-to-do.html" class="text-dark">Emergency Driving Situations: What to Do When Things Go Wrong</a></li>
                             <li><a href="blog-15-what-happens-if-you-fail-the-g1-test.html" class="text-dark">What
                                     Happens If You Fail The G1 Test?</a></li>
                             <li><a href="blog-14-step-by-step-g1-g2-and-g-guide.html" class="text-dark">Step-by-Step
@@ -444,7 +773,7 @@
                             <li><a href="blog-11-10-defnsive-driving-techniques-to-save-your-life.html"
                                     class="text-dark">Defensive Driving: 10 Smart Habits Every Driver Needs</a></li>
                             <li><a href="blog-10-what-happens-after-failing g-road-test-in-ontario.html"
-                                    class="text-dark">Failed the Ontario G Road Test? Here’s What Happens Next</a></li>
+                                    class="text-dark">Failed the Ontario G Road Test? Here's What Happens Next</a></li>
                             <li><a href="blog-9-g-road-test-windsor-failure-reasons.html" class="text-dark">Top 10
                                     Reasons for Failing the G Road Test in Windsor, Ontario</a></li>
                             <li><a href="blog-8-winter-driving-tips.html" class="text-dark">Winter Driving Safety: 10

@@ -28,6 +28,33 @@
         name="description">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://rajputdrivingschool.com/about.html" />
+
+    <!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://rajputdrivingschool.com/about.html" />
+    <meta property="og:title" content="About Rajput Driving School Windsor - Founded 2017" />
+    <meta property="og:description" content="Founded by Muhammad Arif Rajput & Abdul Rehman Arif in 2017. 96% pass rate. Award-winning MTO certified instructors. Serving Windsor & Essex County since 2017." />
+    <meta property="og:image" content="https://rajputdrivingschool.com/img/teen-drivers-ed-windsor-ontario.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_CA" />
+    <meta property="og:site_name" content="Rajput Driving School Windsor" />
+
+    <!-- Additional Preconnects for Performance -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preconnect" href="https://code.jquery.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://www.chatbase.co" crossorigin>
+    <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+
+    <!-- Mobile Optimization -->
+    <meta name="theme-color" content="#06A3DA" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -51,44 +78,90 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 
-    <!-- Schema Markup -->
+    <!-- Enhanced Schema Markup -->
     <script type="application/ld+json">
     {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "Rajput Driving School Windsor",
-    "image": "https://www.rajputdrivingschool.com/img/favicon.png",
-    "telephone": "(226) 246-2224",
-    "priceRange": "$$",
-    "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "2235 Everts Ave",
-        "addressLocality": "Windsor",
-        "addressRegion": "ON",
-        "postalCode": "N9B 3X3",
-        "addressCountry": "CA"
-    },
-    "openingHoursSpecification": [
-        {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-            "Saturday",
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Sunday"
+    "@type": "AboutPage",
+    "mainEntity": {
+        "@type": "AutomotiveBusiness",
+        "name": "Rajput Driving School Windsor",
+        "url": "https://rajputdrivingschool.com",
+        "logo": "https://rajputdrivingschool.com/img/favicon.png",
+        "image": "https://rajputdrivingschool.com/img/teen-drivers-ed-windsor-ontario.png",
+        "telephone": "(226) 246-2224",
+        "email": "rajputwindsor@gmail.com",
+        "foundingDate": "2017",
+        "founder": [
+            {
+                "@type": "Person",
+                "name": "Muhammad Arif Rajput",
+                "jobTitle": "MTO Certified Driving Instructor & Founder"
+            },
+            {
+                "@type": "Person",
+                "name": "Abdul Rehman Arif",
+                "jobTitle": "MTO Certified Driving Instructor & Co-Founder"
+            }
         ],
-        "opens": "07:00",
-        "closes": "21:00"
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "2235 Everts Ave",
+            "addressLocality": "Windsor",
+            "addressRegion": "ON",
+            "postalCode": "N9B 3X3",
+            "addressCountry": "CA"
+        },
+        "openingHoursSpecification": [
+            {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+            ],
+            "opens": "07:00",
+            "closes": "21:00"
+            }
+        ],
+        "sameAs": [
+            "https://www.facebook.com/rajputdrivingschoolwindsor",
+            "https://www.instagram.com/rajputdrivingschoolwindsor/",
+            "https://www.youtube.com/channel/UCbSylhVsjCDpxiqAL2CILsQ",
+            "https://www.linkedin.com/company/102760425"
+        ],
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "5.0",
+            "reviewCount": "270"
         }
-    ],
-    "sameAs": [
-        "https://www.facebook.com/rajputdrivingschoolwindsor",
-        "https://www.instagram.com/rajputdrivingschoolwindsor/",
-        "https://www.youtube.com/channel/UCbSylhVsjCDpxiqAL2CILsQ"
-    ]
+    }
+    }
+    </script>
+
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://rajputdrivingschool.com/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "About",
+                "item": "https://rajputdrivingschool.com/about.html"
+            }
+        ]
     }
     </script>
 </head>
