@@ -1,9 +1,27 @@
-# robots.txt
+# robots.txt - Updated 2025-01-15
+# Rajput Driving School Windsor
+
 User-agent: *
+Allow: /
+
+# Disallow directories
 Disallow: /admin/
 Disallow: /cgi-bin/
 Disallow: /tmp/
 Disallow: /private/
-Allow: /
+Disallow: /.git/
+Disallow: /.github/
 
+# Disallow specific files
+Disallow: /404.html
+Disallow: /chatbot-amplifier.html
+Disallow: /debug.log
+
+# Allow important resources
+Allow: /css/
+Allow: /js/
+Allow: /img/
+Allow: /lib/
+
+# Sitemap location
 Sitemap: https://rajputdrivingschool.com/sitemap.xml
