@@ -518,6 +518,174 @@ async function fetchPage(pageNum) {
         </div>
     </div>
 
+    <!-- SECTION 12: JAVASCRIPT CODE EXPLAINED -->
+    <div class="section">
+        <h2>12. Understanding the Interactive Demo JavaScript</h2>
+        <p>Let's break down exactly how the interactive demo on this page works:</p>
+
+        <h3>Step 1: Setting Up Variables</h3>
+        <div class="code-example">
+// These are our "configuration" variables
+const totalPosts = 22;      // How many blog posts we have
+const postsPerPage = 8;     // How many to show per page
+
+// Why 22 and 8?
+// - 22 is a realistic number for a small blog
+// - 8 per page gives us 3 pages (22 ÷ 8 = 2.75 → 3)
+// - This demonstrates handling non-even division
+        </div>
+
+        <h3>Step 2: Creating the Visual Array</h3>
+        <div class="code-example">
+function createDemoArray() {
+    // 1. Find the container where we'll put posts
+    const container = document.getElementById('demo-array');
+    
+    // 2. Clear any existing content
+    container.innerHTML = '';
+    
+    // 3. Loop through and create 22 post elements
+    for (let i = 0; i < totalPosts; i++) {
+        // Create a new div element
+        const item = document.createElement('div');
+        
+        // Give it CSS classes for styling
+        item.className = 'array-item';
+        
+        // Give it a unique ID so we can find it later
+        item.id = `post-${i}`;  // Results in: post-0, post-1, post-2...
+        
+        // Put HTML inside it
+        item.innerHTML = `
+            <div class="post-number">${i}</div>           ← Array index
+            <div class="post-label">Post ${i+1}</div>    ← Human-readable
+        `;
+        
+        // Add it to the container
+        container.appendChild(item);
+    }
+}
+
+// Why this matters:
+// - Creates 22 divs numbered 0-21 (array indices)
+// - Each has a unique ID so we can change its color later
+// - Shows the difference between array index (0) and count (1)
+        </div>
+
+        <h3>Step 3: The Main Pagination Function</h3>
+        <div class="code-example">
+function showPageDemo(pageNum) {
+    // === PART A: Update Button States ===
+    
+    // Find all three buttons (Page 1, Page 2, Page 3)
+    document.querySelectorAll('.controls .btn').forEach((btn, idx) => {
+        // idx = 0, 1, 2 (button indices)
+        // If button index + 1 equals page number, make it active
+        btn.classList.toggle('active', idx + 1 === pageNum);
+    });
+    
+    // Example: If pageNum = 2
+    // - Button 0 (Page 1): idx+1=1, not equal to 2 → remove 'active'
+    // - Button 1 (Page 2): idx+1=2, equals 2 → add 'active' ✓
+    // - Button 2 (Page 3): idx+1=3, not equal to 2 → remove 'active'
+    
+    
+    // === PART B: Calculate Indices ===
+    
+    const startIndex = (pageNum - 1) * postsPerPage;
+    const endIndex = startIndex + postsPerPage;
+    
+    // Example calculations:
+    // Page 1: start = (1-1) × 8 = 0,  end = 0 + 8 = 8
+    // Page 2: start = (2-1) × 8 = 8,  end = 8 + 8 = 16
+    // Page 3: start = (3-1) × 8 = 16, end = 16 + 8 = 24
+    
+    
+    // === PART C: Update Info Text ===
+    
+    const actualEnd = Math.min(endIndex, totalPosts);
+    // Why Math.min?
+    // - Page 3: endIndex = 24, but we only have 22 posts
+    // - Math.min(24, 22) = 22 (don't go beyond what exists!)
+    
+    document.getElementById('current-page-info').textContent = 
+        `Page ${pageNum}: Showing posts ${startIndex}-${actualEnd-1}`;
+    
+    // Example: Page 3 shows "Showing posts 16-21"
+    // - startIndex = 16
+    // - actualEnd-1 = 22-1 = 21 (last post's index)
+    
+    
+    // === PART D: Update Visual Array ===
+    
+    for (let i = 0; i < totalPosts; i++) {
+        // Find each post element by its ID
+        const item = document.getElementById(`post-${i}`);
+        
+        // Check if this post should be visible
+        if (i >= startIndex && i < endIndex) {
+            item.className = 'array-item visible';  // Green
+        } else {
+            item.className = 'array-item hidden';   // Gray
+        }
+    }
+    
+    // Example: Page 2 (startIndex=8, endIndex=16)
+    // - Posts 0-7:   i < 8  → hidden (gray)
+    // - Posts 8-15:  8 ≤ i < 16 → visible (green) ✓
+    // - Posts 16-21: i ≥ 16 → hidden (gray)
+}
+        </div>
+
+        <h3>Step 4: Initialization</h3>
+        <div class="code-example">
+// Initialize on load
+createDemoArray();   // Create all 22 post elements
+showPageDemo(1);     // Show page 1 by default
+
+// This code runs immediately when the page loads
+// - First, it creates the visual elements
+// - Then, it shows the first page
+        </div>
+
+        <div class="explanation">
+            <h3>🔑 Key Concepts Used:</h3>
+            <ul>
+                <li><strong>document.getElementById()</strong> - Finds an element by its ID</li>
+                <li><strong>document.querySelectorAll()</strong> - Finds all elements matching a selector</li>
+                <li><strong>element.classList.toggle()</strong> - Adds/removes a CSS class</li>
+                <li><strong>element.innerHTML</strong> - Sets the HTML content inside an element</li>
+                <li><strong>element.appendChild()</strong> - Adds a child element</li>
+                <li><strong>Math.min(a, b)</strong> - Returns the smaller of two numbers</li>
+                <li><strong>Template literals</strong> - Strings with ${variables} inside backticks</li>
+            </ul>
+        </div>
+
+        <div class="math-example">
+            <strong>🎯 The Flow When You Click "Page 2":</strong><br><br>
+            1. showPageDemo(2) is called<br>
+            2. Calculate: start = (2-1) × 8 = 8, end = 16<br>
+            3. Update button: Make "Page 2" button green<br>
+            4. Update text: "Page 2: Showing posts 8-15"<br>
+            5. Loop through all 22 posts:<br>
+            &nbsp;&nbsp;&nbsp;- Posts 0-7: Make gray (hidden)<br>
+            &nbsp;&nbsp;&nbsp;- Posts 8-15: Make green (visible) ✓<br>
+            &nbsp;&nbsp;&nbsp;- Posts 16-21: Make gray (hidden)<br>
+            6. User sees: Only posts 8-15 are green!
+        </div>
+
+        <div class="explanation" style="background: #e8f5e9; border-left-color: #4CAF50;">
+            <h3>✅ Why This Code is Good:</h3>
+            <ul>
+                <li><strong>Reusable:</strong> showPageDemo(n) works for any page number</li>
+                <li><strong>Safe:</strong> Uses Math.min() to avoid going beyond array bounds</li>
+                <li><strong>Clear:</strong> Variable names explain what they do</li>
+                <li><strong>Efficient:</strong> Only updates what needs to change</li>
+                <li><strong>Visual:</strong> Provides immediate feedback</li>
+            </ul>
+        </div>
+    </div>
+
     <script>
         // Initialize demo with 22 posts
         const totalPosts = 22;
