@@ -166,18 +166,7 @@
         .accordion-button {
             padding: 1.25rem 1.5rem;
             align-items: center;
-            transition: all 0.3s ease;
             border: none;
-        }
-        
-        .accordion-button:hover:not(.collapsed) {
-            background: linear-gradient(135deg, #CE252A 0%, #a01d21 100%) !important;
-        }
-        
-        .accordion-button.collapsed:hover {
-            background: linear-gradient(135deg, #ffe5e6 0%, #fff5f5 100%) !important;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
         
         .accordion-button:focus {
@@ -195,6 +184,15 @@
             background-color: white !important;
             color: #CE252A !important;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .accordion-item {
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
         }
         
         .accordion-body {
