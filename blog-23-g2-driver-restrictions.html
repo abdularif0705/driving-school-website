@@ -147,8 +147,199 @@
     }
     </script>
     
-    <!-- Custom FAQ Styles -->
+    <!-- Custom Styles for Professional Look -->
     <style>
+        /* Alert Box Enhancements */
+        .alert {
+            border-left: 4px solid;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .alert::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, transparent 100%);
+        }
+        
+        .alert:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+        
+        .alert-warning {
+            background: linear-gradient(135deg, #fff9e6 0%, #fffdf5 100%);
+            border-left-color: #ffc107;
+        }
+        
+        .alert-danger {
+            background: linear-gradient(135deg, #ffe6e6 0%, #fff5f5 100%);
+            border-left-color: #CE252A;
+        }
+        
+        .alert-success {
+            background: linear-gradient(135deg, #e6f7ed 0%, #f5fdf8 100%);
+            border-left-color: #28a745;
+        }
+        
+        .alert-info {
+            background: linear-gradient(135deg, #e6f3ff 0%, #f5f9ff 100%);
+            border-left-color: #17a2b8;
+        }
+        
+        .alert-primary {
+            background: linear-gradient(135deg, #ffe6e8 0%, #fff5f6 100%);
+            border-left-color: #CE252A;
+        }
+        
+        .alert i {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        /* Enhanced Card Styles */
+        .card {
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #CE252A 0%, #a01d21 100%) !important;
+            border: none !important;
+            padding: 1rem 1.25rem;
+            font-weight: 600;
+        }
+        
+        .card-header.bg-primary {
+            background: linear-gradient(135deg, #CE252A 0%, #a01d21 100%) !important;
+        }
+        
+        .card-header.bg-danger {
+            background: linear-gradient(135deg, #dc3545 0%, #b02a37 100%) !important;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .card.border-primary {
+            border: 2px solid #CE252A !important;
+            box-shadow: 0 3px 10px rgba(206, 37, 42, 0.1);
+        }
+        
+        .card.border-primary:hover {
+            border-color: #a01d21 !important;
+            box-shadow: 0 8px 24px rgba(206, 37, 42, 0.2) !important;
+        }
+        
+        .card.border-danger {
+            border: 2px solid #dc3545 !important;
+            box-shadow: 0 3px 10px rgba(220, 53, 69, 0.1);
+        }
+        
+        .card.border-danger:hover {
+            border-color: #b02a37 !important;
+            box-shadow: 0 8px 24px rgba(220, 53, 69, 0.2) !important;
+        }
+        
+        .card .card-header i {
+            font-size: 1.1em;
+            margin-right: 0.5rem;
+            opacity: 0.95;
+        }
+        
+        /* Table of Contents Styling */
+        .card-body ol {
+            padding-left: 1.5rem;
+            counter-reset: toc-counter;
+        }
+        
+        .card-body ol li {
+            margin-bottom: 0.75rem;
+            counter-increment: toc-counter;
+        }
+        
+        .card-body ol li a {
+            color: #2c3e50;
+            transition: all 0.3s ease;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .card-body ol li a:hover {
+            color: #CE252A;
+            transform: translateX(5px);
+            text-decoration: none;
+        }
+        
+        .card-body ol li a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #CE252A, #a01d21);
+            transition: width 0.3s ease;
+        }
+        
+        .card-body ol li a:hover::after {
+            width: 100%;
+        }
+        
+        /* Comparison Table Styling */
+        .table-responsive {
+            border-radius: 12px;
+            overflow-x: auto;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .table {
+            margin-bottom: 0;
+        }
+        
+        .table thead.table-dark {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+        }
+        
+        .table thead th {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            padding: 1rem;
+            border: none;
+            color: #fff;
+        }
+        
+        .table tbody td {
+            padding: 1rem;
+            vertical-align: middle;
+            border-color: #e9ecef;
+        }
+        
+        .table tbody td:first-child {
+            font-weight: 600;
+            color: #2c3e50;
+            background-color: #f8f9fa;
+        }
+        
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+        
+        /* FAQ Accordion Styles */
         .faq-icon-badge {
             width: 45px !important;
             height: 45px !important;
@@ -374,7 +565,7 @@
 
                 <h3 class="mt-4">Driving Restrictions</h3>
                 <ul>
-                    <li><strong>No Highway Driving:</strong> G1 drivers cannot drive on expressways or 400-series highways where the speed limit is over 80 km/h.</li>
+                    <li><strong>Limited Highway Driving:</strong> G1 drivers cannot drive on expressways or 400-series highways where the speed limit is over 80 km/h, <strong>except when accompanied by a licensed driving instructor</strong> during professional lessons. Your instructor can help you practice highway driving skills safely.</li>
                     <li><strong>No Driving Between Midnight and 5 a.m.:</strong> Night driving is prohibited during these hours.</li>
                     <li><strong>Zero Alcohol & Cannabis:</strong> Absolutely no alcohol or cannabis in your system while driving (see detailed section below).</li>
                     <li><strong>No Hand-held Devices:</strong> Strict prohibition on using hand-held electronic devices while driving.</li>
@@ -692,7 +883,7 @@
                             </tr>
                             <tr>
                                 <td><strong>Highway Driving</strong></td>
-                                <td>Prohibited on highways over 80 km/h</td>
+                                <td>Prohibited on highways over 80 km/h (except with driving instructor)</td>
                                 <td>Allowed on all roads including highways</td>
                                 <td>Allowed on all roads including highways</td>
                             </tr>
@@ -793,12 +984,13 @@
                                 <span class="badge bg-danger faq-icon-badge me-3">
                                     <i class="fas fa-road"></i>
                                 </span>
-                                <span>Why can't G1 drivers use highways?</span>
+                                <span>Can G1 drivers use highways?</span>
                             </button>
                         </h2>
                         <div id="collapse0c" class="accordion-collapse collapse" aria-labelledby="faq0c" data-bs-parent="#faqAccordion">
                             <div class="accordion-body bg-light border-start border-danger border-4 ps-4">
-                                <p class="mb-0">G1 drivers are prohibited from highways with speed limits over 80 km/h because they're still learning basic driving skills. Highway driving requires advanced abilities like high-speed merging, lane changing, and traffic management that come with more experience.</p>
+                                <p class="mb-2">G1 drivers are generally prohibited from highways with speed limits over 80 km/h because they're still learning basic driving skills. Highway driving requires advanced abilities like high-speed merging, lane changing, and traffic management that come with more experience.</p>
+                                <p class="mb-0"><strong>Exception:</strong> G1 drivers CAN drive on highways when accompanied by a <strong>licensed driving instructor</strong> during professional driving lessons. This allows you to practice highway skills safely under expert supervision before your G2 test.</p>
                             </div>
                         </div>
                     </div>
