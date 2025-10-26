@@ -146,6 +146,37 @@
         ]
     }
     </script>
+    
+    <!-- Custom FAQ Styles -->
+    <style>
+        .faq-icon-badge {
+            width: 45px !important;
+            height: 45px !important;
+            min-width: 45px;
+            min-height: 45px;
+            border-radius: 50% !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex-shrink: 0;
+            font-size: 18px;
+        }
+        
+        .accordion-button {
+            padding: 1.25rem 1.5rem;
+            align-items: center;
+        }
+        
+        .accordion-button:not(.collapsed) {
+            background: linear-gradient(135deg, #CE252A 0%, #a01d21 100%) !important;
+            color: white !important;
+        }
+        
+        .accordion-button:not(.collapsed) .faq-icon-badge {
+            background-color: white !important;
+            color: #CE252A !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -267,6 +298,11 @@
                 
                 <p class="lead">Driving in Ontario follows a graduated licensing system with three distinct levels: G1, G2, and full G license. Each level comes with specific rules and restrictions designed to keep you and others safe on the road. Did you know that young drivers in Ontario are more likely to be in accidents? In fact, drivers aged 16-24 are involved in almost 30% of crashes, according to the Ministry of Transportation. Understanding the restrictions for each license type is crucial for safe and legal driving.</p>
 
+                <div class="alert alert-warning border-0 shadow-sm mb-4">
+                    <i class="fas fa-clock me-2"></i>
+                    <strong>Important 5-Year Timeline:</strong> You must be at least 16 years old to apply for your G1 license. Once you start, you have 5 years to complete the entire graduated licensing program (G1 → G2 → G). If you don't obtain your full G license within this 5-year period, you must restart the entire process from the beginning.
+                </div>
+
                 <img src="img/G2-Licence-Restrictions.png" alt="G2 Licence Guide Ontario" class="img-fluid mb-4 rounded">
                 
                 <div class="card mb-4">
@@ -329,9 +365,52 @@
                     <i class="fas fa-info-circle me-2"></i>
                     <strong>Safety First:</strong> These restrictions are designed to protect you and others on the road. Young drivers with passengers are 44% more likely to be involved in fatal crashes. Following these rules significantly reduces your risk while you build essential driving experience.
                 </div>
+
+                <h3 class="mt-4">What's Tested on the G2 Road Test (G1 Exit Test)?</h3>
+                <p>The G2 road test evaluates basic driving skills. You must hold your G1 for at least 8 months (with an approved driver education course) or 12 months before taking this test. The test includes:</p>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <ul>
+                            <li>Left and right turns</li>
+                            <li>Stopping at traffic lights and stop signs</li>
+                            <li>Parallel parking</li>
+                            <li>Three-point turns</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul>
+                            <li>Lane changes</li>
+                            <li>Driving in residential neighborhoods</li>
+                            <li>One-way streets</li>
+                            <li>Yield signs and intersections</li>
+                        </ul>
+                    </div>
+                </div>
                 
                 <h2 id="g-licence" class="mt-5">The Freedom of a Full G Licence</h2>
                 <p>After holding a G2 licence for at least 12 months, you can take the G2 exit test to earn your full G licence. This advanced road test evaluates highway driving skills and more complex maneuvers. With a full G license, you have complete driving freedom with no graduated licensing restrictions - you can drive anywhere, anytime, carry any number of passengers, and supervise new G1 drivers.</p>
+
+                <h3 class="mt-4">What's Tested on the G Road Test (G2 Exit Test)?</h3>
+                <p>The G road test focuses on advanced driving skills, especially highway driving. Note that parallel parking, three-point turns, and residential neighborhood driving are NOT re-tested (they were covered in the G2 test). The G test includes:</p>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <ul>
+                            <li>Highway driving and expressway navigation</li>
+                            <li>Merging on and off highways</li>
+                            <li>Maintaining appropriate speed and spacing</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul>
+                            <li>Advanced lane changes and signaling</li>
+                            <li>Driving on major roads</li>
+                            <li>Turns, curves, and intersections</li>
+                            <li>Driving in business areas</li>
+                        </ul>
+                    </div>
+                </div>
 
                 <h3 class="mt-4">Full G Licence Privileges</h3>
                 <p>Once you pass the G test, you receive a full G licence with enhanced privileges:</p>
@@ -482,7 +561,7 @@
                 <p>Understanding demerit points and device penalties is crucial for maintaining your driving privileges. Here's how the
                     rules differ across G1, G2, and full G licenses:</p>
                 
-                <div class="row mb-2">
+                <div class="row mb-4">
                     <div class="col-md-4 mb-3">
                         <div class="card border-danger h-100">
                             <div class="card-header bg-danger text-white">
@@ -490,8 +569,13 @@
                             </div>
                             <div class="card-body">
                                 <p><strong>Demerit Points:</strong> <span class="text-danger">9 points</span> = suspension</p>
-                                <p class="mb-0"><strong>Hand-Held Devices:</strong> <span class="text-danger">30-day suspension</span>
-                                    on first offense + fines + demerit points</p>
+                                <p><strong>Hand-Held Devices (Distracted Driving):</strong></p>
+                                <ul class="small mb-0">
+                                    <li><strong>1st offense:</strong> $615 fine + 30-day suspension</li>
+                                    <li><strong>2nd offense:</strong> $615 fine + 90-day suspension</li>
+                                    <li><strong>3rd offense:</strong> $615 fine + licence cancellation (must redo GLS program)</li>
+                                </ul>
+                                <p class="small text-muted mb-0 mt-2"><em>Note: No demerit points for novice drivers, but longer suspensions instead.</em></p>
                             </div>
                         </div>
                     </div>
@@ -502,8 +586,13 @@
                             </div>
                             <div class="card-body">
                                 <p><strong>Demerit Points:</strong> <span class="text-danger">9 points</span> = suspension</p>
-                                <p class="mb-0"><strong>Hand-Held Devices:</strong> <span class="text-danger">30-day suspension</span>
-                                    on first offense + fines + demerit points</p>
+                                <p><strong>Hand-Held Devices (Distracted Driving):</strong></p>
+                                <ul class="small mb-0">
+                                    <li><strong>1st offense:</strong> $615 fine + 30-day suspension</li>
+                                    <li><strong>2nd offense:</strong> $615 fine + 90-day suspension</li>
+                                    <li><strong>3rd offense:</strong> $615 fine + licence cancellation (must redo GLS program)</li>
+                                </ul>
+                                <p class="small text-muted mb-0 mt-2"><em>Note: No demerit points for novice drivers, but longer suspensions instead.</em></p>
                             </div>
                         </div>
                     </div>
@@ -514,11 +603,26 @@
                             </div>
                             <div class="card-body">
                                 <p><strong>Demerit Points:</strong> <span class="text-danger">15 points</span> = suspension</p>
-                                <p class="mb-0"><strong>Hand-Held Devices:</strong> Fines + <span class="text-danger">3 demerit
-                                        points</span> (no automatic suspension)</p>
+                                <p><strong>Hand-Held Devices (Distracted Driving):</strong></p>
+                                <ul class="small mb-0">
+                                    <li><strong>1st offense:</strong> $615 fine + 3 demerit points + 3-day suspension</li>
+                                    <li><strong>2nd offense:</strong> $615 fine + 6 demerit points + 7-day suspension</li>
+                                    <li><strong>3rd offense:</strong> $615 fine + 6 demerit points + 30-day suspension</li>
+                                </ul>
+                                <p class="small text-muted mb-0 mt-2"><em>Note: Fines can increase up to $1,000-$3,000 if fighting in court and losing.</em></p>
                             </div>
                         </div>
                     </div>
+                </div>
+                
+                <div class="alert alert-warning border-0 shadow-sm">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Important:</strong> The $615 fine applies if settled out of court. If you receive a summons or fight the ticket and lose, fines can be up to $1,000 (1st), $2,000 (2nd), or $3,000 (3rd offense). You'll also pay a licence reinstatement fee after each suspension. <a href="https://www.ontario.ca/page/distracted-driving" target="_blank" class="text-primary"><u>Source: Ontario.ca (Updated July 2025)</u></a>
+                </div>
+
+                <div class="alert alert-info border-0 shadow-sm">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Why No Demerit Points for G1/G2 Drivers?</strong> Novice drivers face longer licence suspensions (30/90 days, then cancellation) instead of demerit points for distracted driving. This stricter approach emphasizes zero tolerance during the critical learning period when inexperienced drivers face the highest risk.
                 </div>
                 
                 <!-- <div class="alert alert-danger border-0 shadow-sm">
@@ -607,102 +711,143 @@
                     <strong>Choose Rajput Driving School Windsor</strong> to master your driving skills, understand G2 restrictions, and start your journey as a responsible and confident driver.
                 </div> -->
 
-                <h2 id="faq" class="mt-5">FAQs</h2>
-                <p>Here are answers to the most common questions about G1, G2, and G licence restrictions and regulations:</p>
-                <div class="accordion accordion-flush" id="faqAccordion">
-                    <div class="accordion-item border-danger">
+                <h2 id="faq" class="mt-5 text-center mb-3">
+                    <i class="fas fa-question-circle text-danger me-2"></i>Frequently Asked Questions
+                </h2>
+                <p class="text-center text-muted mb-4">Quick answers to the most common questions about G1, G2, and G licence restrictions</p>
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item border-0 shadow-sm mb-3 rounded overflow-hidden">
                         <h2 class="accordion-header" id="faq0">
-                            <button class="accordion-button collapsed bg-light text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse0" aria-expanded="false" aria-controls="collapse0">
-                                <i class="fas fa-user-graduate text-danger me-2"></i>Can I practice driving with my G1 license alone?
+                            <button class="accordion-button collapsed fw-bold text-dark" style="background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);" type="button" data-bs-toggle="collapse" data-bs-target="#collapse0" aria-expanded="false" aria-controls="collapse0">
+                                <span class="badge bg-danger faq-icon-badge me-3">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </span>
+                                <span>What happens if I fail a road test?</span>
                             </button>
                         </h2>
                         <div id="collapse0" class="accordion-collapse collapse" aria-labelledby="faq0" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body bg-white">
-                                No, G1 drivers must always have a qualified supervisor (fully licensed G driver with 4+ years experience) in the front passenger seat. Driving alone with a G1 license is illegal and can result in serious penalties.
+                            <div class="accordion-body bg-light border-start border-danger border-4 ps-4">
+                                <p class="mb-0">If you fail a road test, you must wait at least <strong>10 days</strong> before retaking it. If your G1 license expires before you pass the G2 test, you must start completely over. If your G2 is about to expire, you can retake the G1 exit test to get 5 more years as a G2 driver to complete your full G license.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="accordion-item border-danger">
+                    <div class="accordion-item border-0 shadow-sm mb-3 rounded overflow-hidden">
                         <h2 class="accordion-header" id="faq0b">
-                            <button class="accordion-button collapsed bg-light text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse0b" aria-expanded="false" aria-controls="collapse0b">
-                                <i class="fas fa-road text-danger me-2"></i>Why can't G1 drivers use highways?
+                            <button class="accordion-button collapsed fw-bold text-dark" style="background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);" type="button" data-bs-toggle="collapse" data-bs-target="#collapse0b" aria-expanded="false" aria-controls="collapse0b">
+                                <span class="badge bg-danger faq-icon-badge me-3">
+                                    <i class="fas fa-user-graduate"></i>
+                                </span>
+                                <span>Can I practice driving with my G1 license alone?</span>
                             </button>
                         </h2>
                         <div id="collapse0b" class="accordion-collapse collapse" aria-labelledby="faq0b" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body bg-white">
-                                G1 drivers are prohibited from highways with speed limits over 80 km/h because they're still learning basic driving skills. Highway driving requires advanced abilities like high-speed merging, lane changing, and traffic management that come with more experience.
+                            <div class="accordion-body bg-light border-start border-danger border-4 ps-4">
+                                <p class="mb-0"><strong>No.</strong> G1 drivers must always have a qualified supervisor (fully licensed G driver with 4+ years experience) in the front passenger seat. Driving alone with a G1 license is illegal and can result in serious penalties.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="accordion-item border-danger">
+                    <div class="accordion-item border-0 shadow-sm mb-3 rounded overflow-hidden">
                         <h2 class="accordion-header" id="faq0c">
-                            <button class="accordion-button collapsed bg-light text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse0c" aria-expanded="false" aria-controls="collapse0c">
-                                <i class="fas fa-users text-danger me-2"></i>What are the seatbelt responsibilities for G1, G2, and G drivers?
+                            <button class="accordion-button collapsed fw-bold text-dark" style="background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);" type="button" data-bs-toggle="collapse" data-bs-target="#collapse0c" aria-expanded="false" aria-controls="collapse0c">
+                                <span class="badge bg-danger faq-icon-badge me-3">
+                                    <i class="fas fa-road"></i>
+                                </span>
+                                <span>Why can't G1 drivers use highways?</span>
                             </button>
                         </h2>
                         <div id="collapse0c" class="accordion-collapse collapse" aria-labelledby="faq0c" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body bg-white">
-                                <strong>G1 & G2:</strong> You must ensure every passenger wears a seatbelt - no more passengers than working seatbelts in the vehicle. <br><strong>Full G:</strong> You're responsible for passengers under 16 wearing seatbelts/child restraints. Passengers 16+ are responsible for themselves.
+                            <div class="accordion-body bg-light border-start border-danger border-4 ps-4">
+                                <p class="mb-0">G1 drivers are prohibited from highways with speed limits over 80 km/h because they're still learning basic driving skills. Highway driving requires advanced abilities like high-speed merging, lane changing, and traffic management that come with more experience.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="accordion-item border-danger">
+                    <div class="accordion-item border-0 shadow-sm mb-3 rounded overflow-hidden">
                         <h2 class="accordion-header" id="faq1">
-                            <button class="accordion-button collapsed bg-light text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
-                                <i class="fas fa-globe text-danger me-2"></i>Can I drive to the US with a G2 license?
+                            <button class="accordion-button collapsed fw-bold text-dark" style="background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
+                                <span class="badge bg-danger faq-icon-badge me-3">
+                                    <i class="fas fa-globe"></i>
+                                </span>
+                                <span>Can I drive to the US with a G2 license?</span>
                             </button>
                         </h2>
                         <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="faq1" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body bg-white">
-                                Yes, you can drive to the US with a G2 license, but you must follow Ontario's G2 restrictions.
+                            <div class="accordion-body bg-light border-start border-danger border-4 ps-4">
+                                <p class="mb-0"><strong>Yes</strong>, you can drive to the US with a G2 license, but you must follow Ontario's G2 restrictions.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="accordion-item border-danger">
+                    <div class="accordion-item border-0 shadow-sm mb-3 rounded overflow-hidden">
                         <h2 class="accordion-header" id="faq2">
-                            <button class="accordion-button collapsed bg-light text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
-                                <i class="fas fa-calendar-check text-danger me-2"></i>How long do I have to stay at the G2 licensing stage?
+                            <button class="accordion-button collapsed fw-bold text-dark" style="background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                                <span class="badge bg-danger faq-icon-badge me-3">
+                                    <i class="fas fa-calendar-check"></i>
+                                </span>
+                                <span>How long do I have to finish the entire GLS?</span>
                             </button>
                         </h2>
                         <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="faq2" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body bg-white">
-                                You must hold your G2 licence for at least 12 months before you can take the G road test. There is no accelerated option for the G2 to G transition.
+                            <div class="accordion-body bg-light border-start border-danger border-4 ps-4">
+                                <p class="mb-0">You have <strong>5 years</strong> from the date you obtain your G1 license to complete the entire graduated licensing program and get your full G license. If you don't complete it within 5 years, you must start over from the beginning with a new G1 test. After getting your G2, you must hold it for at least 12 months before taking the G test.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="accordion-item border-danger">
+                    <div class="accordion-item border-0 shadow-sm mb-3 rounded overflow-hidden">
+                        <h2 class="accordion-header" id="faq2c">
+                            <button class="accordion-button collapsed fw-bold text-dark" style="background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2c" aria-expanded="false" aria-controls="collapse2c">
+                                <span class="badge bg-danger faq-icon-badge me-3">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </span>
+                                <span>Do I get insurance discounts with a driver ed course?</span>
+                            </button>
+                        </h2>
+                        <div id="collapse2c" class="accordion-collapse collapse" aria-labelledby="faq2c" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body bg-light border-start border-danger border-4 ps-4">
+                                <p class="mb-0"><strong>Yes!</strong> Completing a government-approved driver education course (like those offered by Rajput Driving School) provides two major benefits: you can take your G2 test after 8 months instead of 12, and many insurance companies offer significant premium discounts (often 10-15%) for drivers who complete an approved course.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0 shadow-sm mb-3 rounded overflow-hidden">
                         <h2 class="accordion-header" id="faq3">
-                            <button class="accordion-button collapsed bg-light text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-                                <i class="fas fa-shield-alt text-danger me-2"></i>Do I need auto insurance if I have my G2?
+                            <button class="accordion-button collapsed fw-bold text-dark" style="background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                                <span class="badge bg-danger faq-icon-badge me-3">
+                                    <i class="fas fa-shield-alt"></i>
+                                </span>
+                                <span>Do I need auto insurance if I have my G2?</span>
                             </button>
                         </h2>
                         <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="faq3" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body bg-white">
-                                Yes, auto insurance is required. If you don't own a car, you can be added to a policy as a secondary driver.
+                            <div class="accordion-body bg-light border-start border-danger border-4 ps-4">
+                                <p class="mb-0"><strong>Yes</strong>, auto insurance is required. If you don't own a car, you can be added to a policy as a secondary driver.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="accordion-item border-danger">
+                    <div class="accordion-item border-0 shadow-sm mb-3 rounded overflow-hidden">
                         <h2 class="accordion-header" id="faq4">
-                            <button class="accordion-button collapsed bg-light text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
-                                <i class="fas fa-home text-danger me-2"></i>Do I need to notify my insurance company if someone in my household recently became a G2 licensed driver?
+                            <button class="accordion-button collapsed fw-bold text-dark" style="background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                                <span class="badge bg-danger faq-icon-badge me-3">
+                                    <i class="fas fa-home"></i>
+                                </span>
+                                <span>Do I need to notify my insurance company if someone in my household recently became a G2 licensed driver?</span>
                             </button>
                         </h2>
                         <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="faq4" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body bg-white">
-                                Yes, insurance companies need to know about all licensed drivers in your household to adjust the policy if necessary.
+                            <div class="accordion-body bg-light border-start border-danger border-4 ps-4">
+                                <p class="mb-0"><strong>Yes</strong>, insurance companies need to know about all licensed drivers in your household to adjust the policy if necessary.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="accordion-item border-danger">
+                    <div class="accordion-item border-0 shadow-sm mb-3 rounded overflow-hidden">
                         <h2 class="accordion-header" id="faq5">
-                            <button class="accordion-button collapsed bg-light text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
-                                <i class="fas fa-car text-danger me-2"></i>Can I buy a car if I have my G2?
+                            <button class="accordion-button collapsed fw-bold text-dark" style="background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                                <span class="badge bg-danger faq-icon-badge me-3">
+                                    <i class="fas fa-car"></i>
+                                </span>
+                                <span>Can I buy a car if I have my G2?</span>
                             </button>
                         </h2>
                         <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="faq5" data-bs-parent="#faqAccordion">
-                            <div class="accordion-body bg-white">
-                                Yes, you can buy a car with a G2 licence, but you'll need insurance to legally drive it.
+                            <div class="accordion-body bg-light border-start border-danger border-4 ps-4">
+                                <p class="mb-0"><strong>Yes</strong>, you can buy a car with a G2 licence, but you'll need insurance to legally drive it.</p>
                             </div>
                         </div>
                     </div>
