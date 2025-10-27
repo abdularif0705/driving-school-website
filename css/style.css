@@ -373,37 +373,39 @@
     border: 10px solid var(--primary);
 }
 
-/* it is a must to have this for mobile devices, otherwise the carousel will not look nice */
-@media (max-width: 768px) {
+/* Carousel item styling to prevent image stretching */
+#header-carousel .carousel-item {
+    position: relative;
+    min-height: 450px;
+    overflow: hidden;
+}
+
+#header-carousel .carousel-item img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Adjust minimum height for larger screens */
+@media (min-width: 769px) {
     #header-carousel .carousel-item {
-        position: relative;
-        min-height: 450px;
-    }
-    
-    #header-carousel .carousel-item img {
-        position: absolute;
-        width: 100%; /* Fill the width of the carousel item */
-        height: 100%; /* Fill the height of the carousel item */
-        object-fit: cover; /* Scale the image to cover the carousel item, cropping if necessary */
+        min-height: 600px;
     }
 }
 
-/* Styles for larger screens */
-/* Adjusted this height for monitors but laptop screens won't have forced enlarged height 1070px images. Tablets or smaller laptops might have buttons going up and down though, but very very slightly. Not worth locking the height to that size for tablets for aesthetic reasons even if it deals with the button issue */
-/* Keeping it commented out because the cropped images are almost perfect anyways, so a little movement of the buttons and not being perfectly alighned is fine if it means a more pleasant and aesthetic look to the carousel on any device. */
-/* @media (min-width: 1700px) {
+@media (min-width: 1200px) {
     #header-carousel .carousel-item {
-        position: relative;
-        height: 1070px;
+        min-height: 700px;
     }
-    
-    #header-carousel .carousel-item img {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+}
+
+@media (min-width: 1700px) {
+    #header-carousel .carousel-item {
+        min-height: 800px;
     }
-} */
+}
 
 .page-header {
     background: linear-gradient(rgba(0, 0, 0, .75), rgba(0, 0, 0, .75)), url(../img/drive-test-windsor-g-test.jpg) center center no-repeat;
