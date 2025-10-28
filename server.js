@@ -4,27 +4,27 @@ const express = require("express");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2025-09-30.clover",
 });
-const nodemailer = require("nodemailer");
-const twilio = require("twilio");
+// const nodemailer = require("nodemailer");
+// const twilio = require("twilio");
 const app = express();
 app.use(express.json());
 app.use(express.static(".")); // Serve static files from root directory
 app.use(express.static("public")); // Also serve public folder
 
-// Configure email transporter
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
+// Configure email transporter (commented out for now)
+// const transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.EMAIL_PASS
+//   }
+// });
 
-// Configure Twilio for SMS
-const twilioClient = twilio(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN
-);
+// Configure Twilio for SMS (commented out for now)
+// const twilioClient = twilio(
+//   process.env.TWILIO_ACCOUNT_SID,
+//   process.env.TWILIO_AUTH_TOKEN
+// );
 
 const YOUR_DOMAIN = "http://localhost:4242";
 
@@ -87,10 +87,10 @@ app.get("/session-status", async (req, res) => {
     { expand: ["payment_intent", "customer_details"] }
   );
   
-  // Send email if payment is successful
-  if (session.payment_status === 'paid' && session.customer_details?.email) {
-    await sendRegistrationEmail(session);
-  }
+  // Send email if payment is successful (commented out for now)
+  // if (session.payment_status === 'paid' && session.customer_details?.email) {
+  //   await sendRegistrationEmail(session);
+  // }
   
   res.json({
     status: session.status,
@@ -142,37 +142,37 @@ async function sendRegistrationEmail(session) {
       `
     };
 
-    await transporter.sendMail(mailOptions);
-    console.log('Registration email sent to:', session.customer_details.email);
+    // await transporter.sendMail(mailOptions);
+    // console.log('Registration email sent to:', session.customer_details.email);
     
     // Also send SMS if phone number is available
-    if (session.customer_details?.phone) {
-      await sendRegistrationSMS(session);
-    }
+    // if (session.customer_details?.phone) {
+    //   await sendRegistrationSMS(session);
+    // }
   } catch (error) {
     console.error('Error sending email:', error);
   }
 }
 
-// Function to send SMS confirmation
-async function sendRegistrationSMS(session) {
-  try {
-    const courseName = session.line_items?.data[0]?.description || "Driving Course";
-    const amount = (session.amount_total / 100).toFixed(2);
+// Function to send SMS confirmation (commented out for now)
+// async function sendRegistrationSMS(session) {
+//   try {
+//     const courseName = session.line_items?.data[0]?.description || "Driving Course";
+//     const amount = (session.amount_total / 100).toFixed(2);
     
-    const message = `Thank you for registering! Course: ${courseName}, Amount: $${amount} CAD. We'll contact you soon about scheduling. Rajput Driving School - (226) 246-2224`;
+//     const message = `Thank you for registering! Course: ${courseName}, Amount: $${amount} CAD. We'll contact you soon about scheduling. Rajput Driving School - (226) 246-2224`;
     
-    await twilioClient.messages.create({
-      body: message,
-      from: process.env.TWILIO_PHONE_NUMBER,
-      to: session.customer_details.phone
-    });
+//     await twilioClient.messages.create({
+//       body: message,
+//       from: process.env.TWILIO_PHONE_NUMBER,
+//       to: session.customer_details.phone
+//     });
     
-    console.log('Registration SMS sent to:', session.customer_details.phone);
-  } catch (error) {
-    console.error('Error sending SMS:', error);
-  }
-}
+//     console.log('Registration SMS sent to:', session.customer_details.phone);
+//   } catch (error) {
+//     console.error('Error sending SMS:', error);
+//   }
+// }
 
 app.listen(4242, () =>
   console.log("Stripe payment server running on port 4242")
