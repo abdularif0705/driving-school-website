@@ -26,78 +26,128 @@ app.use(express.static("public")); // Also serve public folder
 //   process.env.TWILIO_AUTH_TOKEN
 // );
 
-const YOUR_DOMAIN = process.env.RENDER_EXTERNAL_URL || process.env.YOUR_DOMAIN || "http://localhost:4242";
+const YOUR_DOMAIN = "http://localhost:4242";
 
 app.post("/create-checkout-session", async (req, res) => {
   try {
-    const { course, numberOfLessons = 1 } = req.body;
+    console.log("📥 Received checkout request:", req.body);
+    
+    const { course, numberOfLessons = 1, email } = req.body;
+    
+    // Log the course and lessons info
+    console.log(`🎯 Course selected: ${course}`);
+    console.log(`📚 Number of lessons: ${numberOfLessons}`);
+    console.log(`📧 Customer email: ${email}`);
+    
     let lineItems = [];
 
     // Calculate prices (in cents)
+    // Includes 13% HST + 3% Stripe fee = 16% markup
+    // BDE: $450 * 1.16 = $522.00 = 52200 cents
+    // Individual: $40 * 1.16 = $46.40 = 4640 cents per hour
+    // Car Rental: $80 * 1.16 = $92.80 = 9280 cents
+    
     if (course === "bde") {
+      console.log("✅ Creating BDE course checkout");
       lineItems.push({
         price_data: {
           product_data: { name: "MTO Approved BDE Course" },
           currency: "CAD",
-          unit_amount: 45000, // $450
+          unit_amount: 52200, // $450 + 13% HST + 3% fee = $522
         },
         quantity: 1,
       });
+      console.log("💰 BDE Total: $522.00 CAD");
+      
     } else if (course === "individual") {
+      console.log(`✅ Creating Individual lessons checkout: ${numberOfLessons} lessons`);
+      const lessonPriceWithTax = 4640; // $46.40 per lesson (includes HST + fee)
+      const totalPrice = lessonPriceWithTax * numberOfLessons;
+      
       lineItems.push({
         price_data: {
-          product_data: { name: "Individual Driving Lesson" },
+          product_data: { name: `Individual Driving Lesson${numberOfLessons > 1 ? 's' : ''} (${numberOfLessons}x)` },
           currency: "CAD",
-          unit_amount: 4000, // $40 per hour
+          unit_amount: lessonPriceWithTax, // $46.40 per lesson including tax
         },
         quantity: numberOfLessons,
       });
+      console.log(`💰 Individual lessons total: $${(totalPrice / 100).toFixed(2)} CAD (${numberOfLessons} x $46.40)`);
+      
     } else if (course === "carRental") {
+      console.log("✅ Creating Car Rental checkout");
       lineItems.push({
         price_data: {
           product_data: { name: "Car Rental for Road Test" },
           currency: "CAD",
-          unit_amount: 8000, // $80
+          unit_amount: 9280, // $80 + 13% HST + 3% fee = $92.80
         },
         quantity: 1,
       });
+      console.log("💰 Car Rental Total: $92.80 CAD");
     } else {
       return res.status(400).json({ error: "Invalid course type" });
     }
 
-    const session = await stripe.checkout.sessions.create({
+    console.log("🔗 Creating Stripe checkout session...");
+    
+    const sessionOptions = {
       ui_mode: "custom",
       line_items: lineItems,
       mode: "payment",
       return_url: `${YOUR_DOMAIN}/registration.html?session_id={CHECKOUT_SESSION_ID}`,
       automatic_tax: { enabled: true },
-      billing_address_collection: "auto", // Collect billing address which includes phone
-      customer_email: "customer@example.com", // This will be updated with actual email from form
-    });
+    };
+    
+    // Only set customer_email if provided
+    if (email) {
+      sessionOptions.customer_email = email;
+      console.log("📧 Setting customer email in session");
+    }
+    
+    const session = await stripe.checkout.sessions.create(sessionOptions);
+
+    console.log("✅ Stripe session created:", session.id);
+    console.log("🔑 Client secret:", session.client_secret.substring(0, 20) + "...");
 
     res.json({ clientSecret: session.client_secret });
   } catch (err) {
+    console.error("❌ Error creating checkout session:", err.message);
+    console.error("Full error:", err);
     res.status(500).json({ error: "Server error: " + err.message });
   }
 });
 
 app.get("/session-status", async (req, res) => {
-  const session = await stripe.checkout.sessions.retrieve(
-    req.query.session_id,
-    { expand: ["payment_intent", "customer_details"] }
-  );
-  
-  // Send email if payment is successful (commented out for now)
-  // if (session.payment_status === 'paid' && session.customer_details?.email) {
-  //   await sendRegistrationEmail(session);
-  // }
-  
-  res.json({
-    status: session.status,
-    payment_status: session.payment_status,
-    payment_intent_id: session.payment_intent.id,
-    payment_intent_status: session.payment_intent.status,
-  });
+  try {
+    const sessionId = req.query.session_id;
+    console.log("📊 Checking session status for:", sessionId);
+    
+    const session = await stripe.checkout.sessions.retrieve(
+      sessionId,
+      { expand: ["payment_intent", "customer_details"] }
+    );
+    
+    console.log("✅ Session retrieved");
+    console.log("   Status:", session.status);
+    console.log("   Payment Status:", session.payment_status);
+    console.log("   Payment Intent ID:", session.payment_intent?.id);
+    
+    // Send email if payment is successful (commented out for now)
+    // if (session.payment_status === 'paid' && session.customer_details?.email) {
+    //   await sendRegistrationEmail(session);
+    // }
+    
+    res.json({
+      status: session.status,
+      payment_status: session.payment_status,
+      payment_intent_id: session.payment_intent.id,
+      payment_intent_status: session.payment_intent.status,
+    });
+  } catch (err) {
+    console.error("❌ Error retrieving session:", err.message);
+    res.status(500).json({ error: "Error retrieving session: " + err.message });
+  }
 });
 
 // Function to send registration confirmation email
@@ -174,7 +224,12 @@ async function sendRegistrationEmail(session) {
 //   }
 // }
 
-const PORT = process.env.PORT || 4242;
-app.listen(PORT, () =>
-  console.log(`Stripe payment server running on port ${PORT}`)
-);
+app.listen(4242, () => {
+  console.log("=" .repeat(50));
+  console.log("🚀 Stripe payment server running on port 4242");
+  console.log("📋 Price breakdown:");
+  console.log("   BDE Course: $522.00 CAD (includes HST + Stripe fee)");
+  console.log("   Individual Lessons: $46.40 CAD/hour (includes HST + Stripe fee)");
+  console.log("   Car Rental: $92.80 CAD (includes HST + Stripe fee)");
+  console.log("=" .repeat(50));
+});
