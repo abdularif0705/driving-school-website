@@ -26,18 +26,34 @@ app.use(express.static("public")); // Also serve public folder
 //   process.env.TWILIO_AUTH_TOKEN
 // );
 
-const YOUR_DOMAIN = "http://localhost:4242";
+// Use environment variable for domain, fallback to localhost for development
+const YOUR_DOMAIN = process.env.DOMAIN || "http://localhost:4242";
 
 app.post("/create-checkout-session", async (req, res) => {
   try {
-    console.log("📥 Received checkout request:", req.body);
+    console.log("=" .repeat(60));
+    console.log("📥 New checkout session request received");
+    console.log("⏰ Timestamp:", new Date().toISOString());
+    console.log("📦 Request body:", JSON.stringify(req.body, null, 2));
+    console.log("=" .repeat(60));
     
-    const { course, numberOfLessons = 1, email } = req.body;
+    const { course, numberOfLessons = 1 } = req.body;
+    
+    // Validate course is provided
+    if (!course) {
+      console.error("❌ Missing course parameter");
+      return res.status(400).json({ error: "Course is required" });
+    }
     
     // Log the course and lessons info
     console.log(`🎯 Course selected: ${course}`);
     console.log(`📚 Number of lessons: ${numberOfLessons}`);
-    console.log(`📧 Customer email: ${email}`);
+    
+    // Validate course type
+    if (!['bde', 'individual', 'carRental'].includes(course)) {
+      console.error("❌ Invalid course type:", course);
+      return res.status(400).json({ error: "Invalid course type" });
+    }
     
     let lineItems = [];
 
@@ -97,23 +113,34 @@ app.post("/create-checkout-session", async (req, res) => {
       mode: "payment",
       return_url: `${YOUR_DOMAIN}/registration.html?session_id={CHECKOUT_SESSION_ID}`,
       automatic_tax: { enabled: true },
+      // Don't collect billing address - we already have it in the form
+      // billing_address_collection: "auto",
     };
     
-    // Only set customer_email if provided
-    if (email) {
-      sessionOptions.customer_email = email;
-      console.log("📧 Setting customer email in session");
-    }
+    // Don't set customer_email here - Stripe Payment Element handles email collection
+    // Setting it manually causes conflicts with the confirm() method
+    console.log("📋 Session options:", JSON.stringify(sessionOptions, null, 2));
+    console.log("🔗 Calling Stripe API...");
     
     const session = await stripe.checkout.sessions.create(sessionOptions);
 
-    console.log("✅ Stripe session created:", session.id);
-    console.log("🔑 Client secret:", session.client_secret.substring(0, 20) + "...");
+    console.log("=" .repeat(60));
+    console.log("✅ SUCCESS - Stripe session created!");
+    console.log("🔑 Session ID:", session.id);
+    console.log("🔑 Client secret:", session.client_secret.substring(0, 30) + "...");
+    console.log("💰 Total amount:", session.amount_total);
+    console.log("💳 Customer email:", session.customer_email || 'Not set');
+    console.log("=" .repeat(60));
 
     res.json({ clientSecret: session.client_secret });
   } catch (err) {
-    console.error("❌ Error creating checkout session:", err.message);
-    console.error("Full error:", err);
+    console.error("=" .repeat(60));
+    console.error("❌ ERROR creating checkout session!");
+    console.error("📝 Error message:", err.message);
+    console.error("📝 Error type:", err.type);
+    console.error("📝 Error code:", err.code);
+    console.error("📝 Full error:", JSON.stringify(err, null, 2));
+    console.error("=" .repeat(60));
     res.status(500).json({ error: "Server error: " + err.message });
   }
 });

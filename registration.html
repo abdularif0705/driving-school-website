@@ -1197,7 +1197,7 @@
                                     <!-- Stripe Elements will be inserted here -->
                                     <div id="card-element" class="form-control"
                                         style="min-height: 300px; padding: 30px; border: 2px solid #e9ecef; border-radius: 10px; margin-bottom: 20px;">
-                                        <!-- A Stripe Element will be inserted here. -->
+                                        <!-- A Stripe Payment Element will be inserted here. -->
                                     </div>
 
                                     <!-- Used to display form errors. -->
@@ -1369,9 +1369,17 @@
         let selectedCourse = null;
         let selectedPrice = 0;
         let numberOfLessons = 1;
-        let stripe = Stripe('pk_test_51SN11YJcnVKw61PDz3UU6c7mnNXgZGQB4hJVIKQpMiXA0tD5U56UtKM9qjpA9rjLmmvqBAUvi8842GJY0kc2qWT900FUsPgjr6');
+        // Stripe publishable key (safe to expose in client-side code)
+        const stripe = Stripe('pk_test_51SN11YJcnVKw61PDz3UU6c7mnNXgZGQB4hJVIKQpMiXA0tD5U56UtKM9qjpA9rjLmmvqBAUvi8842GJY0kc2qWT900FUsPgjr6');
         let checkout = null;
         let actions = null;
+        
+        // Log environment for debugging
+        console.log('🌍 Environment check:');
+        console.log('📍 Current URL:', window.location.href);
+        console.log('📍 Hostname:', window.location.hostname);
+        console.log('📍 Protocol:', window.location.protocol);
+        console.log('⏰ Page loaded at:', new Date().toISOString());
 
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function () {
@@ -1399,35 +1407,46 @@
         }
 
         async function initializeStripe() {
-            if (!selectedCourse) return;
+            console.log('🔄 Initializing Stripe...');
+            console.log('📌 Selected course:', selectedCourse);
+            console.log('📚 Number of lessons:', numberOfLessons);
+            
+            if (!selectedCourse) {
+                console.warn('⚠️ No course selected');
+                return;
+            }
 
             try {
-                // Fetch client secret from backend with customer email
-                const email = document.getElementById('email').value;
+                console.log('📤 Sending request to server...');
                 const requestBody = {
-                    course: selectedCourse,
+                    course: selectedCourse, 
                     numberOfLessons: selectedCourse === 'individual' ? numberOfLessons : 1
                 };
+                console.log('📤 Request body:', requestBody);
                 
-                // Only send email if it's filled in
-                if (email) {
-                    requestBody.email = email;
-                }
-                
+                // Fetch client secret from backend
                 const response = await fetch('/create-checkout-session', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(requestBody)
                 });
 
+                console.log('📥 Server response status:', response.status);
                 const data = await response.json();
-                console.log('Server response:', data);
+                console.log('📥 Server response data:', data);
 
-                if (!response.ok || !data.clientSecret) {
-                    throw new Error(data.error || 'Failed to create checkout session');
+                if (!response.ok) {
+                    throw new Error(data.error || `Server error: ${response.status}`);
                 }
 
+                if (!data.clientSecret) {
+                    throw new Error('No client secret received from server');
+                }
+
+                console.log('✅ Client secret received:', data.clientSecret.substring(0, 30) + '...');
+
                 // Initialize checkout
+                console.log('🔄 Initializing Stripe checkout...');
                 checkout = stripe.initCheckout({
                     clientSecret: data.clientSecret,
                     elementsOptions: {
@@ -1441,19 +1460,48 @@
                 });
 
                 // Load actions
+                console.log('🔄 Loading actions...');
                 const loadActionsResult = await checkout.loadActions();
+                console.log('📊 Load actions result:', loadActionsResult.type);
+                
                 if (loadActionsResult.type === 'success') {
                     actions = loadActionsResult.actions;
+                    console.log('✅ Actions loaded successfully');
+                    
+                    // Try to get session details to check for customer_email
+                    try {
+                        const session = actions.getSession();
+                        console.log('📋 Session details retrieved');
+                        console.log('📋 Session ID:', session.id);
+                        console.log('📋 Customer email set?:', session.customer_email || 'NOT SET');
+                        if (session.customer_email) {
+                            console.warn('⚠️ WARNING: customer_email is already set in session:', session.customer_email);
+                        }
+                    } catch (getSessionError) {
+                        console.warn('⚠️ Could not get session details:', getSessionError);
+                    }
+                    
                     // Order summary is already populated by updateOrderSummary()
                     // Just confirm Stripe is ready
+                } else {
+                    console.error('❌ Failed to load actions:', loadActionsResult);
+                    throw new Error('Failed to load Stripe actions');
                 }
 
-                // Create and mount payment element only (no billing/shipping - already collected)
+                // Create and mount payment element (no billing/shipping - already collected)
+                console.log('🔄 Creating payment element...');
                 const paymentElement = checkout.createPaymentElement();
+                console.log('🔄 Mounting payment element...');
                 paymentElement.mount('#card-element');
+                console.log('✅ Payment element mounted successfully');
 
             } catch (error) {
-                console.error('Error initializing Stripe:', error);
+                console.error('❌ Error initializing Stripe:', error);
+                console.error('Error details:', {
+                    name: error.name,
+                    message: error.message,
+                    stack: error.stack
+                });
                 document.getElementById('card-errors').textContent = error.message;
             }
         }
@@ -1680,7 +1728,7 @@
             // Car Rental: $80 * 1.16 = $92.80
             let unitPrice = selectedPrice;
             let totalPrice = selectedPrice;
-            
+
             if (selectedCourse === 'bde') {
                 unitPrice = 450;
                 totalPrice = 522;
@@ -1730,6 +1778,7 @@
 
         async function handlePayment(e) {
             e.preventDefault();
+            console.log('🔵 Payment button clicked');
             const submitButton = document.getElementById('submitPayment');
             const originalText = submitButton.innerHTML;
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
@@ -1737,27 +1786,110 @@
             document.getElementById('loadingOverlay').style.display = 'flex';
 
             try {
+                console.log('✅ Starting payment process...');
+                
                 if (!actions) {
                     throw new Error('Payment not initialized. Please refresh and try again.');
                 }
+                console.log('✅ Actions object available');
 
-                // Confirm the payment (email is already set in CheckoutSession)
-                const { error } = await actions.confirm();
+                // Get email from the form and check if updateEmail is available
+                const email = document.getElementById('email').value;
+                console.log('📧 Email from form:', email);
+                
+                if (!email || email.trim() === '') {
+                    throw new Error('Email address is required');
+                }
 
-                // If there's an error, show it
-                if (error) {
+                // Try to update email in the checkout session
+                console.log('🔄 Attempting to update email in Stripe session...');
+                console.log('📊 Actions object:', actions);
+                console.log('📊 updateEmail available?', typeof actions.updateEmail);
+                
+                if (typeof actions.updateEmail === 'function') {
+                    try {
+                        console.log('✅ updateEmail is a function, calling it...');
+                        const updateResult = await actions.updateEmail(email);
+                        console.log('✅ Email updated successfully. Result:', updateResult);
+                    } catch (updateEmailError) {
+                        console.error('❌ Error updating email:', updateEmailError);
+                        console.error('📝 Error name:', updateEmailError.name);
+                        console.error('📝 Error message:', updateEmailError.message);
+                        console.error('📝 Error stack:', updateEmailError.stack);
+                        // Check if the error is about email already being set
+                        if (updateEmailError.message && updateEmailError.message.includes('customer_email is already set')) {
+                            console.warn('⚠️ Customer email is already set in session. Skipping updateEmail()...');
+                        } else {
+                            // Try to continue with confirmation anyway
+                            console.log('⚠️ Continuing with payment confirmation despite email update error');
+                        }
+                    }
+                } else {
+                    console.warn('⚠️ updateEmail is not available on actions object');
+                }
+                
+                // Now confirm the payment
+                console.log('🔄 Confirming payment...');
+                console.log('📊 Actions.confirm available?', typeof actions.confirm);
+                console.log('📊 About to call actions.confirm() WITHOUT email parameter');
+                
+                try {
+                    console.log('🔄 Calling actions.confirm()...');
+                    const result = await actions.confirm();
+                    console.log('📊 Confirmation result received:', result);
+                    console.log('📊 Result keys:', Object.keys(result));
+                    
+                    const { error } = result;
+                    console.log('📊 Has error?', !!error);
+                    console.log('📊 Error value:', error);
+                    
+                    // ALWAYS submit to Formspree if there's no error
+                    if (!error) {
+                        console.log('✅ Payment successful! No error detected.');
+                        // Hide loading overlay
+                        document.getElementById('loadingOverlay').style.display = 'none';
+                        
+                        // Submit to Formspree IMMEDIATELY while form data is available
+                        console.log('🔄 About to submit to Formspree...');
+                        console.log('📊 Checkpoint: Before Formspree call');
+                        try {
+                            console.log('📧 CALLING submitToFormspree() NOW...');
+                            await submitToFormspree();
+                            console.log('✅ Formspree submission complete');
+                        } catch (formspreeError) {
+                            console.error('❌ Formspree submission failed:', formspreeError);
+                            console.error('Error stack:', formspreeError.stack);
+                        }
+                        console.log('✅ After Formspree call');
+                        
+                        // Show success message on the page
+                        console.log('🎉 Showing success message...');
+                        showSuccessMessage();
+                    } else {
+                        console.error('❌ Payment confirmation error details:');
+                        console.error('📝 Error type:', error.type);
+                        console.error('📝 Error message:', error.message);
+                        console.error('📝 Error code:', error.code);
+                        console.error('📝 Full error object:', JSON.stringify(error, null, 2));
+                        
+                        document.getElementById('loadingOverlay').style.display = 'none';
+                        document.getElementById('card-errors').textContent = error.message || 'Payment failed. Please try again.';
+                        submitButton.innerHTML = originalText;
+                        submitButton.disabled = false;
+                    }
+                } catch (confirmError) {
+                    console.error('❌ Error calling actions.confirm():', confirmError);
+                    console.error('📝 Confirm error name:', confirmError.name);
+                    console.error('📝 Confirm error message:', confirmError.message);
+                    console.error('📝 Confirm error stack:', confirmError.stack);
                     document.getElementById('loadingOverlay').style.display = 'none';
-                    document.getElementById('card-errors').textContent = error.message || 'Payment failed. Please try again.';
+                    document.getElementById('card-errors').textContent = confirmError.message || 'Payment confirmation failed. Please try again.';
                     submitButton.innerHTML = originalText;
                     submitButton.disabled = false;
-                } else {
-                    // Success! Submit to Formspree to send email notification
-                    await submitToFormspree();
-                    
-                    // Then redirect
-                    window.location.href = window.location.href;
                 }
             } catch (error) {
+                console.error('❌ Unexpected error in payment handler:', error);
+                console.error('Error stack:', error.stack);
                 document.getElementById('loadingOverlay').style.display = 'none';
                 document.getElementById('card-errors').textContent = error.message || 'An unexpected error occurred. Please try again.';
                 submitButton.innerHTML = originalText;
@@ -1765,9 +1897,12 @@
             }
         }
 
-        // Function to submit registration data to Formspree
+        // Function to submit registration data to Formspree (like contact.html)
         async function submitToFormspree() {
+            console.log('📧 Preparing to submit to Formspree...');
+            
             try {
+                // Get form data
                 const formData = {
                     firstName: document.getElementById('firstName').value,
                     lastName: document.getElementById('lastName').value,
@@ -1786,23 +1921,44 @@
                     numberOfLessons: numberOfLessons
                 };
 
-                // TODO: Replace with your actual Formspree form ID
-                const response = await fetch('https://formspree.io/f/YOUR_FORMSPREE_ID_HERE', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        _subject: 'New Course Registration - Rajput Driving School',
-                        ...formData
-                    })
+                console.log('📧 Form data collected:', formData);
+
+                // Create form data object like contact.html does
+                const formDataToSend = new FormData();
+                Object.keys(formData).forEach(key => {
+                    formDataToSend.append(key, formData[key]);
                 });
 
+                // Add subject
+                formDataToSend.append('_subject', 'New Course Registration - Rajput Driving School');
+
+                console.log('📤 Submitting to Formspree...');
+                
+                // Use form-encoded submission like contact.html (more reliable)
+                const response = await fetch('https://formspree.io/f/mbjnlojk', {
+                    method: 'POST',
+                    body: formDataToSend,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                console.log('📥 Formspree response status:', response.status);
+                
                 if (response.ok) {
-                    console.log('Registration data sent to Formspree');
+                    const responseData = await response.json();
+                    console.log('✅ Formspree submission successful:', responseData);
+                } else {
+                    const errorData = await response.json();
+                    console.warn('⚠️ Formspree submission warning:', errorData);
                 }
             } catch (error) {
-                console.error('Error submitting to Formspree:', error);
+                console.error('❌ Error submitting to Formspree:', error);
+                console.error('Error details:', {
+                    name: error.name,
+                    message: error.message,
+                    stack: error.stack
+                });
                 // Don't show error to user - payment was successful
             }
         }
@@ -1811,6 +1967,7 @@
             document.querySelectorAll('.step-content').forEach(step => step.style.display = 'none');
             document.querySelector('.step-indicator').style.display = 'none';
             document.getElementById('successMessage').style.display = 'block';
+            console.log('✅ Success message displayed');
         }
 
         // Form validation helpers
