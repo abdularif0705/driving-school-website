@@ -12,8 +12,8 @@
                     'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-KRD8TNJ8');</script>
 
-    <!-- Stripe.js -->
-    <script src="https://js.stripe.com/v3/"></script>
+    <!-- Stripe.js Clover API for Custom Checkout -->
+    <script src="https://js.stripe.com/clover/stripe.js"></script>
 
     <!-- JavaScript Libraries -->
     <script defer src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -1195,12 +1195,12 @@
 
                                     <!-- Stripe Elements will be inserted here -->
                                     <div id="card-element" class="form-control"
-                                        style="height: 58px; padding: 20px; border: 2px solid #e9ecef; border-radius: 10px;">
+                                        style="min-height: 300px; padding: 30px; border: 2px solid #e9ecef; border-radius: 10px; margin-bottom: 20px;">
                                         <!-- A Stripe Element will be inserted here. -->
                                     </div>
 
                                     <!-- Used to display form errors. -->
-                                    <div id="card-errors" role="alert" class="text-danger mt-2"></div>
+                                    <div id="card-errors" role="alert" class="text-danger mt-2 mb-4"></div>
 
                                     <div class="security-badge">
                                         <i class="fas fa-lock"></i>
@@ -1368,45 +1368,82 @@
         let selectedCourse = null;
         let selectedPrice = 0;
         let numberOfLessons = 1;
-        let stripe = Stripe('pk_test_51234567890abcdef'); // Replace with your Stripe publishable key
-        let elements = stripe.elements();
-        let cardElement;
+        let stripe = Stripe('pk_test_51SN11YJcnVKw61PDz3UU6c7mnNXgZGQB4hJVIKQpMiXA0tD5U56UtKM9qjpA9rjLmmvqBAUvi8842GJY0kc2qWT900FUsPgjr6');
+        let checkout = null;
+        let actions = null;
 
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function () {
-            initializeStripe();
             bindEventListeners();
+            checkPaymentSuccess();
         });
 
-        function initializeStripe() {
-            // Create card element
-            cardElement = elements.create('card', {
-                style: {
-                    base: {
-                        fontSize: '16px',
-                        color: '#424770',
-                        '::placeholder': {
-                            color: '#aab7c4',
-                        },
-                        fontFamily: 'Work Sans, sans-serif',
-                    },
-                    invalid: {
-                        color: '#9e2146',
-                    },
-                },
-            });
+        // Check if returning from successful payment
+        async function checkPaymentSuccess() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const sessionId = urlParams.get('session_id');
 
-            cardElement.mount('#card-element');
+            if (sessionId) {
+                try {
+                    const response = await fetch(`/session-status?session_id=${sessionId}`);
+                    const session = await response.json();
 
-            // Handle real-time validation errors from the card Element
-            cardElement.on('change', function (event) {
-                const displayError = document.getElementById('card-errors');
-                if (event.error) {
-                    displayError.textContent = event.error.message;
-                } else {
-                    displayError.textContent = '';
+                    if (session.payment_status === 'paid') {
+                        showSuccessMessage();
+                    }
+                } catch (error) {
+                    console.error('Error checking session status:', error);
                 }
-            });
+            }
+        }
+
+        async function initializeStripe() {
+            if (!selectedCourse) return;
+
+            try {
+                // Fetch client secret from backend
+                const response = await fetch('/create-checkout-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ course: selectedCourse, numberOfLessons: selectedCourse === 'individual' ? numberOfLessons : 1 })
+                });
+
+                const data = await response.json();
+                console.log('Server response:', data);
+
+                if (!response.ok || !data.clientSecret) {
+                    throw new Error(data.error || 'Failed to create checkout session');
+                }
+
+                // Initialize checkout
+                checkout = stripe.initCheckout({
+                    clientSecret: data.clientSecret,
+                    elementsOptions: {
+                        appearance: {
+                            theme: 'stripe',
+                            variables: {
+                                colorPrimary: '#ce252a',
+                            }
+                        }
+                    }
+                });
+
+                // Load actions
+                const loadActionsResult = await checkout.loadActions();
+                if (loadActionsResult.type === 'success') {
+                    actions = loadActionsResult.actions;
+                    // Order summary is already populated by updateOrderSummary()
+                    // Just confirm Stripe is ready
+                }
+
+                // Create and mount payment element only (no billing/shipping - already collected)
+                const paymentElement = checkout.createPaymentElement();
+                paymentElement.mount('#card-element');
+
+            } catch (error) {
+                console.error('Error initializing Stripe:', error);
+                document.getElementById('card-errors').textContent = error.message;
+            }
         }
 
         function bindEventListeners() {
@@ -1441,10 +1478,12 @@
             // Navigation buttons
             document.getElementById('nextToDetails').addEventListener('click', () => showStep(2));
             document.getElementById('backToCourses').addEventListener('click', () => showStep(1));
-            document.getElementById('nextToPayment').addEventListener('click', () => {
+            document.getElementById('nextToPayment').addEventListener('click', async () => {
                 if (validateStudentInfo()) {
                     updateOrderSummary();
                     showStep(3);
+                    // Initialize Stripe when showing payment section
+                    await initializeStripe();
                 }
             });
             document.getElementById('backToInfo').addEventListener('click', () => showStep(2));
@@ -1670,36 +1709,38 @@
             document.getElementById('orderSummary').innerHTML = summaryHTML;
         }
 
-        async function handlePayment() {
+        async function handlePayment(e) {
+            e.preventDefault();
             const submitButton = document.getElementById('submitPayment');
             const originalText = submitButton.innerHTML;
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
             submitButton.disabled = true;
             document.getElementById('loadingOverlay').style.display = 'flex';
+
             try {
-                // Only send course type to backend
-                const response = await fetch('/create-checkout-session', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ course: selectedCourse })
-                });
-                let result;
-                const text = await response.text();
-                try {
-                    result = JSON.parse(text);
-                } catch (e) {
-                    result = null;
+                if (!actions) {
+                    throw new Error('Payment not initialized. Please refresh and try again.');
                 }
-                document.getElementById('loadingOverlay').style.display = 'none';
-                if (response.ok && result && result.sessionId) {
-                    // Redirect to Stripe Checkout
-                    window.location.href = `https://checkout.stripe.com/c/pay/${result.sessionId}`;
-                } else {
-                    document.getElementById('card-errors').textContent = (result && result.error) ? result.error : 'Payment failed. Please try again.';
+
+                // Get email from the form
+                const email = document.getElementById('email').value;
+                if (!email) {
+                    throw new Error('Email is required');
+                }
+
+                // Confirm the payment with email
+                const { error } = await actions.confirm({ email });
+
+                // If there's an error, show it
+                if (error) {
+                    document.getElementById('loadingOverlay').style.display = 'none';
+                    document.getElementById('card-errors').textContent = error.message || 'Payment failed. Please try again.';
                     submitButton.innerHTML = originalText;
                     submitButton.disabled = false;
+                } else {
+                    // Success! Redirect happens via return_url in server.js
+                    // The return_url will reload this page with session_id parameter
+                    window.location.href = window.location.href;
                 }
             } catch (error) {
                 document.getElementById('loadingOverlay').style.display = 'none';

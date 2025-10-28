@@ -1,62 +1,62 @@
 // Stripe payment server for driving school
 require("dotenv").config();
 const express = require("express");
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: "2025-09-30.clover",
+});
 const app = express();
 app.use(express.json());
+app.use(express.static(".")); // Serve static files from root directory
+app.use(express.static("public")); // Also serve public folder
 
 const YOUR_DOMAIN = "http://localhost:4242";
 
 app.post("/create-checkout-session", async (req, res) => {
   try {
-    const { course } = req.body;
-    let lineItem;
-    // Calculate total with 13% HST and 3% Stripe fee
-    // BDE: $450 + 13% + 3% = $450 * 1.16 = $522
-    // Individual: $40 * 1.16 = $46.40
-    // Car Rental: $80 * 1.16 = $92.80
+    const { course, numberOfLessons = 1 } = req.body;
+    let lineItems = [];
+
+    // Calculate prices (in cents)
     if (course === "bde") {
-      lineItem = {
+      lineItems.push({
         price_data: {
-          product_data: { name: "BDE Course" },
+          product_data: { name: "MTO Approved BDE Course" },
           currency: "CAD",
-          unit_amount: 52200,
+          unit_amount: 45000, // $450
         },
         quantity: 1,
-      };
+      });
     } else if (course === "individual") {
-      lineItem = {
+      lineItems.push({
         price_data: {
           product_data: { name: "Individual Driving Lesson" },
           currency: "CAD",
-          unit_amount: 4640,
+          unit_amount: 4000, // $40 per hour
         },
-        quantity: 1,
-      };
+        quantity: numberOfLessons,
+      });
     } else if (course === "carRental") {
-      lineItem = {
+      lineItems.push({
         price_data: {
           product_data: { name: "Car Rental for Road Test" },
           currency: "CAD",
-          unit_amount: 9280,
+          unit_amount: 8000, // $80
         },
         quantity: 1,
-      };
+      });
     } else {
       return res.status(400).json({ error: "Invalid course type" });
     }
 
     const session = await stripe.checkout.sessions.create({
       ui_mode: "custom",
-      billing_address_collection: "auto",
-      shipping_address_collection: { allowed_countries: ["US", "CA"] },
-      line_items: [lineItem],
+      line_items: lineItems,
       mode: "payment",
-      return_url: `${YOUR_DOMAIN}/complete.html?session_id={CHECKOUT_SESSION_ID}`,
+      return_url: `${YOUR_DOMAIN}/registration.html?session_id={CHECKOUT_SESSION_ID}`,
       automatic_tax: { enabled: true },
     });
 
-    res.json({ clientSecret: session.client_secret, sessionId: session.id });
+    res.json({ clientSecret: session.client_secret });
   } catch (err) {
     res.status(500).json({ error: "Server error: " + err.message });
   }
