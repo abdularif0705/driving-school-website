@@ -111,7 +111,7 @@ app.post("/create-checkout-session", async (req, res) => {
       ui_mode: "custom",
       line_items: lineItems,
       mode: "payment",
-      return_url: `${YOUR_DOMAIN}/registration.html?session_id={CHECKOUT_SESSION_ID}`,
+      return_url: `${YOUR_DOMAIN}/registration.html?session_id={CHECKOUT_SESSION_ID}&payment=success`,
       automatic_tax: { enabled: true },
       // Don't collect billing address - we already have it in the form
       // billing_address_collection: "auto",

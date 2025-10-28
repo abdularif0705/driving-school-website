@@ -1391,18 +1391,30 @@
         async function checkPaymentSuccess() {
             const urlParams = new URLSearchParams(window.location.search);
             const sessionId = urlParams.get('session_id');
+            const paymentSuccess = urlParams.get('payment') === 'success';
 
-            if (sessionId) {
+            console.log('🔍 Checking payment success...');
+            console.log('📋 Session ID:', sessionId);
+            console.log('📋 Payment param:', paymentSuccess);
+
+            if (sessionId || paymentSuccess) {
                 try {
+                    console.log('📤 Fetching session status from server...');
                     const response = await fetch(`/session-status?session_id=${sessionId}`);
                     const session = await response.json();
+                    console.log('📥 Session status received:', session);
 
                     if (session.payment_status === 'paid') {
+                        console.log('✅ Payment verified as paid - showing success message');
                         showSuccessMessage();
+                    } else {
+                        console.log('⚠️ Payment status:', session.payment_status);
                     }
                 } catch (error) {
-                    console.error('Error checking session status:', error);
+                    console.error('❌ Error checking session status:', error);
                 }
+            } else {
+                console.log('ℹ️ No session_id or payment param - normal page load');
             }
         }
 
@@ -1805,20 +1817,24 @@
                 console.log('🔄 Attempting to update email in Stripe session...');
                 console.log('📊 Actions object:', actions);
                 console.log('📊 updateEmail available?', typeof actions.updateEmail);
+                console.log('📧 Email to set:', email);
                 
                 if (typeof actions.updateEmail === 'function') {
+                    console.log('✅ updateEmail is a function, calling it...');
                     try {
-                        console.log('✅ updateEmail is a function, calling it...');
                         const updateResult = await actions.updateEmail(email);
                         console.log('✅ Email updated successfully. Result:', updateResult);
                     } catch (updateEmailError) {
                         console.error('❌ Error updating email:', updateEmailError);
                         console.error('📝 Error name:', updateEmailError.name);
                         console.error('📝 Error message:', updateEmailError.message);
-                        console.error('📝 Error stack:', updateEmailError.stack);
+                        console.error('📝 Full error:', JSON.stringify(updateEmailError, Object.getOwnPropertyNames(updateEmailError)));
+                        
                         // Check if the error is about email already being set
-                        if (updateEmailError.message && updateEmailError.message.includes('customer_email is already set')) {
-                            console.warn('⚠️ Customer email is already set in session. Skipping updateEmail()...');
+                        if (updateEmailError.message && (updateEmailError.message.includes('customer_email is already set') || updateEmailError.message.includes('email in confirm'))) {
+                            console.warn('⚠️ Customer email is already set in session - SERVER MAY BE SETTING IT!');
+                            console.warn('⚠️ This means your Render deployment has old code that sets customer_email');
+                            console.warn('⚠️ Solution: Make sure you deployed the latest server.js to Render');
                         } else {
                             // Try to continue with confirmation anyway
                             console.log('⚠️ Continuing with payment confirmation despite email update error');
@@ -1847,7 +1863,7 @@
                     if (!error) {
                         console.log('✅ Payment successful! No error detected.');
                         // Hide loading overlay
-                        document.getElementById('loadingOverlay').style.display = 'none';
+                document.getElementById('loadingOverlay').style.display = 'none';
                         
                         // Submit to Formspree IMMEDIATELY while form data is available
                         console.log('🔄 About to submit to Formspree...');
@@ -1865,7 +1881,7 @@
                         // Show success message on the page
                         console.log('🎉 Showing success message...');
                         showSuccessMessage();
-                    } else {
+                } else {
                         console.error('❌ Payment confirmation error details:');
                         console.error('📝 Error type:', error.type);
                         console.error('📝 Error message:', error.message);
@@ -1882,6 +1898,16 @@
                     console.error('📝 Confirm error name:', confirmError.name);
                     console.error('📝 Confirm error message:', confirmError.message);
                     console.error('📝 Confirm error stack:', confirmError.stack);
+                    console.error('📝 Full confirm error:', JSON.stringify(confirmError, Object.getOwnPropertyNames(confirmError)));
+                    
+                    // Check if it's the customer_email error
+                    if (confirmError.message && confirmError.message.includes('customer_email is already set')) {
+                        console.error('🔴 ISSUE: Server is setting customer_email in CheckoutSession');
+                        console.error('🔴 This means your Render deployment is running OLD CODE');
+                        console.error('🔴 The server.js on Render needs to be updated with latest code');
+                        console.error('🔴 DEPLOY FIX: Push latest code to GitHub, Render will auto-deploy');
+                    }
+                    
                     document.getElementById('loadingOverlay').style.display = 'none';
                     document.getElementById('card-errors').textContent = confirmError.message || 'Payment confirmation failed. Please try again.';
                     submitButton.innerHTML = originalText;
