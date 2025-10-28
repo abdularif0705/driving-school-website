@@ -1,0 +1,23 @@
+{
+  "name": "driving-school-website",
+  "version": "1.0.0",
+  "description": "Rajput Driving School Windsor - Payment Integration",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "driving-school",
+    "stripe",
+    "payment"
+  ],
+  "author": "Rajput Driving School",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "nodemailer": "^7.0.10",
+    "stripe": "^18.5.0",
+    "twilio": "^5.10.3"
+  }
+}
