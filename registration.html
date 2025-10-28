@@ -1409,9 +1409,15 @@
                     body: JSON.stringify({ course: selectedCourse, numberOfLessons: selectedCourse === 'individual' ? numberOfLessons : 1 })
                 });
 
+                // Check if response is JSON
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    throw new Error('Server returned HTML instead of JSON. Check your deployment.');
+                }
+                
                 const data = await response.json();
                 console.log('Server response:', data);
-
+                
                 if (!response.ok || !data.clientSecret) {
                     throw new Error(data.error || 'Failed to create checkout session');
                 }
@@ -1739,6 +1745,9 @@
                     submitButton.innerHTML = originalText;
                     submitButton.disabled = false;
                 } else {
+                    // Payment successful! Send data to Formspree for your records
+                    await sendToFormspree();
+                    
                     // Success! Redirect happens via return_url in server.js
                     // The return_url will reload this page with session_id parameter
                     window.location.href = window.location.href;
@@ -1748,6 +1757,42 @@
                 document.getElementById('card-errors').textContent = error.message || 'An unexpected error occurred. Please try again.';
                 submitButton.innerHTML = originalText;
                 submitButton.disabled = false;
+            }
+        }
+
+        // Send registration data to Formspree
+        async function sendToFormspree() {
+            try {
+                const formData = {
+                    course: selectedCourse,
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    dateOfBirth: document.getElementById('dateOfBirth').value,
+                    licenseNumber: document.getElementById('licenseNumber').value,
+                    address: document.getElementById('address').value,
+                    city: document.getElementById('city').value,
+                    province: document.getElementById('province').value,
+                    postalCode: document.getElementById('postalCode').value,
+                    notes: document.getElementById('notes').value,
+                    emergencyName: document.getElementById('emergencyName').value,
+                    emergencyPhone: document.getElementById('emergencyPhone').value,
+                    price: selectedPrice,
+                    numberOfLessons: numberOfLessons,
+                    timestamp: new Date().toISOString()
+                };
+
+                await fetch('https://formspree.io/f/mbjnlojk', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                
+                console.log('Registration data sent to Formspree');
+            } catch (error) {
+                console.error('Error sending to Formspree:', error);
+                // Don't show error to user - payment already succeeded
             }
         }
 

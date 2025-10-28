@@ -26,7 +26,7 @@ app.use(express.static("public")); // Also serve public folder
 //   process.env.TWILIO_AUTH_TOKEN
 // );
 
-const YOUR_DOMAIN = "http://localhost:4242";
+const YOUR_DOMAIN = process.env.RENDER_EXTERNAL_URL || process.env.YOUR_DOMAIN || "http://localhost:4242";
 
 app.post("/create-checkout-session", async (req, res) => {
   try {
@@ -174,6 +174,7 @@ async function sendRegistrationEmail(session) {
 //   }
 // }
 
-app.listen(4242, () =>
-  console.log("Stripe payment server running on port 4242")
+const PORT = process.env.PORT || 4242;
+app.listen(PORT, () =>
+  console.log(`Stripe payment server running on port ${PORT}`)
 );
