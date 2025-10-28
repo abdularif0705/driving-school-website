@@ -1404,14 +1404,20 @@
             try {
                 // Fetch client secret from backend with customer email
                 const email = document.getElementById('email').value;
+                const requestBody = {
+                    course: selectedCourse,
+                    numberOfLessons: selectedCourse === 'individual' ? numberOfLessons : 1
+                };
+                
+                // Only send email if it's filled in
+                if (email) {
+                    requestBody.email = email;
+                }
+                
                 const response = await fetch('/create-checkout-session', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        course: selectedCourse, 
-                        numberOfLessons: selectedCourse === 'individual' ? numberOfLessons : 1,
-                        email: email
-                    })
+                    body: JSON.stringify(requestBody)
                 });
 
                 const data = await response.json();
