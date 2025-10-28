@@ -314,6 +314,14 @@
             color: #dc3545;
         }
 
+        .invalid-feedback {
+            font-size: 0.85em;
+            color: #d32f2f;
+            margin-top: 2px;
+            font-weight: 400;
+            opacity: 0.95;
+        }
+
         .form-floating-custom label {
             padding: 1rem 0.75rem;
             color: #6c757d;
@@ -1022,15 +1030,20 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-floating-custom">
-                                        <input type="text" class="form-control" id="firstName" name="firstName"
-                                            required>
+                                        <input type="text" class="form-control" id="firstName" name="firstName" required
+                                            autocomplete="given-name">
                                         <label for="firstName">First Name *</label>
+                                        <div class="invalid-feedback" id="firstNameError" style="display:none;">Please
+                                            enter your first name.</div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating-custom">
-                                        <input type="text" class="form-control" id="lastName" name="lastName" required>
+                                        <input type="text" class="form-control" id="lastName" name="lastName" required
+                                            autocomplete="family-name">
                                         <label for="lastName">Last Name *</label>
+                                        <div class="invalid-feedback" id="lastNameError" style="display:none;">Please
+                                            enter your last name.</div>
                                     </div>
                                 </div>
                             </div>
@@ -1039,6 +1052,8 @@
                                     <div class="form-floating-custom">
                                         <input type="email" class="form-control" id="email" name="email" required>
                                         <label for="email">Email Address *</label>
+                                        <div class="invalid-feedback" id="emailError" style="display:none;">Please enter
+                                            a valid email address.</div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -1046,6 +1061,8 @@
                                         <input type="tel" class="form-control" id="phone" name="phone" required
                                             pattern="^(?![-. ])[\d().+\- ]{6,14}\d$">
                                         <label for="phone">Phone Number *</label>
+                                        <div class="invalid-feedback" id="phoneError" style="display:none;">Please enter
+                                            a valid phone number.</div>
                                     </div>
                                 </div>
                             </div>
@@ -1055,19 +1072,29 @@
                                         <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth"
                                             required>
                                         <label for="dateOfBirth">Date of Birth *</label>
+                                        <div class="invalid-feedback" id="dobError" style="display:none;">You must be at
+                                            least 16 years old to register.</div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating-custom">
                                         <input type="text" class="form-control" id="licenseNumber" name="licenseNumber"
-                                            pattern="^[A-Za-z]\d{4}-\d{5}-\d{5}$" placeholder="A1234-12345-12345">
-                                        <label for="licenseNumber">Driver's License Number (if applicable)</label>
+                                            placeholder="A1234-12345-12345" pattern="^[A-Za-z]\d{4}-\d{5}-\d{5}$"
+                                            title="Enter a valid Ontario driver's license number (e.g., A1234-12345-12345)"
+                                            required>
+                                        <label for="licenseNumber">Driver's License Number</label>
+                                        <div class="invalid-feedback" id="licenseNumberError" style="display:none;">
+                                            Please enter a valid Ontario driver's license number (e.g.,
+                                            A1234-12345-12345).</div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-floating-custom">
-                                <input type="text" class="form-control" id="address" name="address" required>
+                                <input type="text" class="form-control" id="address" name="address" required
+                                    autocomplete="street-address">
                                 <label for="address">Street Address *</label>
+                                <div class="invalid-feedback" id="addressError" style="display:none;">Please enter your
+                                    street address.</div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
@@ -1075,6 +1102,8 @@
                                         <input type="text" class="form-control" id="city" name="city" required
                                             value="Windsor">
                                         <label for="city">City *</label>
+                                        <div class="invalid-feedback" id="cityError" style="display:none;">Please enter
+                                            your city.</div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -1093,13 +1122,18 @@
                                             <option value="SK">Saskatchewan</option>
                                         </select>
                                         <label for="province">Province *</label>
+                                        <div class="invalid-feedback" id="provinceError" style="display:none;">Please
+                                            select your province.</div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-floating-custom">
                                         <input type="text" class="form-control" id="postalCode" name="postalCode"
-                                            required pattern="^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$" placeholder="N9B 3X3">
+                                            required pattern="^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$" placeholder="N9B 3X3"
+                                            autocomplete="postal-code">
                                         <label for="postalCode">Postal Code *</label>
+                                        <div class="invalid-feedback" id="postalCodeError" style="display:none;">Please
+                                            enter a valid postal code (e.g., N9B 3X3).</div>
                                     </div>
                                 </div>
                             </div>
@@ -1115,15 +1149,21 @@
                                 <div class="col-md-6">
                                     <div class="form-floating-custom">
                                         <input type="text" class="form-control" id="emergencyName" name="emergencyName"
-                                            required>
+                                            required autocomplete="name">
                                         <label for="emergencyName">Emergency Contact Name *</label>
+                                        <div class="invalid-feedback" id="emergencyNameError" style="display:none;">
+                                            Please enter an emergency contact name.</div>
+                                        <div class="invalid-feedback" id="emergencyNameError" style="display:none;">
+                                            Please enter an emergency contact name.</div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating-custom">
                                         <input type="tel" class="form-control" id="emergencyPhone" name="emergencyPhone"
-                                            required pattern="^(?![-. ])[\d().+\- ]{6,14}\d$">
+                                            required pattern="^(?![-. ])[\d().+\- ]{6,14}\d$" autocomplete="tel">
                                         <label for="emergencyPhone">Emergency Contact Phone *</label>
+                                        <div class="invalid-feedback" id="emergencyPhoneError" style="display:none;">
+                                            Please enter a valid emergency contact phone number.</div>
                                     </div>
                                 </div>
                             </div>
@@ -1454,19 +1494,123 @@
             let isValid = true;
 
             requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    field.classList.add('is-invalid');
-                    isValid = false;
-                } else {
-                    field.classList.remove('is-invalid');
-                    field.classList.add('is-valid');
+                let errorDiv = null;
+                // Custom validation for driver's license
+                if (field.id === 'licenseNumber') {
+                    const licensePattern = /^[A-Za-z]\d{4}-\d{5}-\d{5}$/;
+                    errorDiv = document.getElementById('licenseNumberError');
+                    if (!licensePattern.test(field.value.trim())) {
+                        field.classList.add('is-invalid');
+                        field.classList.remove('is-valid');
+                        errorDiv.style.display = 'block';
+                        isValid = false;
+                    } else {
+                        field.classList.remove('is-invalid');
+                        field.classList.add('is-valid');
+                        errorDiv.style.display = 'none';
+                    }
+                }
+                // Custom validation for DOB
+                else if (field.id === 'dateOfBirth') {
+                    errorDiv = document.getElementById('dobError');
+                    if (!field.value.trim()) {
+                        field.classList.add('is-invalid');
+                        field.classList.remove('is-valid');
+                        errorDiv.style.display = 'block';
+                        isValid = false;
+                    } else {
+                        const dob = new Date(field.value);
+                        const today = new Date();
+                        const minDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
+                        if (dob > minDate) {
+                            field.classList.add('is-invalid');
+                            field.classList.remove('is-valid');
+                            errorDiv.style.display = 'block';
+                            isValid = false;
+                        } else {
+                            field.classList.remove('is-invalid');
+                            field.classList.add('is-valid');
+                            errorDiv.style.display = 'none';
+                        }
+                    }
+                }
+                // Custom validation for phone
+                else if (field.id === 'phone') {
+                    const phonePattern = /^(?![-. ])[\d().+\- ]{6,14}\d$/;
+                    errorDiv = document.getElementById('phoneError');
+                    if (!phonePattern.test(field.value.trim())) {
+                        field.classList.add('is-invalid');
+                        field.classList.remove('is-valid');
+                        errorDiv.style.display = 'block';
+                        isValid = false;
+                    } else {
+                        field.classList.remove('is-invalid');
+                        field.classList.add('is-valid');
+                        errorDiv.style.display = 'none';
+                    }
+                }
+                // Custom validation for emergency phone
+                else if (field.id === 'emergencyPhone') {
+                    const phonePattern = /^(?![-. ])[\d().+\- ]{6,14}\d$/;
+                    errorDiv = document.getElementById('emergencyPhoneError');
+                    if (!phonePattern.test(field.value.trim())) {
+                        field.classList.add('is-invalid');
+                        field.classList.remove('is-valid');
+                        errorDiv.style.display = 'block';
+                        isValid = false;
+                    } else {
+                        field.classList.remove('is-invalid');
+                        field.classList.add('is-valid');
+                        errorDiv.style.display = 'none';
+                    }
+                }
+                // Custom validation for email
+                else if (field.id === 'email') {
+                    errorDiv = document.getElementById('emailError');
+                    const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+                    if (!emailPattern.test(field.value.trim())) {
+                        field.classList.add('is-invalid');
+                        field.classList.remove('is-valid');
+                        if (errorDiv) errorDiv.style.display = 'block';
+                        isValid = false;
+                    } else {
+                        field.classList.remove('is-invalid');
+                        field.classList.add('is-valid');
+                        if (errorDiv) errorDiv.style.display = 'none';
+                    }
+                }
+                // Custom validation for postal code
+                else if (field.id === 'postalCode') {
+                    errorDiv = document.getElementById('postalCodeError');
+                    const postalPattern = /^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/;
+                    if (!postalPattern.test(field.value.trim())) {
+                        field.classList.add('is-invalid');
+                        field.classList.remove('is-valid');
+                        if (errorDiv) errorDiv.style.display = 'block';
+                        isValid = false;
+                    } else {
+                        field.classList.remove('is-invalid');
+                        field.classList.add('is-valid');
+                        if (errorDiv) errorDiv.style.display = 'none';
+                    }
+                }
+                // Default validation for other fields
+                else {
+                    errorDiv = document.getElementById(field.id + 'Error');
+                    if (!field.value.trim()) {
+                        field.classList.add('is-invalid');
+                        field.classList.remove('is-valid');
+                        if (errorDiv) errorDiv.style.display = 'block';
+                        isValid = false;
+                    } else {
+                        field.classList.remove('is-invalid');
+                        field.classList.add('is-valid');
+                        if (errorDiv) errorDiv.style.display = 'none';
+                    }
                 }
             });
 
-            if (!isValid) {
-                alert('Please fill in all required fields');
-            }
-
+            // No alert, only inline error feedback
             return isValid;
         }
 
@@ -1485,7 +1629,8 @@
             }
 
             const taxes = Math.round(totalPrice * 0.13); // 13% HST
-            const finalTotal = totalPrice + taxes;
+            const stripeFee = Math.round((totalPrice + taxes) * 0.03); // 3% Stripe fee
+            const finalTotal = totalPrice + taxes + stripeFee;
 
             let summaryHTML = `
                 <div class="summary-item">
@@ -1513,6 +1658,10 @@
                     <span>$${taxes}</span>
                 </div>
                 <div class="summary-item">
+                    <span>Stripe Fee (3%)</span>
+                    <span>$${stripeFee}</span>
+                </div>
+                <div class="summary-item">
                     <span>Total</span>
                     <span>$${finalTotal}</span>
                 </div>
@@ -1524,73 +1673,33 @@
         async function handlePayment() {
             const submitButton = document.getElementById('submitPayment');
             const originalText = submitButton.innerHTML;
-
-            // Update button to show processing state
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
             submitButton.disabled = true;
-
             document.getElementById('loadingOverlay').style.display = 'flex';
-
             try {
-                const form = document.getElementById('registrationForm');
-                const formData = new FormData(form);
-
-                // Create payment intent on your server
-                const response = await fetch('payment-handler.php', {
+                // Only send course type to backend
+                const response = await fetch('/create-checkout-session', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                        course: selectedCourse,
-                        price: selectedCourse === 'individual' ? selectedPrice * numberOfLessons : selectedPrice,
-                        lessons: numberOfLessons,
-                        studentInfo: Object.fromEntries(formData)
-                    })
+                    body: JSON.stringify({ course: selectedCourse })
                 });
-
-                if (!response.ok) {
-                    throw new Error('Payment setup failed. Please try again.');
+                let result;
+                const text = await response.text();
+                try {
+                    result = JSON.parse(text);
+                } catch (e) {
+                    result = null;
                 }
-
-                const paymentData = await response.json();
-
-                if (paymentData.error) {
-                    throw new Error(paymentData.error);
-                }
-
-                // Confirm payment with Stripe
-                const result = await stripe.confirmCardPayment(paymentData.client_secret, {
-                    payment_method: {
-                        card: cardElement,
-                        billing_details: {
-                            name: `${formData.get('firstName')} ${formData.get('lastName')}`,
-                            email: formData.get('email'),
-                            phone: formData.get('phone'),
-                            address: {
-                                line1: formData.get('address'),
-                                city: formData.get('city'),
-                                state: formData.get('province'),
-                                postal_code: formData.get('postalCode'),
-                                country: 'CA'
-                            }
-                        }
-                    }
-                });
-
                 document.getElementById('loadingOverlay').style.display = 'none';
-
-                if (result.error) {
-                    // Show error to customer
-                    document.getElementById('card-errors').textContent = result.error.message;
+                if (response.ok && result && result.sessionId) {
+                    // Redirect to Stripe Checkout
+                    window.location.href = `https://checkout.stripe.com/c/pay/${result.sessionId}`;
+                } else {
+                    document.getElementById('card-errors').textContent = (result && result.error) ? result.error : 'Payment failed. Please try again.';
                     submitButton.innerHTML = originalText;
                     submitButton.disabled = false;
-                } else {
-                    // Payment succeeded - show success immediately
-                    submitButton.innerHTML = '<i class="fas fa-check me-2"></i>Success!';
-                    setTimeout(() => {
-                        showSuccessMessage();
-                    }, 500);
                 }
             } catch (error) {
                 document.getElementById('loadingOverlay').style.display = 'none';
