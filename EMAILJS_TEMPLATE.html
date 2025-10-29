@@ -1,0 +1,69 @@
+<div style="font-family: system-ui, sans-serif, Arial; font-size: 16px; background-color: #fff8f1">
+    <div style="max-width: 600px; margin: auto; padding: 16px">
+        <h2 style="color: #ce252a; margin-bottom: 20px;">New Course Registration Received!</h2>
+
+        <p>You have received a new course registration from your website. Here are the details:</p>
+
+        <!-- Student Information -->
+        <div
+            style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #ce252a;">
+            <h3 style="color: #333; margin-top: 0;">Student Information</h3>
+            <p><strong>Name:</strong> {{firstName}} {{lastName}}</p>
+            <p><strong>Email:</strong> {{from_email}}</p>
+            <p><strong>Phone:</strong> {{phone}}</p>
+            <p><strong>Date of Birth:</strong> {{dateOfBirth}}</p>
+            <p><strong>Driver's License:</strong> {{licenseNumber}}</p>
+        </div>
+
+        <!-- Address -->
+        <div
+            style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #ce252a;">
+            <h3 style="color: #333; margin-top: 0;">Address</h3>
+            <p>{{address}}<br>{{city}}, {{province}} {{postalCode}}</p>
+        </div>
+
+        <!-- Emergency Contact -->
+        <div
+            style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #ce252a;">
+            <h3 style="color: #333; margin-top: 0;">Emergency Contact</h3>
+            <p><strong>Name:</strong> {{emergencyName}}</p>
+            <p><strong>Phone:</strong> {{emergencyPhone}}</p>
+        </div>
+
+        <!-- Course Details -->
+        <div
+            style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #ce252a;">
+            <h3 style="color: #333; margin-top: 0;">Course Details</h3>
+            <p><strong>Course:</strong> {{course}}</p>
+            <p><strong>Number of Lessons:</strong> {{numberOfLessons}}</p>
+        </div>
+
+        <!-- Additional Notes -->
+        {{#if notes}}
+        <div
+            style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #ce252a;">
+            <h3 style="color: #333; margin-top: 0;">Additional Notes</h3>
+            <p>{{notes}}</p>
+        </div>
+        {{/if}}
+
+        <p style="color: #666; font-size: 14px; margin-top: 30px;">
+            Registration received on {{date}}.
+        </p>
+
+        <p style="margin-top: 30px;">
+            Best regards,<br />The Rajput Driving School Windsor Team
+        </p>
+
+        <p style="margin-top: 20px; font-size: 14px; color: #666;">
+            Contact us at
+            <a href="mailto:rajputwindsor@gmail.com" style="text-decoration: none; outline: none; color: #ce252a">
+                rajputwindsor@gmail.com
+            </a>
+            or
+            <a href="tel:(226)246-2224" style="text-decoration: none; outline: none; color: #ce252a">
+                (226) 246-2224
+            </a>
+        </p>
+    </div>
+</div>
