@@ -127,7 +127,7 @@ app.post("/create-checkout-session", async (req, res) => {
         price_data: {
           product_data: { name: "MTO Approved BDE Course" },
           currency: "CAD",
-          unit_amount: 52200, // $450 + 13% HST + 3% fee = $522
+          unit_amount: 52200, // $522.00 = $450 + 13% HST + 3% Stripe fee
         },
         quantity: 1,
       });
@@ -136,7 +136,7 @@ app.post("/create-checkout-session", async (req, res) => {
     } else if (sanitizedCourse === "individual") {
       console.log(`✅ Creating Individual lessons checkout: ${sanitizedLessons} lessons`);
       const lessonPriceWithTax = 4640; // $46.40 per lesson (includes HST + fee)
-      const totalPrice = lessonPriceWithTax * sanitizedLessons;
+      const totalPrice = lessonPriceWithTax * sanitizedLessons; // Calculate total in cents (preserves precision)
       
       lineItems.push({
         price_data: {
@@ -154,7 +154,7 @@ app.post("/create-checkout-session", async (req, res) => {
         price_data: {
           product_data: { name: "Car Rental for Road Test" },
           currency: "CAD",
-          unit_amount: 9280, // $80 + 13% HST + 3% fee = $92.80
+          unit_amount: 9280, // $92.80 = $80 + 13% HST + 3% Stripe fee
         },
         quantity: 1,
       });
@@ -187,7 +187,7 @@ app.post("/create-checkout-session", async (req, res) => {
     console.log("✅ SUCCESS - Stripe session created!");
     console.log("🔑 Session ID:", session.id);
     console.log("🔑 Client secret:", session.client_secret.substring(0, 30) + "...");
-    console.log("💰 Total amount:", session.amount_total);
+    console.log("💰 Total amount:", session.amount_total, `($${(session.amount_total / 100).toFixed(2)} CAD)`);
     console.log("💳 Customer email:", session.customer_email || 'Not set');
     console.log("=" .repeat(60));
 

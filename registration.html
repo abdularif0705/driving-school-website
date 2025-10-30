@@ -1837,7 +1837,7 @@
             const courseName = courseNames[selectedCourse];
             
             // Calculate prices with 16% markup (13% HST + 3% Stripe fee)
-            // BDE: $450 * 1.16 = $522
+            // BDE: $450 * 1.16 = $522.00
             // Individual: $40 * 1.16 = $46.40 per hour
             // Car Rental: $80 * 1.16 = $92.80
             let unitPrice = selectedPrice;
@@ -1845,21 +1845,23 @@
 
             if (selectedCourse === 'bde') {
                 unitPrice = 450;
-                totalPrice = 522;
+                totalPrice = 522.00;
             } else if (selectedCourse === 'individual') {
                 unitPrice = 40;
-                totalPrice = Math.round(46.40 * numberOfLessons);
+                totalPrice = 46.40 * numberOfLessons;
             } else if (selectedCourse === 'carRental') {
                 unitPrice = 80;
-                totalPrice = 93;
+                totalPrice = 92.80;
             }
 
             const finalTotal = totalPrice;
+            const subtotal = selectedCourse === 'individual' ? (unitPrice * numberOfLessons) : unitPrice;
+            const taxesAndFees = (finalTotal / 116) * 16;
 
             let summaryHTML = `
                 <div class="summary-item">
                     <span>${courseName}</span>
-                    <span>$${unitPrice}${selectedCourse === 'individual' ? '/hr' : ''}</span>
+                    <span>$${unitPrice.toFixed(2)}${selectedCourse === 'individual' ? '/hr' : ''}</span>
                 </div>
             `;
 
@@ -1871,7 +1873,7 @@
                     </div>
                     <div class="summary-item">
                         <span>Subtotal</span>
-                        <span>$${unitPrice * numberOfLessons}</span>
+                        <span>$${subtotal.toFixed(2)}</span>
                     </div>
                 `;
             }
@@ -1879,11 +1881,11 @@
             summaryHTML += `
                 <div class="summary-item">
                     <span>HST (13%) + Stripe Fee (3%)</span>
-                    <span>$${Math.round((finalTotal / 116) * 16)}</span>
+                    <span>$${taxesAndFees.toFixed(2)}</span>
                 </div>
                 <div class="summary-item">
                     <span>Total</span>
-                    <span>$${finalTotal}.00</span>
+                    <span>$${finalTotal.toFixed(2)}</span>
                 </div>
             `;
 

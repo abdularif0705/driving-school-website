@@ -11,12 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     try {
         // Calculate total amount including taxes
-        $baseAmount = $input['price'];
-        $taxes = round($baseAmount * 0.13); // 13% HST for Ontario
+        $baseAmount = floatval($input['price']);
+        $taxes = $baseAmount * 0.13; // 13% HST for Ontario (preserve decimals)
         $totalAmount = $baseAmount + $taxes;
         
-        // Convert to cents for Stripe
-        $amountInCents = $totalAmount * 100;
+        // Convert to cents for Stripe (round to nearest cent)
+        $amountInCents = round($totalAmount * 100);
         
         // Course details for description
         $courseNames = [
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Return client secret
         echo json_encode([
             'client_secret' => $paymentIntent->client_secret,
-            'amount' => $totalAmount,
+            'amount' => round($totalAmount, 2), // Preserve 2 decimal places
             'course' => $courseName
         ]);
         
