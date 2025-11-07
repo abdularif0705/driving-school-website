@@ -310,6 +310,54 @@ async function sendRegistrationEmail(session) {
 //   }
 // }
 
+// Address autocomplete endpoint (keeps Mapbox token secure on server)
+app.get("/api/geocode", async (req, res) => {
+  try {
+    const query = req.query.query;
+    
+    // Validate query
+    if (!query || query.trim().length < 3) {
+      return res.status(400).json({ error: "Query must be at least 3 characters" });
+    }
+    
+    // Sanitize query (prevent injection)
+    const sanitizedQuery = query.toString().trim().substring(0, 200);
+    
+    console.log(`🔍 Geocoding request: "${sanitizedQuery}"`);
+    
+    // Mapbox Geocoding API - Token stored securely in .env
+    const MAPBOX_TOKEN = process.env.MAPBOX_ACCESS_TOKEN;
+    
+    if (!MAPBOX_TOKEN) {
+      console.error("❌ MAPBOX_ACCESS_TOKEN not found in environment variables");
+      return res.status(500).json({ error: "Geocoding service not configured" });
+    }
+    
+    const url = new URL('https://api.mapbox.com/geocoding/v5/mapbox.places/' + encodeURIComponent(sanitizedQuery) + '.json');
+    url.searchParams.set('access_token', MAPBOX_TOKEN);
+    url.searchParams.set('country', 'CA'); // Canada only
+    url.searchParams.set('types', 'address'); // Only addresses, not cities/regions
+    url.searchParams.set('limit', '8');
+    url.searchParams.set('language', 'en');
+    url.searchParams.set('proximity', '-83.0167,42.3149'); // Windsor, ON coordinates
+    
+    const response = await fetch(url.toString());
+    
+    if (!response.ok) {
+      throw new Error(`Mapbox API error: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    
+    console.log(`✅ Found ${data.features?.length || 0} addresses`);
+    
+    res.json(data);
+  } catch (error) {
+    console.error("❌ Geocoding error:", error.message);
+    res.status(500).json({ error: "Geocoding service error" });
+  }
+});
+
 app.listen(4242, () => {
   console.log("=" .repeat(50));
   console.log("🚀 Stripe payment server running on port 4242");
@@ -318,6 +366,7 @@ app.listen(4242, () => {
   console.log("   ✅ Rate limiting (100 req/min per IP)");
   console.log("   ✅ Input sanitization & validation");
   console.log("   ✅ Request size limit (10MB)");
+  console.log("   ✅ Address autocomplete API (Mapbox token secured)");
   console.log("📋 Price breakdown:");
   console.log("   BDE Course: $522.00 CAD (includes HST + Stripe fee)");
   console.log("   Individual Lessons: $46.40 CAD/hour (includes HST + Stripe fee)");

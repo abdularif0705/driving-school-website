@@ -29,7 +29,7 @@
     <script defer src="lib/easing/easing.min.js"></script>
     <script defer src="lib/waypoints/waypoints.min.js"></script>
     <script defer src="lib/owlcarousel/owl.carousel.min.js"></script>
-
+    
     <!-- Template Javascript -->
     <script defer src="js/main.js"></script>
 
@@ -1151,9 +1151,12 @@
                                 </div>
                             </div>
                             <div class="form-floating-custom">
-                                <input type="text" class="form-control" id="address" name="address" required
-                                    autocomplete="street-address">
-                                <label for="address">Street Address *</label>
+                                <div class="address-input-wrapper" style="position: relative;">
+                                    <input type="text" class="form-control" id="address" name="address" required
+                                        autocomplete="off" placeholder="Start typing an address...">
+                                    <label for="address">Street Address *</label>
+                                    <div id="address-dropdown" class="address-dropdown-menu"></div>
+                                </div>
                                 <div class="invalid-feedback" id="addressError" style="display:none;">Please enter your
                                     street address.</div>
                             </div>
@@ -2228,6 +2231,259 @@
     <!-- Chatbase Script -->
     <script>
         (function () { if (!window.chatbase || window.chatbase("getState") !== "initialized") { window.chatbase = (...arguments) => { if (!window.chatbase.q) { window.chatbase.q = [] } window.chatbase.q.push(arguments) }; window.chatbase = new Proxy(window.chatbase, { get(target, prop) { if (prop === "q") { return target.q } return (...args) => target(prop, ...args) } }) } const onLoad = function () { const script = document.createElement("script"); script.src = "https://www.chatbase.co/embed.min.js"; script.id = "DleEiu3_Y0lZhuSMBuO7f"; script.domain = "www.chatbase.co"; document.body.appendChild(script) }; if (document.readyState === "complete") { onLoad() } else { window.addEventListener("load", onLoad) } })();
+    </script>
+
+    <!-- ✅ Address Autocomplete Styling -->
+    <style>
+        .address-input-wrapper {
+            position: relative;
+        }
+        .address-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-top: -2px;
+        }
+        .address-dropdown-menu.show {
+            display: block;
+        }
+        .address-dropdown-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+        .address-dropdown-item:hover {
+            background-color: #f8f9fa;
+        }
+        .address-dropdown-item:last-child {
+            border-bottom: none;
+        }
+        .address-dropdown-loading,
+        .address-dropdown-no-results {
+            padding: 12px 15px;
+            color: #6c757d;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+
+    <!-- ✅ Address Autocomplete JavaScript -->
+    <!-- 
+        SETUP INSTRUCTIONS:
+        1. Go to https://account.mapbox.com/
+        2. Sign up for FREE (100,000 requests/month)
+        3. Create an access token
+        4. Replace 'YOUR_MAPBOX_TOKEN_HERE' below with your token
+        
+        Alternative: Use Google Places API instead
+        - Free tier: 1,000 requests/month
+        - After: $17 per 1,000 requests
+    -->
+    <script>
+        (function() {
+            const addressInput = document.getElementById('address');
+            const dropdownMenu = document.getElementById('address-dropdown');
+            
+            if (!addressInput || !dropdownMenu) return;
+
+            let searchTimeout;
+
+            // Debounce function
+            function debounce(func, delay) {
+                return function(...args) {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => func.apply(this, args), delay);
+                };
+            }
+
+            // Fetch addresses from YOUR backend (keeps API key secure!)
+            async function fetchAddresses(query) {
+                if (!query || query.trim().length < 3) {
+                    hideDropdown();
+                    return;
+                }
+
+                showLoading();
+
+                try {
+                    // Call YOUR backend API endpoint (API key stays on server)
+                    const response = await fetch(`/api/geocode?query=${encodeURIComponent(query)}`);
+
+                    if (!response.ok) {
+                        throw new Error('API error');
+                    }
+
+                    const data = await response.json();
+                    displayResults(data.features || []);
+                } catch (error) {
+                    console.error('Error fetching addresses:', error);
+                    showError();
+                }
+            }
+
+            // Show loading state
+            function showLoading() {
+                dropdownMenu.innerHTML = '<div class="address-dropdown-loading">🔍 Searching...</div>';
+                dropdownMenu.classList.add('show');
+            }
+
+            // Show error
+            function showError() {
+                dropdownMenu.innerHTML = '<div class="address-dropdown-no-results">❌ Error fetching addresses</div>';
+                dropdownMenu.classList.add('show');
+            }
+
+            // Format Mapbox address to clean format: "123 Street Name, City, Province PostalCode"
+            function formatAddress(result) {
+                // Mapbox returns: place_name and context array
+                const placeName = result.place_name || result.text || '';
+                const context = result.context || [];
+                
+                // Extract components from Mapbox response
+                let address = result.address ? `${result.address} ${result.text}` : result.text;
+                let city = '';
+                let province = '';
+                let postcode = '';
+                
+                // Parse context for city, province, postcode
+                context.forEach(item => {
+                    if (item.id.startsWith('place.')) {
+                        city = item.text;
+                    } else if (item.id.startsWith('region.')) {
+                        province = item.short_code ? item.short_code.replace('CA-', '') : item.text;
+                    } else if (item.id.startsWith('postcode.')) {
+                        postcode = item.text;
+                    }
+                });
+                
+                // Build clean format: "2235 Everts Ave, Windsor, ON N9B 3X3"
+                const parts = [];
+                if (address) parts.push(address);
+                if (city) parts.push(city);
+                
+                const provincePostal = [];
+                if (province) provincePostal.push(province);
+                if (postcode) provincePostal.push(postcode);
+                if (provincePostal.length > 0) parts.push(provincePostal.join(' '));
+                
+                return parts.join(', ');
+            }
+
+            // Display results
+            function displayResults(results) {
+                if (!results || results.length === 0) {
+                    dropdownMenu.innerHTML = '<div class="address-dropdown-no-results">No addresses found</div>';
+                    dropdownMenu.classList.add('show');
+                    return;
+                }
+
+                // Format and deduplicate addresses
+                const formattedAddresses = results.map(result => ({
+                    formatted: formatAddress(result),
+                    original: result.display_name
+                }));
+
+                // Remove duplicates based on formatted address
+                const uniqueAddresses = formattedAddresses.filter((addr, index, self) =>
+                    index === self.findIndex(a => a.formatted === addr.formatted)
+                );
+
+                dropdownMenu.innerHTML = uniqueAddresses.map(addr => 
+                    `<div class="address-dropdown-item" data-address="${addr.formatted}">
+                        ${addr.formatted}
+                    </div>`
+                ).join('');
+
+                dropdownMenu.classList.add('show');
+
+                // Add click handlers
+                const items = dropdownMenu.querySelectorAll('.address-dropdown-item');
+                items.forEach(item => {
+                    item.addEventListener('click', function() {
+                        const address = this.getAttribute('data-address');
+                        selectAddress(address);
+                    });
+                });
+            }
+
+            // Select an address
+            function selectAddress(address) {
+                addressInput.value = address;
+                addressInput.dispatchEvent(new Event('input', { bubbles: true }));
+                hideDropdown();
+                
+                // Remove validation errors if any
+                addressInput.classList.remove('is-invalid');
+                addressInput.classList.add('is-valid');
+                const errorDiv = document.getElementById('addressError');
+                if (errorDiv) errorDiv.style.display = 'none';
+            }
+
+            // Hide dropdown
+            function hideDropdown() {
+                dropdownMenu.classList.remove('show');
+            }
+
+            // Event listeners
+            addressInput.addEventListener('input', debounce(function(e) {
+                const query = e.target.value;
+                fetchAddresses(query);
+            }, 300));
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!addressInput.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                    hideDropdown();
+                }
+            });
+
+            // Handle keyboard navigation
+            addressInput.addEventListener('keydown', function(e) {
+                const items = dropdownMenu.querySelectorAll('.address-dropdown-item');
+                if (items.length === 0) return;
+
+                let currentIndex = Array.from(items).findIndex(item => 
+                    item.classList.contains('active')
+                );
+
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    currentIndex = currentIndex < items.length - 1 ? currentIndex + 1 : 0;
+                    items.forEach((item, i) => {
+                        item.classList.toggle('active', i === currentIndex);
+                        if (i === currentIndex) item.style.backgroundColor = '#f8f9fa';
+                        else item.style.backgroundColor = '';
+                    });
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    currentIndex = currentIndex > 0 ? currentIndex - 1 : items.length - 1;
+                    items.forEach((item, i) => {
+                        item.classList.toggle('active', i === currentIndex);
+                        if (i === currentIndex) item.style.backgroundColor = '#f8f9fa';
+                        else item.style.backgroundColor = '';
+                    });
+                } else if (e.key === 'Enter' && currentIndex >= 0) {
+                    e.preventDefault();
+                    const address = items[currentIndex].getAttribute('data-address');
+                    selectAddress(address);
+                } else if (e.key === 'Escape') {
+                    hideDropdown();
+                }
+            });
+
+            console.log('✅ Address autocomplete initialized!');
+        })();
     </script>
 </body>
 
