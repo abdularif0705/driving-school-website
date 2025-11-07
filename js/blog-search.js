@@ -23,7 +23,7 @@ class BlogSearch {
 
   getAllPosts() {
     this.allBlogPosts = Array.from(document.querySelectorAll(".blog-content .blog-post"));
-    console.log(`Search initialized with ${this.allBlogPosts.length} blog posts`);
+    //console.log(`Search initialized with ${this.allBlogPosts.length} blog posts`);
   }
 
   bindEvents() {
@@ -100,7 +100,7 @@ class BlogSearch {
       }
     });
 
-    console.log(`Search: "${query}", Category: "${this.currentCategory}", Results: ${visibleCount}`);
+    //console.log(`Search: "${query}", Category: "${this.currentCategory}", Results: ${visibleCount}`);
 
     // Show/hide no results message
     if (visibleCount === 0) {

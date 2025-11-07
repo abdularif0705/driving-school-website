@@ -1150,13 +1150,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-floating-custom">
-                                <div class="address-input-wrapper" style="position: relative;">
-                                    <input type="text" class="form-control" id="address" name="address" required
-                                        autocomplete="off" placeholder="Start typing an address...">
-                                    <label for="address">Street Address *</label>
-                                    <div id="address-dropdown" class="address-dropdown-menu"></div>
-                                </div>
+                            <div class="form-floating-custom" style="position: relative;">
+                                <input type="text" class="form-control" id="address" name="address" required
+                                    autocomplete="off" placeholder="Start typing an address...">
+                                <label for="address">Street Address *</label>
+                                <div id="address-dropdown" class="address-dropdown-menu"></div>
                                 <div class="invalid-feedback" id="addressError" style="display:none;">Please enter your
                                     street address.</div>
                             </div>
@@ -1492,11 +1490,11 @@
         let actions = null;
         
         // Log environment for debugging
-        console.log('🌍 Environment check:');
-        console.log('📍 Current URL:', window.location.href);
-        console.log('📍 Hostname:', window.location.hostname);
-        console.log('📍 Protocol:', window.location.protocol);
-        console.log('⏰ Page loaded at:', new Date().toISOString());
+        //console.log('🌍 Environment check:');
+        //console.log('📍 Current URL:', window.location.href);
+        //console.log('📍 Hostname:', window.location.hostname);
+        //console.log('📍 Protocol:', window.location.protocol);
+        //console.log('⏰ Page loaded at:', new Date().toISOString());
 
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function () {
@@ -1510,35 +1508,35 @@
             const sessionId = urlParams.get('session_id');
             const paymentSuccess = urlParams.get('payment') === 'success';
 
-            console.log('🔍 Checking payment success...');
-            console.log('📋 Session ID:', sessionId);
-            console.log('📋 Payment param:', paymentSuccess);
+            //console.log('🔍 Checking payment success...');
+            //console.log('📋 Session ID:', sessionId);
+            //console.log('📋 Payment param:', paymentSuccess);
 
             if (sessionId || paymentSuccess) {
                 try {
-                    console.log('📤 Fetching session status from server...');
+                    //console.log('📤 Fetching session status from server...');
                     const response = await fetch(`/session-status?session_id=${sessionId}`);
                     const session = await response.json();
-                    console.log('📥 Session status received:', session);
+                    //console.log('📥 Session status received:', session);
 
                     if (session.payment_status === 'paid') {
-                        console.log('✅ Payment verified as paid - showing success message');
+                        //console.log('✅ Payment verified as paid - showing success message');
                         showSuccessMessage();
                     } else {
-                        console.log('⚠️ Payment status:', session.payment_status);
+                        //console.log('⚠️ Payment status:', session.payment_status);
                     }
                 } catch (error) {
                     console.error('❌ Error checking session status:', error);
                 }
             } else {
-                console.log('ℹ️ No session_id or payment param - normal page load');
+                //console.log('ℹ️ No session_id or payment param - normal page load');
             }
         }
 
         async function initializeStripe() {
-            console.log('🔄 Initializing Stripe...');
-            console.log('📌 Selected course:', selectedCourse);
-            console.log('📚 Number of lessons:', numberOfLessons);
+            //console.log('🔄 Initializing Stripe...');
+            //console.log('📌 Selected course:', selectedCourse);
+            //console.log('📚 Number of lessons:', numberOfLessons);
             
             if (!selectedCourse) {
                 console.warn('⚠️ No course selected');
@@ -1546,12 +1544,12 @@
             }
 
             try {
-                console.log('📤 Sending request to server...');
+                //console.log('📤 Sending request to server...');
                 const requestBody = {
                     course: selectedCourse, 
                     numberOfLessons: selectedCourse === 'individual' ? numberOfLessons : 1
                 };
-                console.log('📤 Request body:', requestBody);
+                //console.log('📤 Request body:', requestBody);
                 
                 // Fetch client secret from backend
                 const response = await fetch('/create-checkout-session', {
@@ -1560,9 +1558,9 @@
                     body: JSON.stringify(requestBody)
                 });
 
-                console.log('📥 Server response status:', response.status);
+                //console.log('📥 Server response status:', response.status);
                 const data = await response.json();
-                console.log('📥 Server response data:', data);
+                //console.log('📥 Server response data:', data);
 
                 if (!response.ok) {
                     throw new Error(data.error || `Server error: ${response.status}`);
@@ -1572,10 +1570,10 @@
                     throw new Error('No client secret received from server');
                 }
 
-                console.log('✅ Client secret received:', data.clientSecret.substring(0, 30) + '...');
+                //console.log('✅ Client secret received:', data.clientSecret.substring(0, 30) + '...');
 
                 // Initialize checkout
-                console.log('🔄 Initializing Stripe checkout...');
+                //console.log('🔄 Initializing Stripe checkout...');
                 checkout = stripe.initCheckout({
                     clientSecret: data.clientSecret,
                     elementsOptions: {
@@ -1589,20 +1587,20 @@
                 });
 
                 // Load actions
-                console.log('🔄 Loading actions...');
+                //console.log('🔄 Loading actions...');
                 const loadActionsResult = await checkout.loadActions();
-                console.log('📊 Load actions result:', loadActionsResult.type);
+                //console.log('📊 Load actions result:', loadActionsResult.type);
                 
                 if (loadActionsResult.type === 'success') {
                     actions = loadActionsResult.actions;
-                    console.log('✅ Actions loaded successfully');
+                    //console.log('✅ Actions loaded successfully');
                     
                     // Try to get session details to check for customer_email
                     try {
                         const session = actions.getSession();
-                        console.log('📋 Session details retrieved');
-                        console.log('📋 Session ID:', session.id);
-                        console.log('📋 Customer email set?:', session.customer_email || 'NOT SET');
+                        //console.log('📋 Session details retrieved');
+                        //console.log('📋 Session ID:', session.id);
+                        //console.log('📋 Customer email set?:', session.customer_email || 'NOT SET');
                         if (session.customer_email) {
                             console.warn('⚠️ WARNING: customer_email is already set in session:', session.customer_email);
                         }
@@ -1618,11 +1616,11 @@
                 }
 
                 // Create and mount payment element (no billing/shipping - already collected)
-                console.log('🔄 Creating payment element...');
+                //console.log('🔄 Creating payment element...');
                 const paymentElement = checkout.createPaymentElement();
-                console.log('🔄 Mounting payment element...');
+                //console.log('🔄 Mounting payment element...');
                 paymentElement.mount('#card-element');
-                console.log('✅ Payment element mounted successfully');
+                //console.log('✅ Payment element mounted successfully');
 
             } catch (error) {
                 console.error('❌ Error initializing Stripe:', error);
@@ -1939,7 +1937,7 @@
 
         async function handlePayment(e) {
             e.preventDefault();
-            console.log('🔵 Payment button clicked');
+            //console.log('🔵 Payment button clicked');
             const submitButton = document.getElementById('submitPayment');
             const originalText = submitButton.innerHTML;
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
@@ -1947,32 +1945,32 @@
             document.getElementById('loadingOverlay').style.display = 'flex';
 
             try {
-                console.log('✅ Starting payment process...');
+                //console.log('✅ Starting payment process...');
                 
                 if (!actions) {
                     throw new Error('Payment not initialized. Please refresh and try again.');
                 }
-                console.log('✅ Actions object available');
+                //console.log('✅ Actions object available');
 
                 // Get email from the form and check if updateEmail is available
                 const email = document.getElementById('email').value;
-                console.log('📧 Email from form:', email);
+                //console.log('📧 Email from form:', email);
                 
                 if (!email || email.trim() === '') {
                     throw new Error('Email address is required');
                 }
 
                 // Try to update email in the checkout session
-                console.log('🔄 Attempting to update email in Stripe session...');
-                console.log('📊 Actions object:', actions);
-                console.log('📊 updateEmail available?', typeof actions.updateEmail);
-                console.log('📧 Email to set:', email);
+                //console.log('🔄 Attempting to update email in Stripe session...');
+                //console.log('📊 Actions object:', actions);
+                //console.log('📊 updateEmail available?', typeof actions.updateEmail);
+                //console.log('📧 Email to set:', email);
                 
                 if (typeof actions.updateEmail === 'function') {
-                    console.log('✅ updateEmail is a function, calling it...');
+                    //console.log('✅ updateEmail is a function, calling it...');
                     try {
                         const updateResult = await actions.updateEmail(email);
-                        console.log('✅ Email updated successfully. Result:', updateResult);
+                        //console.log('✅ Email updated successfully. Result:', updateResult);
                     } catch (updateEmailError) {
                         console.error('❌ Error updating email:', updateEmailError);
                         console.error('📝 Error name:', updateEmailError.name);
@@ -1986,7 +1984,7 @@
                             console.warn('⚠️ Solution: Make sure you deployed the latest server.js to Render');
                         } else {
                             // Try to continue with confirmation anyway
-                            console.log('⚠️ Continuing with payment confirmation despite email update error');
+                            //console.log('⚠️ Continuing with payment confirmation despite email update error');
                         }
                     }
                 } else {
@@ -1994,41 +1992,41 @@
                 }
                 
                 // Now confirm the payment
-                console.log('🔄 Confirming payment...');
-                console.log('📊 Actions.confirm available?', typeof actions.confirm);
-                console.log('📊 About to call actions.confirm() WITHOUT email parameter');
+                //console.log('🔄 Confirming payment...');
+                //console.log('📊 Actions.confirm available?', typeof actions.confirm);
+                //console.log('📊 About to call actions.confirm() WITHOUT email parameter');
                 
                 try {
-                    console.log('🔄 Calling actions.confirm()...');
+                    //console.log('🔄 Calling actions.confirm()...');
                     const result = await actions.confirm();
-                    console.log('📊 Confirmation result received:', result);
-                    console.log('📊 Result keys:', Object.keys(result));
+                    //console.log('📊 Confirmation result received:', result);
+                    //console.log('📊 Result keys:', Object.keys(result));
                     
                     const { error } = result;
-                    console.log('📊 Has error?', !!error);
-                    console.log('📊 Error value:', error);
+                    //console.log('📊 Has error?', !!error);
+                    //console.log('📊 Error value:', error);
                     
                     // ALWAYS submit to Formspree if there's no error
                     if (!error) {
-                        console.log('✅ Payment successful! No error detected.');
+                        //console.log('✅ Payment successful! No error detected.');
                         // Hide loading overlay
                 document.getElementById('loadingOverlay').style.display = 'none';
                         
                         // Submit to Formspree IMMEDIATELY while form data is available
-                        console.log('🔄 About to submit to Formspree...');
-                        console.log('📊 Checkpoint: Before Formspree call');
+                        //console.log('🔄 About to submit to Formspree...');
+                        //console.log('📊 Checkpoint: Before Formspree call');
                         try {
-                            console.log('📧 CALLING submitToFormspree() NOW...');
+                            //console.log('📧 CALLING submitToFormspree() NOW...');
                             await submitToFormspree();
-                            console.log('✅ Formspree submission complete');
+                            //console.log('✅ Formspree submission complete');
                         } catch (formspreeError) {
                             console.error('❌ Formspree submission failed:', formspreeError);
                             console.error('Error stack:', formspreeError.stack);
                         }
-                        console.log('✅ After Formspree call');
+                        //console.log('✅ After Formspree call');
                         
                         // Show success message on the page
-                        console.log('🎉 Showing success message...');
+                        //console.log('🎉 Showing success message...');
                         showSuccessMessage();
                 } else {
                         console.error('❌ Payment confirmation error details:');
@@ -2074,7 +2072,7 @@
 
         // Function to send registration data via EmailJS (replaces Formspree)
         async function submitToFormspree() {
-            console.log('📧 Preparing to send registration email via EmailJS...');
+            //console.log('📧 Preparing to send registration email via EmailJS...');
             
             try {
                 // Get form data
@@ -2096,34 +2094,34 @@
                     numberOfLessons: numberOfLessons
                 };
 
-                console.log('📧 Form data collected:', formData);
+                //console.log('📧 Form data collected:', formData);
                 
                 // Display in a readable format in the console
-                console.log('=' .repeat(60));
-                console.log('📋 REGISTRATION DATA SUMMARY');
-                console.log('=' .repeat(60));
-                console.log('👤 Name:', formData.firstName, formData.lastName);
-                console.log('📧 Email:', formData.email);
-                console.log('📱 Phone:', formData.phone);
-                console.log('🎂 DOB:', formData.dateOfBirth);
-                console.log('🆔 License:', formData.licenseNumber);
-                console.log('🏠 Address:', formData.address);
-                console.log('📍 City:', formData.city);
-                console.log('🗺️  Province:', formData.province);
-                console.log('📮 Postal Code:', formData.postalCode);
-                console.log('📝 Notes:', formData.notes || 'None');
-                console.log('🚨 Emergency Contact:', formData.emergencyName);
-                console.log('📱 Emergency Phone:', formData.emergencyPhone);
-                console.log('🎓 Course:', formData.course);
-                console.log('📚 Lessons:', formData.numberOfLessons);
-                console.log('=' .repeat(60));
+                //console.log('=' .repeat(60));
+                //console.log('📋 REGISTRATION DATA SUMMARY');
+                //console.log('=' .repeat(60));
+                //console.log('👤 Name:', formData.firstName, formData.lastName);
+                //console.log('📧 Email:', formData.email);
+                //console.log('📱 Phone:', formData.phone);
+                //console.log('🎂 DOB:', formData.dateOfBirth);
+                //console.log('🆔 License:', formData.licenseNumber);
+                //console.log('🏠 Address:', formData.address);
+                //console.log('📍 City:', formData.city);
+                //console.log('🗺️  Province:', formData.province);
+                //console.log('📮 Postal Code:', formData.postalCode);
+                //console.log('📝 Notes:', formData.notes || 'None');
+                //console.log('🚨 Emergency Contact:', formData.emergencyName);
+                //console.log('📱 Emergency Phone:', formData.emergencyPhone);
+                //console.log('🎓 Course:', formData.course);
+                //console.log('📚 Lessons:', formData.numberOfLessons);
+                //console.log('=' .repeat(60));
                 
                 // Store in localStorage for debugging
                 localStorage.setItem('lastRegistrationData', JSON.stringify(formData));
-                console.log('💾 Data saved to localStorage as "lastRegistrationData"');
+                //console.log('💾 Data saved to localStorage as "lastRegistrationData"');
 
                 // Send email via EmailJS
-                console.log('📤 Sending email via EmailJS...');
+                //console.log('📤 Sending email via EmailJS...');
                 
                 const emailTemplate = {
                     from_name: `${formData.firstName} ${formData.lastName}`,
@@ -2147,11 +2145,11 @@
                     date: new Date().toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short' })
                 };
                 
-                console.log('📧 Email template data:', emailTemplate);
+                //console.log('📧 Email template data:', emailTemplate);
                 
                 try {
                     await emailjs.send('service_5by0waq', 'template_2yisa3c', emailTemplate);
-                    console.log('✅ Email sent successfully via EmailJS');
+                    //console.log('✅ Email sent successfully via EmailJS');
                 } catch (emailError) {
                     console.error('❌ EmailJS error:', emailError);
                     console.error('Error details:', JSON.stringify(emailError, null, 2));
@@ -2171,18 +2169,18 @@
                     headers: { 'Accept': 'application/json' }
                 });
                 
-                console.log('📥 Formspree response status:', response.status);
+                //console.log('📥 Formspree response status:', response.status);
                 if (response.ok) {
                     const responseData = await response.json();
-                    console.log('✅ Formspree submission successful:', responseData);
+                    //console.log('✅ Formspree submission successful:', responseData);
                 } else {
                     const errorData = await response.json();
                     console.warn('⚠️ Formspree submission warning:', errorData);
                 }
                 */
                 
-                console.log('✅ Registration data logged and saved to localStorage');
-                console.log('⚠️  EmailJS is commented out - configure your credentials to enable email sending');
+                //console.log('✅ Registration data logged and saved to localStorage');
+                //console.log('⚠️  EmailJS is commented out - configure your credentials to enable email sending');
                 
             } catch (error) {
                 console.error('❌ Error in registration submission:', error);
@@ -2199,7 +2197,7 @@
             document.querySelectorAll('.step-content').forEach(step => step.style.display = 'none');
             document.querySelector('.step-indicator').style.display = 'none';
             document.getElementById('successMessage').style.display = 'block';
-            console.log('✅ Success message displayed');
+            //console.log('✅ Success message displayed');
         }
 
         // Form validation helpers
@@ -2235,24 +2233,24 @@
 
     <!-- ✅ Address Autocomplete Styling -->
     <style>
-        .address-input-wrapper {
+        .form-floating-custom {
             position: relative;
         }
         .address-dropdown-menu {
             position: absolute;
-            top: 100%;
+            top: 58px; /* Position right below the input field (input height) */
             left: 0;
             right: 0;
             background: white;
             border: 2px solid #e9ecef;
-            border-top: none;
-            border-radius: 0 0 10px 10px;
+            border-top: 2px solid #e9ecef;
+            border-radius: 10px;
             max-height: 300px;
             overflow-y: auto;
             display: none;
-            z-index: 1000;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-top: -2px;
+            z-index: 9999; /* Higher z-index to ensure it's on top */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            margin-top: 0;
         }
         .address-dropdown-menu.show {
             display: block;
@@ -2276,20 +2274,19 @@
             text-align: center;
             font-size: 14px;
         }
+        .address-dropdown-loading i,
+        .address-dropdown-no-results i {
+            margin-right: 8px;
+        }
+        .address-dropdown-item {
+            transition: background-color 0.15s ease;
+        }
+        .address-dropdown-item.active {
+            background-color: #f8f9fa;
+        }
     </style>
 
     <!-- ✅ Address Autocomplete JavaScript -->
-    <!-- 
-        SETUP INSTRUCTIONS:
-        1. Go to https://account.mapbox.com/
-        2. Sign up for FREE (100,000 requests/month)
-        3. Create an access token
-        4. Replace 'YOUR_MAPBOX_TOKEN_HERE' below with your token
-        
-        Alternative: Use Google Places API instead
-        - Free tier: 1,000 requests/month
-        - After: $17 per 1,000 requests
-    -->
     <script>
         (function() {
             const addressInput = document.getElementById('address');
@@ -2334,13 +2331,13 @@
 
             // Show loading state
             function showLoading() {
-                dropdownMenu.innerHTML = '<div class="address-dropdown-loading">🔍 Searching...</div>';
+                dropdownMenu.innerHTML = '<div class="address-dropdown-loading"><i class="fas fa-spinner fa-spin"></i> Searching...</div>';
                 dropdownMenu.classList.add('show');
             }
 
             // Show error
             function showError() {
-                dropdownMenu.innerHTML = '<div class="address-dropdown-no-results">❌ Error fetching addresses</div>';
+                dropdownMenu.innerHTML = '<div class="address-dropdown-no-results"><i class="fas fa-exclamation-circle"></i> Error fetching addresses</div>';
                 dropdownMenu.classList.add('show');
             }
 
@@ -2385,13 +2382,14 @@
                 if (!results || results.length === 0) {
                     dropdownMenu.innerHTML = '<div class="address-dropdown-no-results">No addresses found</div>';
                     dropdownMenu.classList.add('show');
+                    cachedResults = [];
                     return;
                 }
 
                 // Format and deduplicate addresses
                 const formattedAddresses = results.map(result => ({
                     formatted: formatAddress(result),
-                    original: result.display_name
+                    result: result // Keep full result for auto-fill
                 }));
 
                 // Remove duplicates based on formatted address
@@ -2399,9 +2397,12 @@
                     index === self.findIndex(a => a.formatted === addr.formatted)
                 );
 
-                dropdownMenu.innerHTML = uniqueAddresses.map(addr => 
-                    `<div class="address-dropdown-item" data-address="${addr.formatted}">
-                        ${addr.formatted}
+                // Cache results for keyboard navigation
+                cachedResults = uniqueAddresses.map(addr => addr.result);
+
+                dropdownMenu.innerHTML = uniqueAddresses.map((addr, index) => 
+                    `<div class="address-dropdown-item" data-index="${index}" data-address="${addr.formatted}">
+                        <i class="fas fa-map-marker-alt" style="color: #ce252a; margin-right: 10px;"></i>${addr.formatted}
                     </div>`
                 ).join('');
 
@@ -2411,23 +2412,77 @@
                 const items = dropdownMenu.querySelectorAll('.address-dropdown-item');
                 items.forEach(item => {
                     item.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
                         const address = this.getAttribute('data-address');
-                        selectAddress(address);
+                        const result = cachedResults[index];
+                        selectAddress(address, result);
                     });
                 });
             }
 
-            // Select an address
-            function selectAddress(address) {
-                addressInput.value = address;
+            // Select an address and auto-fill city, province, postal code
+            function selectAddress(address, result) {
+                // Extract just the street address (before the first comma)
+                const streetOnly = address.split(',')[0].trim();
+                addressInput.value = streetOnly;
                 addressInput.dispatchEvent(new Event('input', { bubbles: true }));
                 hideDropdown();
                 
-                // Remove validation errors if any
+                // Auto-fill city, province, and postal code from Mapbox result
+                if (result && result.context) {
+                    const context = result.context;
+                    
+                    // Extract city
+                    const cityContext = context.find(c => c.id.startsWith('place.'));
+                    if (cityContext) {
+                        const cityInput = document.getElementById('city');
+                        if (cityInput) {
+                            cityInput.value = cityContext.text;
+                            cityInput.dispatchEvent(new Event('input', { bubbles: true }));
+                            cityInput.classList.remove('is-invalid');
+                            cityInput.classList.add('is-valid');
+                        }
+                    }
+                    
+                    // Extract province
+                    const provinceContext = context.find(c => c.id.startsWith('region.'));
+                    if (provinceContext) {
+                        const provinceInput = document.getElementById('province');
+                        if (provinceInput) {
+                            // Get short code (e.g., "CA-ON" -> "ON")
+                            const provinceCode = provinceContext.short_code ? 
+                                provinceContext.short_code.replace('CA-', '') : '';
+                            
+                            // Set the select dropdown value
+                            if (provinceCode) {
+                                provinceInput.value = provinceCode;
+                                provinceInput.dispatchEvent(new Event('change', { bubbles: true }));
+                                provinceInput.classList.remove('is-invalid');
+                                provinceInput.classList.add('is-valid');
+                            }
+                        }
+                    }
+                    
+                    // Extract postal code
+                    const postalContext = context.find(c => c.id.startsWith('postcode.'));
+                    if (postalContext) {
+                        const postalInput = document.getElementById('postalCode');
+                        if (postalInput) {
+                            postalInput.value = postalContext.text;
+                            postalInput.dispatchEvent(new Event('input', { bubbles: true }));
+                            postalInput.classList.remove('is-invalid');
+                            postalInput.classList.add('is-valid');
+                        }
+                    }
+                }
+                
+                // Remove validation errors from address field
                 addressInput.classList.remove('is-invalid');
                 addressInput.classList.add('is-valid');
                 const errorDiv = document.getElementById('addressError');
                 if (errorDiv) errorDiv.style.display = 'none';
+                
+                //console.log('✅ Address selected and fields auto-filled!');
             }
 
             // Hide dropdown
@@ -2449,6 +2504,8 @@
             });
 
             // Handle keyboard navigation
+            let cachedResults = []; // Store results for keyboard navigation
+            
             addressInput.addEventListener('keydown', function(e) {
                 const items = dropdownMenu.querySelectorAll('.address-dropdown-item');
                 if (items.length === 0) return;
@@ -2475,14 +2532,16 @@
                     });
                 } else if (e.key === 'Enter' && currentIndex >= 0) {
                     e.preventDefault();
+                    const index = parseInt(items[currentIndex].getAttribute('data-index'));
                     const address = items[currentIndex].getAttribute('data-address');
-                    selectAddress(address);
+                    const result = cachedResults[index];
+                    selectAddress(address, result);
                 } else if (e.key === 'Escape') {
                     hideDropdown();
                 }
             });
 
-            console.log('✅ Address autocomplete initialized!');
+            //console.log('✅ Address autocomplete initialized!');
         })();
     </script>
 </body>

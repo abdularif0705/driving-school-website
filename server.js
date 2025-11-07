@@ -44,7 +44,7 @@ app.use((req, res, next) => {
   }
   
   if (record.count >= RATE_LIMIT_MAX_REQUESTS) {
-    console.log(`🚫 Rate limit exceeded for IP: ${ip}`);
+    //console.log(`🚫 Rate limit exceeded for IP: ${ip}`);
     return res.status(429).json({ error: 'Too many requests. Please try again later.' });
   }
   
@@ -74,12 +74,12 @@ app.post("/create-checkout-session", async (req, res) => {
   try {
     const clientIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress || req.socket.remoteAddress;
     
-    console.log("=" .repeat(60));
-    console.log("📥 New checkout session request received");
-    console.log("⏰ Timestamp:", new Date().toISOString());
-    console.log("🌐 Client IP:", clientIP);
-    console.log("📦 Request body:", JSON.stringify(req.body, null, 2));
-    console.log("=" .repeat(60));
+    //console.log("=" .repeat(60));
+    //console.log("📥 New checkout session request received");
+    //console.log("⏰ Timestamp:", new Date().toISOString());
+    //console.log("🌐 Client IP:", clientIP);
+    //console.log("📦 Request body:", JSON.stringify(req.body, null, 2));
+    //console.log("=" .repeat(60));
     
     const { course, numberOfLessons = 1 } = req.body;
     
@@ -104,8 +104,8 @@ app.post("/create-checkout-session", async (req, res) => {
     }
     
     // Log the course and lessons info
-    console.log(`🎯 Course selected: ${sanitizedCourse}`);
-    console.log(`📚 Number of lessons: ${sanitizedLessons}`);
+    //console.log(`🎯 Course selected: ${sanitizedCourse}`);
+    //console.log(`📚 Number of lessons: ${sanitizedLessons}`);
     
     // Validate course type
     if (!['bde', 'individual', 'carRental'].includes(sanitizedCourse)) {
@@ -122,7 +122,7 @@ app.post("/create-checkout-session", async (req, res) => {
     // Car Rental: $80 * 1.16 = $92.80 = 9280 cents
     
     if (sanitizedCourse === "bde") {
-      console.log("✅ Creating BDE course checkout");
+      //console.log("✅ Creating BDE course checkout");
       lineItems.push({
         price_data: {
           product_data: { name: "MTO Approved BDE Course" },
@@ -131,10 +131,10 @@ app.post("/create-checkout-session", async (req, res) => {
         },
         quantity: 1,
       });
-      console.log("💰 BDE Total: $522.00 CAD");
+      //console.log("💰 BDE Total: $522.00 CAD");
       
     } else if (sanitizedCourse === "individual") {
-      console.log(`✅ Creating Individual lessons checkout: ${sanitizedLessons} lessons`);
+      //console.log(`✅ Creating Individual lessons checkout: ${sanitizedLessons} lessons`);
       const lessonPriceWithTax = 4640; // $46.40 per lesson (includes HST + fee)
       const totalPrice = lessonPriceWithTax * sanitizedLessons; // Calculate total in cents (preserves precision)
       
@@ -146,10 +146,10 @@ app.post("/create-checkout-session", async (req, res) => {
         },
         quantity: sanitizedLessons,
       });
-      console.log(`💰 Individual lessons total: $${(totalPrice / 100).toFixed(2)} CAD (${sanitizedLessons} x $46.40)`);
+      //console.log(`💰 Individual lessons total: $${(totalPrice / 100).toFixed(2)} CAD (${sanitizedLessons} x $46.40)`);
       
     } else if (sanitizedCourse === "carRental") {
-      console.log("✅ Creating Car Rental checkout");
+      //console.log("✅ Creating Car Rental checkout");
       lineItems.push({
         price_data: {
           product_data: { name: "Car Rental for Road Test" },
@@ -158,12 +158,12 @@ app.post("/create-checkout-session", async (req, res) => {
         },
         quantity: 1,
       });
-      console.log("💰 Car Rental Total: $92.80 CAD");
+      //console.log("💰 Car Rental Total: $92.80 CAD");
     } else {
       return res.status(400).json({ error: "Invalid course type" });
     }
 
-    console.log("🔗 Creating Stripe checkout session...");
+    //console.log("🔗 Creating Stripe checkout session...");
     
     const sessionOptions = {
       ui_mode: "custom",
@@ -178,18 +178,18 @@ app.post("/create-checkout-session", async (req, res) => {
     
     // Don't set customer_email here - Stripe Payment Element handles email collection
     // Setting it manually causes conflicts with the confirm() method
-    console.log("📋 Session options:", JSON.stringify(sessionOptions, null, 2));
-    console.log("🔗 Calling Stripe API...");
+    //console.log("📋 Session options:", JSON.stringify(sessionOptions, null, 2));
+    //console.log("🔗 Calling Stripe API...");
     
     const session = await stripe.checkout.sessions.create(sessionOptions);
 
-    console.log("=" .repeat(60));
-    console.log("✅ SUCCESS - Stripe session created!");
-    console.log("🔑 Session ID:", session.id);
-    console.log("🔑 Client secret:", session.client_secret.substring(0, 30) + "...");
-    console.log("💰 Total amount:", session.amount_total, `($${(session.amount_total / 100).toFixed(2)} CAD)`);
-    console.log("💳 Customer email:", session.customer_email || 'Not set');
-    console.log("=" .repeat(60));
+    //console.log("=" .repeat(60));
+    //console.log("✅ SUCCESS - Stripe session created!");
+    //console.log("🔑 Session ID:", session.id);
+    //console.log("🔑 Client secret:", session.client_secret.substring(0, 30) + "...");
+    //console.log("💰 Total amount:", session.amount_total, `($${(session.amount_total / 100).toFixed(2)} CAD)`);
+    //console.log("💳 Customer email:", session.customer_email || 'Not set');
+    //console.log("=" .repeat(60));
 
     res.json({ clientSecret: session.client_secret });
   } catch (err) {
@@ -207,17 +207,17 @@ app.post("/create-checkout-session", async (req, res) => {
 app.get("/session-status", async (req, res) => {
   try {
     const sessionId = req.query.session_id;
-    console.log("📊 Checking session status for:", sessionId);
+    //console.log("📊 Checking session status for:", sessionId);
     
     const session = await stripe.checkout.sessions.retrieve(
       sessionId,
       { expand: ["payment_intent", "customer_details"] }
     );
     
-    console.log("✅ Session retrieved");
-    console.log("   Status:", session.status);
-    console.log("   Payment Status:", session.payment_status);
-    console.log("   Payment Intent ID:", session.payment_intent?.id);
+    //console.log("✅ Session retrieved");
+    //console.log("   Status:", session.status);
+    //console.log("   Payment Status:", session.payment_status);
+    //console.log("   Payment Intent ID:", session.payment_intent?.id);
     
     // Send email if payment is successful (commented out for now)
     // if (session.payment_status === 'paid' && session.customer_details?.email) {
@@ -279,7 +279,7 @@ async function sendRegistrationEmail(session) {
     };
 
     // await transporter.sendMail(mailOptions);
-    // console.log('Registration email sent to:', session.customer_details.email);
+    // //console.log('Registration email sent to:', session.customer_details.email);
     
     // Also send SMS if phone number is available
     // if (session.customer_details?.phone) {
@@ -304,7 +304,7 @@ async function sendRegistrationEmail(session) {
 //       to: session.customer_details.phone
 //     });
     
-//     console.log('Registration SMS sent to:', session.customer_details.phone);
+//     //console.log('Registration SMS sent to:', session.customer_details.phone);
 //   } catch (error) {
 //     console.error('Error sending SMS:', error);
 //   }
@@ -323,7 +323,7 @@ app.get("/api/geocode", async (req, res) => {
     // Sanitize query (prevent injection)
     const sanitizedQuery = query.toString().trim().substring(0, 200);
     
-    console.log(`🔍 Geocoding request: "${sanitizedQuery}"`);
+    //console.log(`🔍 Geocoding request: "${sanitizedQuery}"`);
     
     // Mapbox Geocoding API - Token stored securely in .env
     const MAPBOX_TOKEN = process.env.MAPBOX_ACCESS_TOKEN;
@@ -349,7 +349,7 @@ app.get("/api/geocode", async (req, res) => {
     
     const data = await response.json();
     
-    console.log(`✅ Found ${data.features?.length || 0} addresses`);
+    //console.log(`✅ Found ${data.features?.length || 0} addresses`);
     
     res.json(data);
   } catch (error) {
@@ -359,17 +359,17 @@ app.get("/api/geocode", async (req, res) => {
 });
 
 app.listen(4242, () => {
-  console.log("=" .repeat(50));
-  console.log("🚀 Stripe payment server running on port 4242");
-  console.log("🛡️  Security features enabled:");
-  console.log("   ✅ Security headers (X-Frame-Options, CSP, etc.)");
-  console.log("   ✅ Rate limiting (100 req/min per IP)");
-  console.log("   ✅ Input sanitization & validation");
-  console.log("   ✅ Request size limit (10MB)");
-  console.log("   ✅ Address autocomplete API (Mapbox token secured)");
-  console.log("📋 Price breakdown:");
-  console.log("   BDE Course: $522.00 CAD (includes HST + Stripe fee)");
-  console.log("   Individual Lessons: $46.40 CAD/hour (includes HST + Stripe fee)");
-  console.log("   Car Rental: $92.80 CAD (includes HST + Stripe fee)");
-  console.log("=" .repeat(50));
+  //console.log("=" .repeat(50));
+  //console.log("🚀 Stripe payment server running on port 4242");
+  //console.log("🛡️  Security features enabled:");
+  //console.log("   ✅ Security headers (X-Frame-Options, CSP, etc.)");
+  //console.log("   ✅ Rate limiting (100 req/min per IP)");
+  //console.log("   ✅ Input sanitization & validation");
+  //console.log("   ✅ Request size limit (10MB)");
+  //console.log("   ✅ Address autocomplete API (Mapbox token secured)");
+  //console.log("📋 Price breakdown:");
+  //console.log("   BDE Course: $522.00 CAD (includes HST + Stripe fee)");
+  //console.log("   Individual Lessons: $46.40 CAD/hour (includes HST + Stripe fee)");
+  //console.log("   Car Rental: $92.80 CAD (includes HST + Stripe fee)");
+  //console.log("=" .repeat(50));
 });
